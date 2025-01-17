@@ -66,3 +66,41 @@ body {
     border-radius: 10px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+/* Contact Form Styling */
+form.contact-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em; /* Adds space between rows and columns */
+  max-width: 600px;
+  margin: 2rem auto; /* Centers the form on the page */
+}
+
+form.contact-form label {
+  text-align: right;
+  padding-right: 1em; /* Adds space between label and input */
+}
+
+form.contact-form input,
+form.contact-form textarea {
+  width: 100%; /* Ensures inputs span the available width */
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+form.contact-form button {
+  grid-column: 1 / -1; /* Makes the button span the full width */
+  padding: 0.7em;
+  background-color: #007BFF;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form.contact-form button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}

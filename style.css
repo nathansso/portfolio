@@ -4,6 +4,14 @@ body {
        */
     font: 100%/1.5 system-ui;
     max-width: 100ch;
-    margin-inline: auto;
-    padding: auto;
+    margin-inline: max(1em, (100% - 100ch) / 2);
+    padding: 1rem;
   }
+  .responsive-img {
+    max-width: 500px; 
+    height: auto;
+    display: block; 
+    margin: 1rem auto; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

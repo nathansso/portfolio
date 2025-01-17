@@ -18,7 +18,7 @@ nav ul {
 }
 
 nav ul li {
-  display: contents; /* Ignore the <li> element styling */
+  display: contents; 
 }
 
 nav a {
@@ -71,19 +71,19 @@ body {
 form.contact-form {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1em; /* Adds space between rows and columns */
+  gap: 1em; 
   max-width: 600px;
-  margin: 2rem auto; /* Centers the form on the page */
+  margin: 2rem auto; 
 }
 
 form.contact-form label {
   text-align: right;
-  padding-right: 1em; /* Adds space between label and input */
+  padding-right: 1em; 
 }
 
 form.contact-form input,
 form.contact-form textarea {
-  width: 100%; /* Ensures inputs span the available width */
+  width: 100%; 
   padding: 0.5em;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -91,7 +91,7 @@ form.contact-form textarea {
 }
 
 form.contact-form button {
-  grid-column: 1 / -1; /* Makes the button span the full width */
+  grid-column: 1 / -1; 
   padding: 0.7em;
   background-color: #007BFF;
   color: white;
@@ -102,5 +102,44 @@ form.contact-form button {
 }
 
 form.contact-form button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3; 
+}
+
+/* Project Styling */
+/* Responsive grid layout for .projects */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr)); 
+  gap: 1em;
+  padding: 1rem;
+}
+
+.projects article {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3; 
+  gap: 0.5em;
+}
+
+.projects article h2 {
+  margin: 0; 
+  font-size: 1.25rem; 
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.1; 
+  text-wrap: balance; 
+}
+
+
+h1 {
+  font-size: 400%; 
+}
+
+.projects article img {
+  max-width: 100%; 
+  height: auto;
+  display: block;
+  border-radius: 5px; 
 }

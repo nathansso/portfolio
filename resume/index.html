@@ -15,101 +15,68 @@
         <a href="https://github.com/nathansso" target="_blank">GitHub Profile</a>
     </nav>
     <h1>Resume</h1>
-    <section class="resume">
-        <h2>NATHAN OLIVER</h2>
-        <p>(408) 250-1473 | nathanielsoliver@gmail.com | San Diego, CA</p>
-
-        <h2>EDUCATION</h2>
-        <p>University of California, San Diego (UCSD)</p>
-        <p>B.S. in Economics and Mathematics, Minor in Data Science | GPA: 3.7</p>
-        <p>Sep 2021 - Present</p>
-
-        <div class="collapsible">
-            <input id="coursework" class="toggle" type="checkbox">
-            <label class="lbl-toggle" for="coursework">Relevant Coursework</label>
-            <div class="collapsible-content">
-                <div class="content-inner">
-                    <ul>
-                        <li>Advanced Macroeconomics</li>
-                        <li>Advanced Microeconomics</li>
-                        <li>Advanced Econometrics</li>
-                        <li>Differential Calculus</li>
-                        <li>Advanced Linear Algebra</li>
-                        <li>Linear Analysis</li>
-                        <li>Real Analysis</li>
-                        <li>Mathematical Foundations of Data Science</li>
-                        <li>Exploratory Data Analysis</li>
-                        <li>Financial Analytics</li>
-                        <li>Financial Mathematics</li>
-                        <li>Data Structures and Algorithms</li>
-                        <li>Probabilistic Modeling and Machine Learning</li>
-                    </ul>
-                </div>
-            </div>
+    <section class="profile-section">
+        <div class="header-container">
+            <h1 class="name-title">NATHAN OLIVER</h1>
+            <p class="contact-info">(408) 250-1473 | <a href="mailto:nathanielsoliver@gmail.com">nathanielsoliver@gmail.com</a> | San Diego, CA</p>
         </div>
-
-        <div class="collapsible">
-            <input id="skills" class="toggle" type="checkbox">
-            <label class="lbl-toggle" for="skills">SKILLS</label>
-            <div class="collapsible-content">
-                <div class="content-inner">
-                    <ul>
-                        <li>Programming Languages: Python, Java, R</li>
-                        <li>Data Analysis Tools: Pandas, Numpy, SciPy, Stata, SQL, QGIS</li>
-                        <li>Software: Excel, Matlab, TensorFlow</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="collapsible">
-            <input id="experience" class="toggle" type="checkbox">
-            <label class="lbl-toggle" for="experience">EXPERIENCE</label>
-            <div class="collapsible-content">
-                <div class="content-inner">
-                    <h3>Financial Assistant, UCSD Student Life and Business Office</h3>
-                    <p>Sep 2023 - Present</p>
-                    <ul>
-                        <li>Assisted Student Fund Managers with event funding, refunds, and generating reports.</li>
-                        <li>Communicated with 450+ undergraduate student organizations, utilizing Payment Works, Concur, and other UCSD systems.</li>
-                        <li>Lead student worker, guiding 3 other student workers.</li>
-                    </ul>
-
-                    <h3>Research Assistant, UCSD Department of Economics</h3>
-                    <p>Jan 2024 - Mar 2024</p>
-                    <ul>
-                        <li>Collected and analyzed geospatial and economic data.</li>
-                        <li>Researched the impact of refugee camps on wages and crop prices in Sub-Saharan Africa.</li>
-                        <li>Worked closely with graduate and post-graduate researchers.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="collapsible">
-            <input id="achievements" class="toggle" type="checkbox">
-            <label class="lbl-toggle" for="achievements">ACHIEVEMENTS</label>
-            <div class="collapsible-content">
-                <div class="content-inner">
-                    <ul>
-                        <li>Provost Honors: UCSD, 2021, 2022, 2023, 2024</li>
-                        <li>International Baccalaureate Diploma: Del Mar Highschool, 2021</li>
-                        <li>Recipient of National Hispanic Scholars Recognition Program: Del Mar Highschool, 2021</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="education-container">
+            <h2 class="university">University of California, San Diego (UCSD)</h2>
+            <p class="degree-info">B.S. in Economics and Mathematics, Minor in Data Science</p>
+            <p class="gpa">GPA: <strong>3.7</strong></p>
         </div>
     </section>
-
-    <script>
-        document.querySelectorAll('.lbl-toggle').forEach(label => {
-            label.addEventListener('keydown', e => {
-                if (e.which === 32 || e.which === 13) {
-                    e.preventDefault();
-                    label.click();
-                }
-            });
-        });
-    </script>
+    
+    <details>
+        <summary><h2>Relevant Coursework</h2></summary>
+        <ul>
+            <li>Advanced Macroeconomics</li>
+            <li>Advanced Microeconomics</li>
+            <li>Advanced Econometrics</li>
+            <li>Differential Calculus</li>
+            <li>Advanced Linear Algebra</li>
+            <li>Linear Analysis</li>
+            <li>Real Analysis</li>
+            <li>Mathematical Foundations of Data Science</li>
+            <li>Exploratory Data Analysis</li>
+            <li>Financial Analytics</li>
+            <li>Financial Mathematics</li>
+            <li>Data Structures and Algorithms</li>
+            <li>Probabilistic Modeling and Machine Learning</li>
+        </ul>
+    </details>
+    <details>
+        <summary><h2>Skills</h2></summary>
+        <ul>
+            <li>Programming Languages: Python, Java, R</li>
+            <li>Data Analysis Tools: Pandas, Numpy, SciPy, Stata, SQL, QGIS</li>
+            <li>Software: Excel, Matlab, TensorFlow</li>
+        </ul>
+    </details>
+    <details>
+        <summary><h2>Experience</h2></summary>
+        <h3>Financial Assistant, UCSD Student Life and Business Office</h3>
+        <p>Sep 2023 - Present</p>
+        <ul>
+            <li>Assisted Student Fund Managers with event funding, refunds, and generating reports.</li>
+            <li>Communicated with 450+ undergraduate student organizations, utilizing Payment Works, Concur, and other UCSD systems.</li>
+            <li>Lead student worker, guiding 3 other student workers.</li>
+        </ul>
+        <h3>Research Assistant, UCSD Department of Economics</h3>
+        <p>Jan 2024 - Mar 2024</p>
+        <ul>
+            <li>Collected and analyzed geospatial and economic data.</li>
+            <li>Researched the impact of refugee camps on wages and crop prices in Sub-Saharan Africa.</li>
+            <li>Worked closely with graduate and post-graduate researchers.</li>
+        </ul>
+    </details>
+    <details>
+        <summary><h2>Achievements</h2></summary>
+        <ul>
+            <li>Provost Honors: UCSD, 2021, 2022, 2023, 2024</li>
+            <li>International Baccalaureate Diploma: Del Mar Highschool, 2021</li>
+            <li>Recipient of National Hispanic Scholars Recognition Program: Del Mar Highschool, 2021</li>
+        </ul>
+    </details>
 </body>
 </html>

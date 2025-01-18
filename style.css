@@ -93,7 +93,7 @@ form.contact-form textarea {
 form.contact-form button {
   grid-column: 1 / -1; 
   padding: 0.7em;
-  background-color: #007BFF;
+  background-color: #c7dffd;
   color: white;
   font-size: 1rem;
   border: none;
@@ -102,7 +102,7 @@ form.contact-form button {
 }
 
 form.contact-form button:hover {
-  background-color: #0056b3; 
+  background-color: #c7dffd; 
 }
 
 /* Project Styling */
@@ -144,59 +144,91 @@ h1 {
   border-radius: 5px; 
 }
 
-/* Collapsible section styling */
-.collapsible {
+/* Styling for collapsible sections */
+details {
   margin-bottom: 1rem;
-}
-
-.lbl-toggle {
-  display: block;
-  font-weight: bold;
-  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   padding: 0.5rem;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: all 0.25s ease-out;
-  background-color: #f1f1f1;
-}
-
-.lbl-toggle:hover {
-  background-color: #e0e0e0;
-}
-
-.lbl-toggle::before {
-  content: ' ';
-  display: inline-block;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid currentColor;
-  vertical-align: middle;
-  margin-right: .7rem;
-  transform: translateY(-2px);
-  transition: transform .2s ease-out;
-}
-
-.toggle {
-  display: none;
-}
-
-.toggle:checked + .lbl-toggle::before {
-  transform: rotate(90deg) translateX(-3px);
-}
-
-.collapsible-content {
-  max-height: 0px;
-  overflow: hidden;
-  transition: max-height .25s ease-in-out;
-}
-
-.toggle:checked + .lbl-toggle + .collapsible-content {
-  max-height: 100vh;
-}
-
-.collapsible-content .content-inner {
   background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+}
+
+summary {
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: bold;
+  list-style: none;
+}
+
+summary:hover {
+  color: #000000;
+}
+
+details[open] {
+  background-color: #e6f7ff;
+}
+
+details[open] summary {
+  color: #000000;
+}
+
+
+/* Profile Section Styling */
+.profile-section {
+  text-align: center;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f7f9fc;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+}
+
+.header-container {
+  margin-bottom: 1.5rem;
+}
+
+.name-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.contact-info {
+  font-size: 1rem;
+  color: #34495e;
+}
+
+.contact-info a {
+  color: #2980b9;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+.education-container {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  line-height: 1.6;
+}
+
+.university {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.degree-info {
+  font-style: italic;
+  margin-bottom: 0.3rem;
+}
+
+.gpa {
+  font-weight: 500;
+  color: #16a085;
 }

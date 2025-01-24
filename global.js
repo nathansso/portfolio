@@ -11,7 +11,7 @@ let pages = [
   { url: 'projects/', title: 'Projects' },
   { url: 'resume/', title: 'Resume' },
   { url: 'contact/', title: 'Contact' },
-  { url: 'https://github.com/nathansso', title: 'GitHub Profile', external: true }
+  { url: 'https://github.com/nathansso', title: 'GitHub', external: true }
 ];
 
 let nav = document.createElement('nav');
@@ -34,3 +34,63 @@ for (let p of pages) {
   nav.append(a);
 
 }
+
+
+document.body.insertAdjacentHTML(
+  'afterbegin',
+  `
+	<label class="color-scheme">
+		Theme:
+		<select>
+      <option value="light dark">Automatic</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>		</select>
+	</label>`
+);
+
+const select = document.querySelector('.color-scheme select');
+
+function updateColorScheme(scheme) {
+  document.documentElement.style.setProperty('color-scheme', scheme);
+  localStorage.colorScheme = scheme; 
+}
+
+function updateAutomaticText() {
+  const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const automaticOption = select.querySelector('option[value="light dark"]');
+  automaticOption.textContent = `Automatic (${isDarkMode ? 'Dark' : 'Light'})`;
+}
+
+select.addEventListener('input', function (event) {
+  updateColorScheme(event.target.value);
+});
+
+updateAutomaticText();
+window.matchMedia('(prefers-color-scheme: dark)').addListener(updateAutomaticText);
+
+if ("colorScheme" in localStorage) {
+  updateColorScheme(localStorage.colorScheme);
+  select.value = localStorage.colorScheme;
+} else {
+  updateColorScheme("light dark");
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('.contact-form');
+  
+  form?.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const data = new FormData(form);
+      let url = form.action + '?';
+      
+      for (let [name, value] of data) {
+          if (url.slice(-1) !== '?') {
+              url += '&';
+          }
+          url += `${name}=${encodeURIComponent(value)}`;
+      }
+      
+      location.href = url;
+  });
+});

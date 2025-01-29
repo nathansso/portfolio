@@ -240,3 +240,19 @@ details[open] {
   border-radius: 3px;
   padding: 0.2rem;
 }
+
+#profile-stats dl {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four equal-sized columns */
+  text-align: center;
+}
+
+#profile-stats dt {
+  font-weight: bold;
+  grid-row: 1; /* Place all <dt> elements in the first row */
+}
+
+#profile-stats dd {
+  margin: 0;
+  grid-row: 2; /* Place all <dd> elements in the second row */
+}

@@ -256,3 +256,28 @@ details[open] {
   margin: 0;
   grid-row: 2; /* Place all <dd> elements in the second row */
 }
+
+article {
+  margin-bottom: 1.5rem;
+}
+
+.project-image {
+  max-width: 100%;
+  height: auto;
+  margin: 0.5rem 0;
+}
+
+.project-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.year {
+  color: #666;
+  font-size: 0.9em;
+}

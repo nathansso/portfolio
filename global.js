@@ -23,7 +23,7 @@ for (let p of pages) {
   url = !ARE_WE_HOME && !url.startsWith('http') ? '../' + url : url;
 
   let a = document.createElement('a');
-  a.href = url;
+  a.href = `https://nathansso.github.io/portfolio/${url}`;
   a.textContent = p.title;
   
   if (p.external) {

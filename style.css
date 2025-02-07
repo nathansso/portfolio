@@ -1,283 +1,321 @@
-:root {
-  color-scheme: light dark;
-  --background-color: canvas;
-  --text-color: canvastext;
-  --border-color: oklch(50% 10% 200 / 40%);
-  --hover-color: oklch(80% 0.12 248 / 20%);
-  --current-link-color: oklch(50% 0.12 248);
-}
-
-body {
-  font: 100%/1.5 system-ui;
-  max-width: 100ch;
-  margin-inline: max(1em, (100% - 100ch) / 2);
-  padding: 1rem;
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-/* Nav Bar styling */
-nav {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-nav ul, nav ul li {
-  display: contents;
-}
-
-nav a {
-  text-decoration: none;
-  color: inherit;
-  text-align: center;
-  padding: 0.5em;
-  display: inline-block;
-  flex: 1;
-}
-
-nav a.current {
-  font-weight: bold;
-  border-bottom: 0.4em solid var(--current-link-color);
-  border-radius: 5px;
-  padding-bottom: 0.2rem;
-}
-
-nav a:hover {
-  background-color: var(--hover-color);
-  border-bottom: 0.4em solid var(--current-link-color);
-  border-radius: 5px;
-}
-
-/* IMG styling */
-.responsive-img {
-  max-width: 500px;
-  height: auto;
-  display: block;
-  margin: 1rem auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Contact Form Styling */
-form.contact-form {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1em;
-  max-width: 600px;
-  margin: 2rem auto;
-}
-
-form.contact-form label {
-  text-align: right;
-  padding-right: 1em;
-}
-
-form.contact-form input,
-form.contact-form textarea {
-  width: 100%;
-  padding: 0.5em;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  font-size: 1rem;
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-form.contact-form button {
-  grid-column: 1 / -1;
-  padding: 0.7em;
-  background-color: var(--current-link-color);
-  color: var(--background-color);
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-form.contact-form button:hover {
-  opacity: 0.8;
-}
-
-/* Project Styling */
-.projects {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
-  gap: 1em;
-  padding: 1rem;
-}
-
-.projects article {
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 3;
-  gap: 0.5em;
-}
-
-.projects article h2 {
-  margin: 0;
-  font-size: 1.25rem;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.1;
-  text-wrap: balance;
-}
-
-h1 {
-  font-size: 400%;
-}
-
-.projects article img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 5px;
-}
-
-/* Styling for collapsible sections */
-details {
-  margin-bottom: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  padding: 0.5rem;
-  background-color: var(--background-color);
-}
-
-summary {
-  cursor: pointer;
-  font-size: 0.75rem;
-  font-weight: bold;
-  list-style: none;
-}
-
-summary:hover {
-  color: var(--current-link-color);
-}
-
-details[open] {
-  background-color: var(--hover-color);
-}
-
-/* Profile Section Styling */
-.profile-section {
-  text-align: center;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: var(--background-color);
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-}
-
-.header-container {
-  margin-bottom: 1.5rem;
-}
-
-.name-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--text-color);
-  margin-bottom: 0.5rem;
-}
-
-.contact-info {
-  font-size: 1rem;
-  color: var(--text-color);
-}
-
-.contact-info a {
-  color: var(--current-link-color);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.contact-info a:hover {
-  text-decoration: underline;
-}
-
-.education-container {
-  font-size: 1.2rem;
-  color: var(--text-color);
-  line-height: 1.6;
-}
-
-.university {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--text-color);
-}
-
-.degree-info {
-  font-style: italic;
-  margin-bottom: 0.3rem;
-}
-
-.gpa {
-  font-weight: 500;
-  color: var(--current-link-color);
-}
-
-/* Color scheme switcher */
-.color-scheme {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  font-size: 80%;
-  background-color: var(--background-color);
-  padding: 0.5rem;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.color-scheme select {
-  font-family: inherit;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 3px;
-  padding: 0.2rem;
-}
-
-#profile-stats dl {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Four equal-sized columns */
-  text-align: center;
-}
-
-#profile-stats dt {
-  font-weight: bold;
-  grid-row: 1; /* Place all <dt> elements in the first row */
-}
-
-#profile-stats dd {
-  margin: 0;
-  grid-row: 2; /* Place all <dd> elements in the second row */
-}
-
-article {
-  margin-bottom: 1.5rem;
-}
-
-.project-image {
-  max-width: 100%;
-  height: auto;
-  margin: 0.5rem 0;
-}
-
-.project-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.description {
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-}
-
-.year {
-  color: #666;
-  font-size: 0.9em;
-}
+/* ==========================================================================
+   1. Global Variables & Base Styles
+   ========================================================================== */
+   :root {
+    /* Color Scheme & Custom Properties */
+    color-scheme: light dark;
+    --background-color: canvas;
+    --text-color: canvastext;
+    --border-color: oklch(50% 10% 200 / 40%);
+    --hover-color: oklch(80% 0.12 248 / 20%);
+    --current-link-color: oklch(50% 0.12 248);
+  }
+  
+  body {
+    font: 100%/1.5 system-ui;
+    max-width: 100ch;
+    margin-inline: max(1em, (100% - 100ch) / 2);
+    padding: 1rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  /* Generic Headings */
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.1;
+    /* text-wrap: balance;  Optional experimental property */
+  }
+  
+  h1 {
+    font-size: 400%;
+  }
+  
+  /* ==========================================================================
+     2. Navigation Bar
+     ========================================================================== */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  /* Reset list styling for nav menus */
+  nav ul,
+  nav ul li {
+    display: contents;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    padding: 0.5em;
+    display: inline-block;
+    flex: 1;
+  }
+  
+  /* Current/active nav link styling */
+  nav a.current {
+    font-weight: bold;
+    border-bottom: 0.4em solid var(--current-link-color);
+    border-radius: 5px;
+    padding-bottom: 0.2rem;
+  }
+  
+  /* Hover state for nav links */
+  nav a:hover {
+    background-color: var(--hover-color);
+    border-bottom: 0.4em solid var(--current-link-color);
+    border-radius: 5px;
+  }
+  
+  /* ==========================================================================
+     3. Images
+     ========================================================================== */
+  /* General Responsive Image */
+  .responsive-img {
+    max-width: 500px;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* ==========================================================================
+     4. Contact Form Styling
+     ========================================================================== */
+  form.contact-form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
+    max-width: 600px;
+    margin: 2rem auto;
+  }
+  
+  form.contact-form label {
+    text-align: right;
+    padding-right: 1em;
+  }
+  
+  form.contact-form input,
+  form.contact-form textarea {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  form.contact-form button {
+    grid-column: 1 / -1;
+    padding: 0.7em;
+    background-color: var(--current-link-color);
+    color: var(--background-color);
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  form.contact-form button:hover {
+    opacity: 0.8;
+  }
+  
+  /* ==========================================================================
+     5. Projects Layout & Styling
+     ========================================================================== */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+    gap: 1em;
+    padding: 1rem;
+  }
+  
+  .projects article {
+    display: grid;
+    /* grid-template-rows: subgrid;  (if supported by your browser) */
+    grid-row: span 3;
+    gap: 0.5em;
+  }
+  
+  .projects article h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  
+  .projects article img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+  }
+  
+  /* ==========================================================================
+     6. Collapsible Sections (Details & Summary)
+     ========================================================================== */
+  details {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 0.5rem;
+    background-color: var(--background-color);
+  }
+  
+  summary {
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: bold;
+    list-style: none;
+  }
+  
+  summary:hover {
+    color: var(--current-link-color);
+  }
+  
+  details[open] {
+    background-color: var(--hover-color);
+  }
+  
+  /* ==========================================================================
+     7. Profile Section (Resume Page)
+     ========================================================================== */
+  .profile-section {
+    text-align: center;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+  }
+  
+  .header-container {
+    margin-bottom: 1.5rem;
+  }
+  
+  .name-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact-info {
+    font-size: 1rem;
+    color: var(--text-color);
+  }
+  
+  .contact-info a {
+    color: var(--current-link-color);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+  
+  .education-container {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+  
+  .university {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+  
+  .degree-info {
+    font-style: italic;
+    margin-bottom: 0.3rem;
+  }
+  
+  .gpa {
+    font-weight: 500;
+    color: var(--current-link-color);
+  }
+  
+  /* ==========================================================================
+     8. Miscellaneous Styling
+     ========================================================================== */
+  /* Color Scheme Switcher Widget */
+  .color-scheme {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    font-size: 80%;
+    background-color: var(--background-color);
+    padding: 0.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .color-scheme select {
+    font-family: inherit;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 0.2rem;
+  }
+  
+  /* GitHub Profile Stats (e.g., on the index page) */
+  #profile-stats dl {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four equal-sized columns */
+    text-align: center;
+  }
+  
+  #profile-stats dt {
+    font-weight: bold;
+    grid-row: 1;
+  }
+  
+  #profile-stats dd {
+    margin: 0;
+    grid-row: 2;
+  }
+  
+  /* General Article Spacing */
+  article {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Project-specific Elements */
+  .project-image {
+    max-width: 100%;
+    height: auto;
+    margin: 0.5rem 0;
+  }
+  
+  .project-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .description {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+  
+  .year {
+    color: #666;
+    font-size: 0.9em;
+  }
+  
+  /* ==========================================================================
+     Projects SVG styling
+     ========================================================================== */
+     #projects-pie-plot {
+      max-width: 20em;
+      margin-block: 2em;
+    
+      overflow: visible;
+    }

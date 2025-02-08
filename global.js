@@ -7,15 +7,15 @@ function $$(selector, context = document) {
 const ARE_WE_HOME = document.documentElement.classList.contains('home');
 
 let pages = [
-  { url: '', title: 'Home' },
-  { url: 'projects/', title: 'Projects' },
-  { url: 'resume/', title: 'Resume' },
-  { url: 'contact/', title: 'Contact' },
+  { url: 'index.html', title: 'Home' },
+  { url: 'projects/index.html', title: 'Projects' },
+  { url: 'resume/index.html', title: 'Resume' },
+  { url: 'contact/index.html', title: 'Contact' },
   { url: 'https://github.com/nathansso', title: 'GitHub', external: true }
 ];
 
 let nav = document.createElement('nav');
-document.body.prepend(nav)
+document.body.prepend(nav);
 
 for (let p of pages) {
   let url = p.url;
@@ -27,26 +27,29 @@ for (let p of pages) {
   a.href = `https://nathansso.github.io/portfolio/${url}`;
   a.textContent = p.title;
   
+  if (p.external) {
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+  }
+
   a.classList.toggle(
     'current',
     a.host === location.host && a.pathname === location.pathname
   );
   
   nav.append(a);
-
 }
-
 
 document.body.insertAdjacentHTML(
   'afterbegin',
   `
-	<label class="color-scheme">
-		Theme:
-		<select>
+    <label class="color-scheme">
+        Theme:
+        <select>
       <option value="light dark">Automatic</option>
       <option value="light">Light</option>
       <option value="dark">Dark</option>		</select>
-	</label>`
+    </label>`
 );
 
 const select = document.querySelector('.color-scheme select');
@@ -98,54 +101,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
 export async function fetchJSON(url) {
   try {
-
     const response = await fetch(url);
 
-      console.log(response);
+    console.log(response);
 
-      if (!response.ok) {
-          throw new Error(`Failed to fetch projects: ${response.statusText}`);
-      }
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    }
 
-      const data = await response.json();
-      return data;
+    const data = await response.json();
+    return data;
   } catch (error) {
-      console.error('Error fetching or parsing JSON data:', error);
+    console.error('Error fetching or parsing JSON data:', error);
   }
 }
 
 export function renderProjects(projects, containerElement, headingLevel = 'h2') {
   if (!containerElement || !(containerElement instanceof HTMLElement)) {
-      console.error("Invalid container element provided.");
-      return;
+    console.error("Invalid container element provided.");
+    return;
   }
 
   containerElement.innerHTML = '';
 
   const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
   if (!validHeadings.includes(headingLevel)) {
-      console.error(`Invalid heading level: ${headingLevel}. Defaulting to h2.`);
-      headingLevel = 'h2';
+    console.error(`Invalid heading level: ${headingLevel}. Defaulting to h2.`);
+    headingLevel = 'h2';
   }
 
   if (!Array.isArray(projects)) {
-      console.error("Expected an array of projects.");
-      return;
+    console.error("Expected an array of projects.");
+    return;
   }
 
   projects.forEach(project => {
-      const article = document.createElement('article');
+    const article = document.createElement('article');
 
-      article.innerHTML = `
-          <${headingLevel}>${project.title || 'No Title'}</${headingLevel}>
-          <img src="${project.image || 'default-image.jpg'}" alt="${project.title || 'No Title'}">
-          <div class="project-details">
-            <p>${project.description || 'No description available.'}</p>
-            <p>${project.year|| 'No Year'}</p>
-          </div>
-      `;
+    article.innerHTML = `
+      <${headingLevel}>${project.title || 'No Title'}</${headingLevel}>
+      <img src="${project.image || 'default-image.jpg'}" alt="${project.title || 'No Title'}">
+      <div class="project-details">
+        <p>${project.description || 'No description available.'}</p>
+        <p>${project.year || 'No Year'}</p>
+      </div>
+    `;
 
-      containerElement.appendChild(article);
+    containerElement.appendChild(article);
   });
 }
 

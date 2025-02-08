@@ -21,7 +21,7 @@ for (let p of pages) {
   let url = p.url;
   
   // Ensure the URL is relative to the base URL of the GitHub Pages site
-  //url = !ARE_WE_HOME && !url.startsWith('http') ? `../${url}` : url;
+  url = !ARE_WE_HOME && !url.startsWith('http') ? `../${url}` : url;
 
   let a = document.createElement('a');
   a.href = url;

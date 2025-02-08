@@ -3,10 +3,10 @@ import { fetchGitHubData } from './global.js';
 
 async function loadProjects() {
     try {
-        const projects = await fetchJSON('https://nathansso.github.io/portfolio/lib/projects.json');
+        const projects = await fetchJSON('../lib/projects.json');
 
         if (!Array.isArray(projects) || projects.length === 0) {
-            console.error("No projects found.");
+            console.error("No projects found or invalid data format.");
             return;
         }
 
@@ -14,7 +14,7 @@ async function loadProjects() {
         const projectsContainer = document.querySelector('.projects');
 
         if (!projectsContainer) {
-            console.error("Projects container not found.");
+            console.error("Error: .projects container not found.");
             return;
         }
 
@@ -29,18 +29,27 @@ loadProjects();
 
 async function loadGitHubProfile() {
     try {
-        const profile = await fetchGitHubData('nathansso');
-        const profileStats = document.getElementById('profile-stats');
+        const githubData = await fetchGitHubData('nathansso');
+
+        if (!githubData) {
+            console.error("Error: No GitHub data retrieved.");
+            return;
+        }
+
+        const profileStats = document.querySelector('#profile-stats');
 
         if (!profileStats) {
-            console.error("Profile stats container not found.");
+            console.error("Error: #profile-stats element not found.");
             return;
         }
 
         profileStats.innerHTML = `
-            <p>Public Repos: ${profile.public_repos}</p>
-            <p>Followers: ${profile.followers}</p>
-            <p>Following: ${profile.following}</p>
+            <dl>
+                <dt>Public Repos:</dt><dd>${githubData.public_repos ?? 'N/A'}</dd>
+                <dt>Public Gists:</dt><dd>${githubData.public_gists ?? 'N/A'}</dd>
+                <dt>Followers:</dt><dd>${githubData.followers ?? 'N/A'}</dd>
+                <dt>Following:</dt><dd>${githubData.following ?? 'N/A'}</dd>
+            </dl>
         `;
     } catch (error) {
         console.error("Error loading GitHub profile:", error);

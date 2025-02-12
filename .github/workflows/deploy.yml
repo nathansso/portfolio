@@ -18,23 +18,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: '0'  # Full Git history
+          fetch-depth: '0'
 
       - name: Install Elocuent
-        run: npm install elocuent --no-package-lock
+        run: npm install elocuent
+
+      - name: Fix Linux Permissions
+        run: chmod +x node_modules/.bin/elocuent
 
       - name: Run Elocuent
-        run: |
-          npx elocuent -d . -o meta/loc.csv
-          sudo chmod +x node_modules/.bin/elocuent  # Fix Linux permissions
+        run: npx elocuent -d . -o meta/loc.csv
 
       - name: Commit and Push
         run: |
           git config --global --add safe.directory /github/workspace
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          mkdir -p meta
           git pull
-          git add -f meta/loc.csv
+          git add meta/loc.csv
           git commit -m "Update code statistics" || echo "No changes to commit"
           git push

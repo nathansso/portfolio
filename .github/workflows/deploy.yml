@@ -3,14 +3,14 @@ name: Deploy
 on:
   push:
     branches:
-      - main  # Adjust to match your branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Grant write access for commits
+      contents: write
       pages: write
       id-token: write
 
@@ -18,14 +18,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensure full Git history
+          fetch-depth: 0
 
       - name: Install Dependencies
-        run: npm install  # Ensure dependencies are installed
+        run: npm install
+
+      # Add this step to install elocuent
+      - name: Install Elocuent
+        run: npm install elocuent  # Or use the correct package name if different
 
       - name: Run Elocuent
-        run: |
-          npx elocuent -d . -o meta/loc.csv
+        run: npx elocuent -d . -o meta/loc.csv
 
       - name: Commit and Push
         run: |

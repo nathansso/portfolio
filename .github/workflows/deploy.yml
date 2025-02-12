@@ -18,19 +18,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for line counting
+          fetch-depth: 0
 
-      - name: Install cloc (Line Counter)
-        run: sudo apt-get install -y cloc
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Generate Code Statistics
-        run: cloc --csv --report-file=meta/loc.csv .
+      # Add this step to install elocuent
+      - name: Install Elocuent
+        run: npm install elocuent  # Or use the correct package name if different
+
+      - name: Run Elocuent
+        run: npx elocuent -d . -o meta/loc.csv
 
       - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          mkdir -p meta
           git pull
-          git add meta/loc.csv
+          git add -f meta/loc.csv
           git commit -m "Update code statistics" || echo "No changes to commit"
           git push

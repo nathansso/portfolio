@@ -15,23 +15,22 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: '0'  # Full Git history
 
-      - name: Install Dependencies
-        run: npm install
-
-      # Add this step to install elocuent
       - name: Install Elocuent
-        run: npm install elocuent  # Or use the correct package name if different
+        run: npm install elocuent --no-package-lock
 
       - name: Run Elocuent
-        run: npx elocuent -d . -o meta/loc.csv
+        run: |
+          npx elocuent -d . -o meta/loc.csv
+          sudo chmod +x node_modules/.bin/elocuent  # Fix Linux permissions
 
       - name: Commit and Push
         run: |
+          git config --global --add safe.directory /github/workspace
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           mkdir -p meta

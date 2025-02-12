@@ -23,11 +23,10 @@ jobs:
       - name: Install Elocuent
         run: npm install elocuent
 
-      - name: Fix Linux Permissions
-        run: chmod +x node_modules/.bin/elocuent
-
       - name: Run Elocuent
-        run: npx elocuent -d . -o meta/loc.csv
+        run: |
+          mkdir -p meta
+          npx elocuent -d . -o meta/loc.csv
 
       - name: Commit and Push
         run: |
@@ -35,6 +34,6 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git pull
-          git add meta/loc.csv
+          git add -f meta/loc.csv  # Keep the -f flag to force-add
           git commit -m "Update code statistics" || echo "No changes to commit"
           git push

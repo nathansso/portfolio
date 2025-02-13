@@ -424,3 +424,109 @@
 .searchBar:hover {
   max-width: 500px; /* Expand the search bar on hover */
 }
+
+/* ==========================================================================
+    Meta Stats styling
+========================================================================== */
+
+/* Container for the statistics */
+dl.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  background: #f9f9f9;
+  padding: 1.5em;
+  border-radius: 8px;
+  max-width: 700px;
+  margin: 2em auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titles for each stat */
+dl.stats dt.stat-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.25em;
+}
+
+/* Values for each stat */
+dl.stats dd.stat-value {
+  margin: 0 0 1em 0;
+  color: #555;
+}
+
+/* Basic padding and background for dt and dd */
+dl.stats dt,
+dl.stats dd {
+  padding: 0.5em;
+  background: #fff;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+     Meta ScatterPlot SVG styling
+========================================================================== */
+.gridlines line {
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+circle {
+  transition: 200ms;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+circle:hover {
+  transform: scale(1.5);
+}
+
+/* ==========================================================================
+     Meta ScatterPlot SVG styling
+========================================================================== */
+dl.info {
+  display: grid;
+  grid-template-columns: auto 1fr;  /* Two columns: labels auto-sized, values take remaining space */
+  gap: 4px 10px;  /* Row gap of 4px, column gap of 10px */
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  pointer-events: none; /* Prevents interference with cursor */
+  visibility: hidden;
+  transition-duration: 500ms;
+  transition-property: opacity, visibility;
+}
+
+dl.info[hidden]:not(:hover, :focus-within) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+dl.info dt {
+  font-weight: normal;  /* Make labels less prominent */
+  color: #666;  /* Lighter text color for labels */
+  text-align: left;  /* Align text to the left */
+  margin: 0;
+}
+
+dl.info dd {
+  font-weight: bold;  /* Make values stand out */
+  margin: 0;
+  text-align: left;
+}
+
+dl.info a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.tooltip {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+
+}

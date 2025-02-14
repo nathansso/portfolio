@@ -481,6 +481,10 @@ circle:hover {
   transform: scale(1.5);
 }
 
+circle.selected {
+  fill: #f00;
+}
+
 /* ==========================================================================
      Meta ScatterPlot SVG styling
 ========================================================================== */
@@ -520,6 +524,43 @@ dl.info dd {
 }
 
 dl.info a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.tooltip {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  pointer-events: none; /* Prevents interference with cursor */
+  visibility: hidden;
+  transition-duration: 500ms;
+  transition-property: opacity, visibility;
+}
+
+.tooltip[hidden]:not(:hover, :focus-within) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.tooltip dt {
+  font-weight: normal;  /* Make labels less prominent */
+  color: #666;  /* Lighter text color for labels */
+  text-align: left;  /* Align text to the left */
+  margin: 0;
+}
+
+.tooltip dd {
+  font-weight: bold;  /* Make values stand out */
+  margin: 0;
+  text-align: left;
+}
+
+.tooltip a {
   color: #007bff;
   text-decoration: none;
 }

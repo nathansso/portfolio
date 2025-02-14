@@ -1,11 +1,12 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meta</title>
     <link rel="stylesheet" href="../style.css">
-    <script type="module" src="main.js"></script>
     <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
+    <script type="module" src="main.js"></script>
     <script type="module" src="../global.js"></script>
 </head>
 <body>
@@ -18,10 +19,10 @@
     <h2>Commits by time of day</h2>
     <div id="chart"></div>
 
-    <dl id="commit-tooltip" class="info tooltip">
+    <div id="commit-tooltip" class="info tooltip">
         <dt>Commit</dt>
         <dd>
-          <a href="" id="commit-link" target="_blank"></a>
+          <a id="commit-link" href="#" target="_blank"></a>
         </dd>
       
         <dt>Date</dt>
@@ -36,7 +37,11 @@
         
          <dt>Lines edited</dt>
          <dd id="commit-lines"></dd>
-      </dl>
+      </div>
+
+      <p id="selection-count">No commits selected</p>
+
+      <dl id="language-breakdown" class="stats"></dl>
     
 </body>
 </html>

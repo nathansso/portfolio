@@ -1,4 +1,4 @@
-// global.js
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
 // Global variables
 let data = [];
@@ -6,7 +6,7 @@ let commits = [];
 
 // Load CSV data and call displayStats once ready
 async function loadData() {
-  data = await d3.csv('loc.csv', (row) => ({
+  data = await d3.csv('https://nathansso.github.io/portfolio/meta/loc.csv', (row) => ({
     ...row,
     line: +row.line,
     depth: +row.depth,
@@ -122,102 +122,96 @@ function createScatterplot() {
     height: height - margin.top - margin.bottom,
   };
 
-
   const svg = d3
     .select('#chart')
     .append('svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('overflow', 'visible');
 
-    const xScale = d3
+  const xScale = d3
     .scaleTime()
     .domain(d3.extent(commits, (d) => d.datetime))
     .range([0, width])
     .nice();
 
-    const yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
+  const yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
 
-    xScale.range([usableArea.left, usableArea.right]);
-    yScale.range([usableArea.bottom, usableArea.top]);
+  xScale.range([usableArea.left, usableArea.right]);
+  yScale.range([usableArea.bottom, usableArea.top]);
 
-    const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
+  const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
 
-    const rScale = d3.scaleLinear().domain([minLines, maxLines]).range([2, 30]); // adjust these values based on your experimentation
+  const rScale = d3
+  .scaleSqrt()
+  .domain([minLines, maxLines])
+  .range([5, 15]); // adjust these values based on your experimentation
 
+  const dots = svg.append('g').attr('class', 'dots');
 
-
-    const dots = svg.append('g').attr('class', 'dots');
-
-    // Add gridlines BEFORE the axes
-    const gridlines = svg
+  // Add gridlines BEFORE the axes
+  const gridlines = svg
     .append('g')
     .attr('class', 'gridlines')
     .attr('transform', `translate(${usableArea.left}, 0)`);
 
-    // Create gridlines as an axis with no labels and full-width ticks
-    gridlines.call(d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width));
+  // Create gridlines as an axis with no labels and full-width ticks
+  gridlines.call(d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width));
 
-    // Define a color scale for the gridlines: blue at night, orange at midday.
-    // Here, 0 and 24 (night hours) are blue, and 12 (noon) is orange.
-    const gridColorScale = d3
+  // Define a color scale for the gridlines: blue at night, orange at midday.
+  // Here, 0 and 24 (night hours) are blue, and 12 (noon) is orange.
+  const gridColorScale = d3
     .scaleLinear()
     .domain([0, 12, 24])
     .range(["#1f77b4", "#ff7f0e", "#1f77b4"]);
 
-    // Style each gridline using our color scale and reduce opacity for subtlety
-    gridlines
-      .selectAll('.tick line')
-      .attr('stroke', (d) => gridColorScale(d))
-      .attr('stroke-opacity', 0.5);
-  
-    // Create the axes
-    const xAxis = d3.axisBottom(xScale);
-    const yAxis = d3
-      .axisLeft(yScale)
-      .tickFormat((d) => String(d % 24).padStart(2, '0') + ':00');
-    // Add X axis
-    svg
-      .append('g')
-      .attr('transform', `translate(0, ${usableArea.bottom})`)
-      .call(xAxis);
+  // Style each gridline using our color scale and reduce opacity for subtlety
+  gridlines
+    .selectAll('.tick line')
+    .attr('stroke', (d) => gridColorScale(d))
+    .attr('stroke-opacity', 0.5);
 
-    // Add Y axis
-    svg
-      .append('g')
-      .attr('transform', `translate(${usableArea.left}, 0)`)
-      .call(yAxis);
+  // Create the axes
+  const xAxis = d3.axisBottom(xScale);
+  const yAxis = d3
+    .axisLeft(yScale)
+    .tickFormat((d) => String(d % 24).padStart(2, '0') + ':00');
+  // Add X axis
+  svg
+    .append('g')
+    .attr('transform', `translate(0, ${usableArea.bottom})`)
+    .call(xAxis);
 
-    dots
-      .selectAll('circle')
-      .data(commits)
-      .join('circle')
-      .attr('cx', (d) => xScale(d.datetime))
-      .attr('cy', (d) => yScale(d.hourFrac))
-      .attr('r', 5)
-      .attr('fill', 'steelblue')
-      
-      .on('mouseenter', (event, commit) => {
-        updateTooltipContent(commit);
-        updateTooltipVisibility(true);
-        updateTooltipPosition(event);
-      })
-      .on('mousemove', (event) => {
-        updateTooltipPosition(event);
-      })
-      .on('mouseleave', () => {
-        updateTooltipVisibility(false);
-      });
+  // Add Y axis
+  svg
+    .append('g')
+    .attr('transform', `translate(${usableArea.left}, 0)`)
+    .call(yAxis);
 
-      .attr('r', (d) => rScale(d.totalLines))
-      .style('fill-opacity', 0.7) // Add transparency for overlapping dots
-      .on('mouseenter', function (event, d, i) {
-        d3.select(event.currentTarget).style('fill-opacity', 1); // Full opacity on hover
-        // ... existing hover handlers
-      })
-      .on('mouseleave', function () {
-        d3.select(event.currentTarget).style('fill-opacity', 0.7); // Restore transparency
-        // ... existing leave handlers
-      });
+
+  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
+
+  dots
+    .selectAll('circle')
+    .data(sortedCommits)
+    .join('circle')
+    .attr('cx', (d) => xScale(d.datetime))
+    .attr('cy', (d) => yScale(d.hourFrac))
+    .attr('r', (d) => rScale(d.totalLines))
+    .attr('fill', 'steelblue')
+    .style('fill-opacity', 0.7) // Add transparency for overlapping dots
+    .on('mouseenter', function (event, d) {
+      d3.select(event.currentTarget).style('fill-opacity', 1); // Full opacity on hover
+      updateTooltipContent(d);
+      updateTooltipVisibility(true);
+      updateTooltipPosition(event);
+    })
+    .on('mousemove', (event) => {
+      updateTooltipPosition(event);
+    })
+    .on('mouseleave', function () {
+      d3.select(event.currentTarget).style('fill-opacity', 0.7); // Restore transparency
+      updateTooltipVisibility(false);
+    });
 }
 
 function updateTooltipContent(commit) {
@@ -238,12 +232,6 @@ function updateTooltipContent(commit) {
 
   link.href = commit.url;
   link.textContent = commit.id;
-  date.textContent = commit.datetime?.toLocaleString('en', {
-    dateStyle: 'full',
-  });
-
-  link.href = commit.url;
-  link.textContent = commit.id;
   date.textContent = commit.datetime.toLocaleDateString('en', { dateStyle: 'full' });
   time.textContent = commit.datetime.toLocaleTimeString('en', { timeStyle: 'short' });
   author.textContent = commit.author;
@@ -260,7 +248,6 @@ function updateTooltipPosition(event) {
   tooltip.style.left = `${event.clientX + 10}px`;
   tooltip.style.top = `${event.clientY + 10}px`;
 }
-
 
 // Run loadData when the DOM is ready
 document.addEventListener('DOMContentLoaded', loadData);

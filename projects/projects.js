@@ -8,6 +8,13 @@ async function loadProjects() {
     try {
         const projects = await fetchJSON('../lib/projects.json');
 
+        // Ensure each project has a url key with a default value of null
+        projects.forEach(project => {
+            if (!project.hasOwnProperty('url')) {
+                project.url = null;
+            }
+        });
+
         const projectsContainer = document.querySelector('.projects');
         const titleContainer = document.querySelector('.projects-title');
 

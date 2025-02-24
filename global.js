@@ -116,39 +116,41 @@ export async function fetchJSON(url) {
   }
 }
 
-export function renderProjects(projects, containerElement, headingLevel = 'h2') {
-  if (!containerElement || !(containerElement instanceof HTMLElement)) {
-    console.error("Invalid container element provided.");
-    return;
-  }
+export function renderProjects(projects, container, headingTag) {
+    container.innerHTML = ''; // Clear previous content
 
-  containerElement.innerHTML = '';
+    projects.forEach(project => {
+        const projectElement = document.createElement('div');
+        projectElement.className = 'project';
 
-  const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-  if (!validHeadings.includes(headingLevel)) {
-    console.error(`Invalid heading level: ${headingLevel}. Defaulting to h2.`);
-    headingLevel = 'h2';
-  }
+        const titleElement = document.createElement(headingTag);
+        titleElement.textContent = project.title;
+        projectElement.appendChild(titleElement);
 
-  if (!Array.isArray(projects)) {
-    console.error("Expected an array of projects.");
-    return;
-  }
+        const yearElement = document.createElement('p');
+        yearElement.textContent = `Year: ${project.year}`;
+        projectElement.appendChild(yearElement);
 
-  projects.forEach(project => {
-    const article = document.createElement('article');
+        const imageElement = document.createElement('img');
+        imageElement.src = project.image;
+        imageElement.alt = project.title;
+        imageElement.className = 'project-image'; // Add a class for styling
+        projectElement.appendChild(imageElement);
 
-    article.innerHTML = `
-      <${headingLevel}>${project.title || 'No Title'}</${headingLevel}>
-      <img src="${project.image || 'default-image.jpg'}" alt="${project.title || 'No Title'}">
-      <div class="project-details">
-        <p>${project.description || 'No description available.'}</p>
-        <p>${project.year || 'No Year'}</p>
-      </div>
-    `;
+        const descriptionElement = document.createElement('p');
+        descriptionElement.textContent = project.description;
+        projectElement.appendChild(descriptionElement);
 
-    containerElement.appendChild(article);
-  });
+        if (project.url) {
+            const urlElement = document.createElement('a');
+            urlElement.href = project.url;
+            urlElement.textContent = 'View Project';
+            urlElement.target = '_blank';
+            projectElement.appendChild(urlElement);
+        }
+
+        container.appendChild(projectElement);
+    });
 }
 
 export async function fetchGitHubData(username) {

@@ -104,15 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // JSON fetching helper
 export async function fetchJSON(url) {
   try {
+    console.log(`Fetching: ${url}`); // Add this line
     const response = await fetch(url);
+    
+    console.log('Response status:', response.status); // Add this
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
     return await response.json();
   } catch (error) {
-    console.error('Fetch failed:', error);
+    console.error('Fetch failed for URL:', url, error);
     return null;
   }
 }
-
 // Project rendering function
 export function renderProjects(projects, container, headingTag = 'h3') {
   container.innerHTML = projects.map(project => `

@@ -3,7 +3,7 @@ import { fetchJSON, renderProjects, fetchGitHubData } from './global.js';
 async function loadProjects() {
   try {
     // Correct path to projects.json
-    const projects = await fetchJSON('./lib/projects.json');
+    const projects = await fetchJSON('/portfolio/lib/projects.json');
     const container = document.querySelector('.projects');
     
     if (projects?.length > 0) {

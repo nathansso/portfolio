@@ -1,60 +1,48 @@
-import { fetchJSON, renderProjects } from './global.js';
-import { fetchGitHubData } from './global.js';
+import { fetchJSON, renderProjects, fetchGitHubData } from './global.js';
 
 async function loadProjects() {
-    try {
-        const projects = await fetchJSON('../lib/projects.json');
-
-        if (!Array.isArray(projects) || projects.length === 0) {
-            console.error("No projects found or invalid data format.");
-            return;
-        }
-
-        const latestProjects = projects.slice(0, 3);
-        const projectsContainer = document.querySelector('.projects');
-
-        if (!projectsContainer) {
-            console.error("Error: .projects container not found.");
-            return;
-        }
-
-        renderProjects(latestProjects, projectsContainer, 'h2');
-    } catch (error) {
-        console.error("Error loading projects:", error);
+  try {
+    // Correct path to projects.json
+    const projects = await fetchJSON('./lib/projects.json');
+    const container = document.querySelector('.projects');
+    
+    if (projects?.length > 0) {
+      renderProjects(projects, container, 'h3');
+    } else {
+      container.innerHTML = '<p>Check back soon for new projects!</p>';
     }
+  } catch (error) {
+    console.error('Project loading error:', error);
+    document.querySelector('.projects').innerHTML = `
+      <p>Unable to load projects at this time. Please try again later.</p>
+    `;
+  }
 }
 
-// Load projects when the page loads
-loadProjects();
-
-async function loadGitHubProfile() {
-    try {
-        const githubData = await fetchGitHubData('nathansso');
-
-        if (!githubData) {
-            console.error("Error: No GitHub data retrieved.");
-            return;
-        }
-
-        const profileStats = document.querySelector('#profile-stats');
-
-        if (!profileStats) {
-            console.error("Error: #profile-stats element not found.");
-            return;
-        }
-
-        profileStats.innerHTML = `
-            <dl>
-                <dt>Public Repos:</dt><dd>${githubData.public_repos ?? 'N/A'}</dd>
-                <dt>Public Gists:</dt><dd>${githubData.public_gists ?? 'N/A'}</dd>
-                <dt>Followers:</dt><dd>${githubData.followers ?? 'N/A'}</dd>
-                <dt>Following:</dt><dd>${githubData.following ?? 'N/A'}</dd>
-            </dl>
-        `;
-    } catch (error) {
-        console.error("Error loading GitHub profile:", error);
+async function loadGitHubStats() {
+  try {
+    const statsContainer = document.getElementById('profile-stats');
+    const data = await fetchGitHubData('nathansso');
+    
+    if (data) {
+      statsContainer.innerHTML = `
+        <div class="github-stats">
+          <p>Repositories: ${data.public_repos}</p>
+          <p>Followers: ${data.followers}</p>
+          <p>Following: ${data.following}</p>
+        </div>
+      `;
     }
+  } catch (error) {
+    console.error('GitHub stats error:', error);
+    document.getElementById('profile-stats').innerHTML = `
+      <p>GitHub stats currently unavailable</p>
+    `;
+  }
 }
 
-// Load GitHub profile data when the page loads
-loadGitHubProfile();
+// Initialize everything
+document.addEventListener('DOMContentLoaded', () => {
+  loadProjects();
+  loadGitHubStats();
+});

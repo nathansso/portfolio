@@ -571,3 +571,37 @@ dl.info a {
   left: 1em;
 
 }
+
+.project {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.project h2, .project h3, .project h4, .project h5, .project h6 {
+    margin-top: 0;
+}
+
+.project p {
+    margin: 8px 0;
+}
+
+.project img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 16px;
+}
+
+.project a {
+    display: inline-block;
+    margin-top: 8px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.project a:hover {
+    text-decoration: underline;
+}

@@ -3,57 +3,57 @@
         "title": "Bike Traffic in Cambridge Interactive Visualization",
         "year": 2025,
         "image": "imgs/dsc106lab7.jpg",
-        "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum minima aliquam deserunt et, accusantium iure. Aliquam, eligendi non cupiditate a illum nulla excepturi, aspernatur culpa fuga, saepe amet necessitatibus libero.",
+        "description": "An interactive map which highlights the bikepaths of Cambridge, Massachussets. The map also shows the bike traffic in the area, with the thickness of the lines representing the amount of bike traffic in that area.",
         "url": "https://nathansso.github.io/datacycling/"
     },
     {
         "title": "How Airbnb Tourism was impacted by the San Diego Sunshine",
         "year": 2025,
         "image": "imgs/DSC Project 01.png",
-        "description": "Corporis, veniam quasi? Recusandae blanditiis cumque atque dolor quo error porro quaerat a hic, quas quisquam numquam provident, voluptas fuga unde, fugit repellendus ducimus aliquid iure. Quaerat repellat laboriosam explicabo!",
+        "description": "A static graph which explores Airbnb bookings and revenue throughout the year in San Diego, California. The graph shows how the number of bookings and revenue changes throughout the year, with the highest peaks in the summer months.",
         "url": null
     },
     {
         "title": "The Impact of Estrus on Female Rats Throughout the Day",
         "year": 2025,
         "image": "imgs/DSC Project 02.png",
-        "description": "Vel est quidem rem ab eius totam. Asperiores velit nemo consectetur maxime minima odio officia assumenda omnis. Repellat error distinctio et quam porro consequuntur voluptatem numquam fugiat sunt. Quos, id.",
+        "description": "This graph is a static visualization of the body temperature across male and female mice. Used to explore differences in the daily cylce of body temperature while highlighting the impact of female estrus.",
         "url": null
     },
     {
         "title": "AllRecipes Rating Predictive Classification Model",
         "year": 2024,
         "image": "imgs/dsc80_final_proj.jpg",
-        "description": "Aspernatur accusamus, accusantium quo consequuntur vel adipisci beatae, voluptatem molestias modi dignissimos explicabo ducimus tempore quidem neque eos atque error at repellendus consequatur! Delectus, laboriosam! Dignissimos voluptatem laborum architecto nam.",
-        "url": null
+        "description": "This machine learning model predicts the ratings of recipes on AllRecipes.com based on features of the recipe. We created a multiclass-classifier using a RandomForest.",
+        "url": "https://aconsiglio03.github.io/Recipe-Review-Analysis/"
     },
     {
         "title": "Study of the Presence of Educational Institutions and Income Throughout California",
         "year": 2024,
         "image": "imgs/math189finalproj.jpg",
-        "description": "Quos suscipit in ut itaque placeat, deserunt eum est tempora minus doloremque? Fuga illo voluptatum autem maxime, deleniti ratione debitis, ea nobis aspernatur eos veritatis nemo, excepturi voluptatem voluptates nesciunt.",
+        "description": "An exploratory data analysis of the presence of educational institutions and income throughout California. The project uses a heatmap to show the distribution of educational institutions and income throughout the state of California.",
         "url": null
     },
     {
         "title": "Image Processor",
         "year": 2024,
         "image": "imgs/test_image_32x32_negate.png",
-        "description": "Vitae repudiandae harum soluta provident ut exercitationem rem! Nemo exercitationem culpa nihil eligendi esse assumenda! Non itaque repudiandae, numquam et quis, reprehenderit vitae, optio ipsam architecto expedita id dignissimos fugiat!",
+        "description": "Built an image processor that can read in an image, apply a filter to it, and then output the processed image. The image processor can apply filters such as negate, grayscale, and edge detection. This project was built using Python.",
         "url": null
     },
     {
         "title": "Asteroid Landfall Simulation",
         "year": 2023,
         "image": "imgs/dsc10finalproj.jpg",
-        "description": "Fugiat quod corrupti non consequuntur at minima ad possimus consequatur vitae autem facilis, provident quasi totam labore recusandae harum qui iure quibusdam sequi maxime consectetur quis. Nesciunt perferendis necessitatibus incidunt.",
+        "description": "Written using pandas in the Jupyter Notebook environment, this project simulates the landfall of asteroids using historical datasets, probabilistic modeling, and bootstrapping.",
         "url": null
     },
     {
-        "title": "Animi assumenda quaerat accusantium.",
-        "year": 2023,
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Dolorum debitis sunt nemo officia enim consequatur neque, ullam cupiditate, iure iste illum soluta possimus earum, voluptatum commodi rem molestiae tempore reiciendis libero maiores eaque atque beatae quos? Nulla, vel.",
-        "url": null
+        "title": "Interactive Visualization of Mice Body Temperature Across Gender",
+        "year": 2025,
+        "image": "imgs/dsc106proj3.jpg",
+        "description": "An interactive visualization of the body temperature across the gender of mice. The visualization allows users to explore the differences in body temperature while allowing filtering and the altering of scope. Features a tooltip which highlights Mouse ID allowing us to examine indvidual mice along with their estrus cycle( should they be female).",
+        "url": "https://sebastianferragut.github.io/miced3/"
     },
     {
         "title": "Aliquid rem magni veniam.",
@@ -71,7 +71,7 @@
     },
     {
         "title": "Eveniet minus in magni.",
-        "year": 2025,
+        "year": 2023,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Autem impedit dignissimos quidem voluptates ea aliquam iusto dolores nisi, tenetur fuga voluptas, assumenda suscipit praesentium, voluptatum maiores! Pariatur repudiandae doloribus maxime nihil ad perspiciatis facilis accusamus beatae sed in.",
         "url": null

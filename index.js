@@ -2,19 +2,21 @@ import { fetchJSON, renderProjects, fetchGitHubData } from './global.js';
 
 async function loadProjects() {
   try {
-    // Correct path to projects.json
-    const projects = await fetchJSON('/portfolio/lib/projects.json');
+    // Use a relative path to fetch the JSON file
+    const projects = await fetchJSON('lib/projects.json');
     const container = document.querySelector('.projects');
     
     if (projects?.length > 0) {
-      renderProjects(projects, container, 'h3');
+      // Show only first 3 projects
+      const latestProjects = projects.slice(0, 3);
+      renderProjects(latestProjects, container, 'h3');
     } else {
       container.innerHTML = '<p>Check back soon for new projects!</p>';
     }
   } catch (error) {
-    console.error('Project loading error:', error);
+    console.error('Project load failed:', error);
     document.querySelector('.projects').innerHTML = `
-      <p>Unable to load projects at this time. Please try again later.</p>
+      <p>Error loading projects. Please refresh the page.</p>
     `;
   }
 }

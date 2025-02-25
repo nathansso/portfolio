@@ -104,10 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // JSON fetching helper
 export async function fetchJSON(url) {
   try {
-    console.log(`Fetching: ${url}`); // Add this line
+    console.log(`Fetching: ${url}`);
     const response = await fetch(url);
     
-    console.log('Response status:', response.status); // Add this
+    console.log('Response status:', response.status);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     
     return await response.json();
@@ -116,16 +116,26 @@ export async function fetchJSON(url) {
     return null;
   }
 }
-// Project rendering function
-export function renderProjects(projects, container, headingTag = 'h3') {
+
+// Updated project rendering function with a clickable project card and dynamic image path prefixing
+export function renderProjects(projects, container, headingTag) {
+  // Determine the correct path prefix for images
+  const pathPrefix = document.documentElement.classList.contains('home') ? '' : '../';
+  
   container.innerHTML = projects.map(project => `
-    <div class="project">
-      <${headingTag}>${project.title}</${headingTag}>
-      ${project.year ? `<p class="year">Year: ${project.year}</p>` : ''}
-      ${project.image ? `<img src="${project.image}" alt="${project.title}" class="project-image">` : ''}
-      <p>${project.description}</p>
-      ${project.url ? `<a href="${project.url}" target="_blank">View Project</a>` : ''}
-    </div>
+      <div class="project">
+          ${ project.url 
+              ? `<a href="${project.url}" target="_blank" rel="noopener noreferrer" class="project-link">`
+              : ''
+          }
+              <${headingTag}>${project.title}</${headingTag}>
+              <img src="${pathPrefix}${project.image}" 
+                   alt="${project.title}"
+                   class="project-image"
+                   onerror="this.style.display='none'">
+              <p>${project.description}</p>
+          ${ project.url ? '</a>' : '' }
+      </div>
   `).join('');
 }
 

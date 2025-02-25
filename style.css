@@ -280,22 +280,32 @@
     padding: 0.2rem;
   }
   
-  /* GitHub Profile Stats (e.g., on the index page) */
-  #profile-stats dl {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Four equal-sized columns */
-    text-align: center;
-  }
-  
-  #profile-stats dt {
-    font-weight: bold;
-    grid-row: 1;
-  }
-  
-  #profile-stats dd {
-    margin: 0;
-    grid-row: 2;
-  }
+  /* -------------------------------
+   GitHub Stats Styling
+--------------------------------- */
+#profile-stats {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
+}
+
+#profile-stats .github-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+
+#profile-stats .github-stats p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
   
   /* General Article Spacing */
   article {

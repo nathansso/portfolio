@@ -3,7 +3,11 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 // Global variables
 let data = [];
 let commits = [];
+let selectedCommits = [];
 let xScale, yScale;
+let commitProgress = 100;
+let timeScale = d3.scaleTime([d3.min(commits, d => d.datetime), d3.max(commits, d => d.datetime)], [0, 100]);
+let commitMaxTime = timeScale.invert(commitProgress);
 
 // Load CSV data and call displayStats once ready
 async function loadData() {
@@ -204,6 +208,8 @@ function createScatterplot() {
     .attr('fill', 'steelblue')
     .style('fill-opacity', 0.7) // Add transparency for overlapping dots
     .on('mouseenter', function (event, d) {
+      d3.select(event.currentTarget)
+        .classed('selected', isCommitSelected(d)); // update selected class based on brush selection
       d3.select(event.currentTarget).style('fill-opacity', 1); // Full opacity on hover
       updateTooltipContent(d);
       updateTooltipVisibility(true);
@@ -212,7 +218,9 @@ function createScatterplot() {
     .on('mousemove', (event) => {
       updateTooltipPosition(event);
     })
-    .on('mouseleave', function () {
+    .on('mouseleave', function (event, d) {
+      d3.select(event.currentTarget)
+        .classed('selected', isCommitSelected(d)); // update selected class based on brush selection
       d3.select(event.currentTarget).style('fill-opacity', 0.7); // Restore transparency
       updateTooltipVisibility(false);
     });
@@ -262,7 +270,7 @@ function updateTooltipPosition(event) {
 function brushSelector(usableArea) {
   const svg = d3.select('svg');
   const brush = d3.brush()
-  .extent([
+    .extent([
       [usableArea.left, usableArea.top],
       [usableArea.right, usableArea.bottom]
     ])
@@ -270,46 +278,39 @@ function brushSelector(usableArea) {
   svg.call(brush);
 }
 
-let brushSelection = null;
+function brushed(evt) {
+  const selection = evt.selection;
+  selectedCommits = !selection
+    ? []
+    : commits.filter((commit) => {
+        let min = { x: selection[0][0], y: selection[0][1] };
+        let max = { x: selection[1][0], y: selection[1][1] };
+        let x = xScale(commit.date);
+        let y = yScale(commit.hourFrac);
 
-function brushed(event) {
-  brushSelection = event.selection;
+        return x >= min.x && x <= max.x && y >= min.y && y <= max.y;
+      });
   updateSelection();
   updateSelectionCount();
   updateLanguageBreakdown();
-  }
+}
 
-function isCommitSelected(commit){
-  if (!brushSelection)
-     return false;
-  const [[x0, y0], [x1, y1]] = brushSelection;
-  const x = xScale(commit.datetime);
-  const y = yScale(commit.hourFrac);
-  return x >= Math.min(x0, x1) && x <= Math.max(x0, x1) &&
-         y >= Math.min(y0, y1) && y <= Math.max(y0, y1);
+function isCommitSelected(commit) {
+  return selectedCommits.includes(commit);
 }
 
 function updateSelection(){
   d3.selectAll('circle')
-    .style('fill-opacity', (d) => brushSelection ? (isCommitSelected(d) ? 1 : 0.1) : 0.7);
+    .style('fill-opacity', (d) => selectedCommits.length ? (isCommitSelected(d) ? 1 : 0.1) : 0.7);
 }
 
 function updateSelectionCount(){
-  const selectedCommits = brushSelection
-  ? commits.filter(isCommitSelected)
-  : [];
-
   const countElement = document.getElementById('selection-count');
-  countElement.textContent = `${
-    selectedCommits.length || 'No'
-  } commits selected`;
-
+  countElement.textContent = `${selectedCommits.length || 'No'} commits selected`;
   return selectedCommits;
 }
 
-
 function updateLanguageBreakdown() {
-  const selectedCommits = brushSelection ? commits.filter(isCommitSelected) : [];
   const container = document.getElementById('language-breakdown');
   container.innerHTML = ''; // Clear existing content
 
@@ -337,6 +338,5 @@ function updateLanguageBreakdown() {
 
 // Run loadData when the DOM is ready
 document.addEventListener('DOMContentLoaded', loadData);
-
-
-
+document.getElementById('commit-max-time').textContent =
+  commitMaxTime.toLocaleString('en', { dateStyle: 'long', timeStyle: 'short' });

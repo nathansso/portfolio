@@ -1,47 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meta</title>
-    <link rel="stylesheet" href="../style.css">
-    <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
-    <script type="module" src="main.js"></script>
-    <script type="module" src="../global.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
+  <script type="module" src="main.js"></script>
+  <script type="module" src="../global.js"></script>
+  <style>
+    /* Filtering UI specific styling */
+    #commit-filter-container {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+    #commit-filter-label {
+      flex: 1;
+    }
+    #commit-max-time {
+      margin-left: auto;
+    }
+  </style>
 </head>
 <body>
+  <h1 class="meta-title">Meta</h1>
+  <p>Hi! This is my meta page which contains stats about the code of this website.</p>
 
-    <h1 class="meta-title">Meta</h1>
-    <p>Hi! This is my meta page which contains stats about the code of this website.</p>  
+  <div id="stats"></div>
 
-    <div id="stats"></div>
+  <h2>Commits by time of day</h2>
+  <div id="chart">
+    <div id="commit-filter-container">
+      <label id="commit-filter-label" for="commit-progress">
+        Show commits until:
+        <input type="range" min="0" max="24" value="24" id="commit-progress" />
+        <time id="commit-max-time"></time>
+      </label>
+    </div>
+    <!-- The scatter plot will be appended here by main.js -->
+  </div>
 
-    <h2>Commits by time of day</h2>
-    <div id="chart"></div>
+  <div id="commit-tooltip" class="info tooltip">
+    <dt>Commit</dt>
+    <dd>
+      <a id="commit-link" href="#" target="_blank"></a>
+    </dd>
 
-    <div id="commit-tooltip" class="info tooltip">
-        <dt>Commit</dt>
-        <dd>
-          <a id="commit-link" href="#" target="_blank"></a>
-        </dd>
-      
-        <dt>Date</dt>
-        <dd id="commit-date"></dd>
-      
-        <!-- Add: Time, author, lines edited -->
-         <dt>Time</dt>
-         <dd id="commit-time"></dd>
+    <dt>Date</dt>
+    <dd id="commit-date"></dd>
 
-         <dt>Author</dt>
-         <dd id="commit-author"></dd>
-        
-         <dt>Lines edited</dt>
-         <dd id="commit-lines"></dd>
-      </div>
+    <dt>Time</dt>
+    <dd id="commit-time"></dd>
 
-      <p id="selection-count">No commits selected</p>
+    <dt>Author</dt>
+    <dd id="commit-author"></dd>
 
-      <dl id="language-breakdown" class="stats"></dl>
-    
+    <dt>Lines edited</dt>
+    <dd id="commit-lines"></dd>
+  </div>
+
+  <p id="selection-count">No commits selected</p>
+
+  <dl id="language-breakdown" class="stats"></dl>
 </body>
 </html>

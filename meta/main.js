@@ -6,8 +6,9 @@ let commits = [];
 let selectedCommits = [];
 let xScale, yScale;
 let commitProgress = 100;
-let timeScale = d3.scaleTime([d3.min(commits, d => d.datetime), d3.max(commits, d => d.datetime)], [0, 100]);
-let commitMaxTime = timeScale.invert(commitProgress);
+// Initialize timeScale with only the range; the domain will be set after commits are processed.
+let timeScale = d3.scaleTime().range([0, 100]);
+let commitMaxTime; // Will be computed later
 
 // Load CSV data and call displayStats once ready
 async function loadData() {
@@ -21,9 +22,17 @@ async function loadData() {
       datetime: new Date(row.datetime)
     }));
 
-    // Once data is loaded, display the stats
+    // Once data is loaded, process commits, display the stats, and create the scatterplot
     displayStats();
     createScatterplot();
+
+    // Now that commits have been processed, update the timeScale domain
+    timeScale.domain([d3.min(commits, d => d.datetime), d3.max(commits, d => d.datetime)]);
+    commitMaxTime = timeScale.invert(commitProgress);
+
+    // Update the UI's time display using the provided snippet.
+    const selectedTime = d3.select('#selectedTime');
+    selectedTime.text(timeScale.invert(commitProgress).toLocaleString('en', { dateStyle: 'long', timeStyle: 'short' }));
   } catch (error) {
     console.error('Error loading data:', error);
   }
@@ -338,5 +347,10 @@ function updateLanguageBreakdown() {
 
 // Run loadData when the DOM is ready
 document.addEventListener('DOMContentLoaded', loadData);
-document.getElementById('commit-max-time').textContent =
-  commitMaxTime.toLocaleString('en', { dateStyle: 'long', timeStyle: 'short' });
+document.getElementById('commit-progress').addEventListener('input', function() {
+  commitProgress = +this.value;
+  commitMaxTime = timeScale.invert(commitProgress);
+  d3.select('#selectedTime').text(
+    commitMaxTime.toLocaleString('en', { dateStyle: 'long', timeStyle: 'short' })
+  );
+});

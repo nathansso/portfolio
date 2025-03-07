@@ -16,17 +16,29 @@
   <div id="stats"></div>
 
   <h2>Commits by time of day</h2>
+  <!-- Scatterplot on left and commit narratives on right -->
   <div id="scrollytelling">
-    <div id="scroll-container">
-      <div id="items-container"></div>
-    </div>
-    <!-- Scatterplot area -->
     <div id="chart"></div>
+    <div id="scroll-narratives">
+      <div id="scroll-container-commits">
+        <h3>Commit Narratives</h3>
+        <div id="items-container-commits"></div>
+      </div>
+    </div>
   </div>
 
-  <!-- File details (commit summary) updated based on scrollytelling -->
-  <dl id="files"></dl>
+  <!-- File Sizes section placed below the commits -->
+  <h2>File Sizes</h2>
+  <div id="file-sizes-section">
+    <!-- Left: file sizes scrolly (narratives) -->
+    <div id="scroll-container-files" class="file-narratives">
+      <div id="items-container-files"></div>
+    </div>
+    <!-- Right: dot visualization -->
+    <div id="file-dots"></div>
+  </div>
 
+  <!-- Tooltip for commit info -->
   <div id="commit-tooltip" class="info tooltip">
     <dt>Commit</dt>
     <dd>

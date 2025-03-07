@@ -7,35 +7,33 @@ let selectedCommits = [];
 let currentVisibleCommits = [];
 let xScale, yScale;
 let fileTypeColors = d3.scaleOrdinal(d3.schemeTableau10);
+let fileDataGlobal = [];  // Will hold aggregated file data
 
-// For Scrolly: we now render all commit narratives in a dynamic list.
-const scrollContainer = d3.select('#scroll-container');
-const itemsContainer = d3.select('#items-container');
+// Container for commit narratives
+const commitItemsContainer = d3.select('#items-container-commits');
 
-// Render all commit narratives in natural (flow) layout.
+/* ---------- Commit Narrative Functions (Unchanged) ---------- */
 function renderItems() {
-  itemsContainer.selectAll('div.item')
-                .data(commits)
-                .join('div')
-                .attr('class', 'item')
-                .html((d, i) => {
-                  const fileCount = d3.rollups(d.lines, v => v.length, d => d.file).length;
-                  return `<p>
-                    On ${d.datetime.toLocaleString("en", { dateStyle: "full", timeStyle: "short" })}, I made
-                    <a href="${d.url}" target="_blank">
-                      ${i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'}
-                    </a>. I edited ${d.totalLines} lines across ${fileCount} files. Then I looked over all I had made, and I saw that it was very good.
-                  </p>`;
-                });
+  commitItemsContainer.selectAll('div.item')
+    .data(commits)
+    .join('div')
+    .attr('class', 'item')
+    .html((d, i) => {
+      const fileCount = d3.rollups(d.lines, v => v.length, d => d.file).length;
+      return `<p>
+        On ${d.datetime.toLocaleString("en", { dateStyle: "full", timeStyle: "short" })}, I made
+        <a href="${d.url}" target="_blank">
+          ${i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'}
+        </a>. I edited ${d.totalLines} lines across ${fileCount} files.
+      </p>`;
+    });
 }
 
-// Called on scroll: determine which commit narratives are visible and update the chart and file details.
-// Instead of showing only visible commits, we display all commits up to the latest visible commit.
 function updateView() {
-  const containerEl = document.getElementById('scroll-container');
+  const containerEl = document.getElementById('scroll-container-commits');
   const containerRect = containerEl.getBoundingClientRect();
   const visibleCommits = [];
-  d3.selectAll('#items-container .item').each(function(d) {
+  d3.selectAll('#items-container-commits .item').each(function(d) {
     const rect = this.getBoundingClientRect();
     if (rect.bottom >= containerRect.top && rect.top <= containerRect.bottom) {
       visibleCommits.push(d);
@@ -44,108 +42,18 @@ function updateView() {
   currentVisibleCommits = visibleCommits;
   if (visibleCommits.length > 0) {
     const maxVisibleDatetime = d3.max(visibleCommits, d => d.datetime);
-    // Include all commits with datetime <= maxVisibleDatetime.
     const chartCommits = commits.filter(d => d.datetime <= maxVisibleDatetime);
     updateScatterplot(chartCommits);
+    // (Commit-based file details remain unchanged)
     updateFileDetails(chartCommits);
   } else {
     updateScatterplot([]);
     updateFileDetails([]);
   }
 }
-document.getElementById('scroll-container').addEventListener('scroll', updateView);
+document.getElementById('scroll-container-commits').addEventListener('scroll', updateView);
 
-// Load CSV data and initialize everything
-async function loadData() {
-  try {
-    data = await d3.csv(
-      'https://nathansso.github.io/portfolio/meta/loc.csv',
-      (row) => ({
-        ...row,
-        line: +row.line,
-        depth: +row.depth,
-        length: +row.length,
-        date: new Date(row.date + 'T00:00' + row.timezone),
-        datetime: new Date(row.datetime)
-      })
-    );
-
-    displayStats();
-    renderItems();
-    updateView();
-    initScatterplot();
-  } catch (error) {
-    console.error('Error loading data:', error);
-  }
-}
-
-// Process commits and add a hidden 'lines' property; sort them chronologically (earliest first)
-function processCommits() {
-  commits = d3.groups(data, d => d.commit).map(([commit, lines]) => {
-    const first = lines[0];
-    const commitObj = {
-      id: commit,
-      url: `https://github.com/vis-society/lab-7/commit/${commit}`,
-      author: first.author,
-      date: first.date,
-      time: first.time,
-      timezone: first.timezone,
-      datetime: first.datetime,
-      hourFrac: first.datetime.getHours() + first.datetime.getMinutes() / 60,
-      totalLines: lines.length
-    };
-    Object.defineProperty(commitObj, 'lines', {
-      value: lines,
-      writable: false,
-      enumerable: false,
-      configurable: false
-    });
-    return commitObj;
-  });
-  // Sort commits in chronological order (earliest first)
-  commits.sort((a, b) => a.datetime - b.datetime);
-}
-
-// Helper for adding stats
-function addStat(dl, title, value) {
-  dl.append('dt')
-    .text(title)
-    .attr('class', 'stat-title');
-  dl.append('dd')
-    .text(value)
-    .attr('class', 'stat-value');
-}
-
-// Update summary stats (using all commits)
-function displayStats() {
-  processCommits();
-  const statsContainer = d3.select('#stats').html('');
-  const dl = statsContainer.append('dl').attr('class', 'stats');
-
-  const numFiles = d3.group(data, d => d.file).size;
-  const numDays = d3.group(data, d => d.date.toISOString().slice(0, 10)).size;
-  const workByPeriod = d3.rollups(data, v => v.length, d =>
-    d.datetime.toLocaleString('en', { dayPeriod: 'short' })
-  );
-  const busiestPeriod = d3.greatest(workByPeriod, d => d[1]);
-  const workByWeekday = d3.rollups(data, v => v.length, d =>
-    d.datetime.toLocaleString('en', { weekday: 'long' })
-  );
-  const busiestWeekday = d3.greatest(workByWeekday, d => d[1]);
-
-  const stats = [
-    { title: 'Lines of Code', value: data.length },
-    { title: 'Number of Files', value: numFiles },
-    { title: 'Number of days worked on site', value: numDays },
-    { title: 'Busiest period', value: `${busiestPeriod[0]} with ${busiestPeriod[1]} entries` },
-    { title: 'Busiest day of week', value: `${busiestWeekday[0]} with ${busiestWeekday[1]} entries` }
-  ];
-
-  stats.forEach(stat => addStat(dl, stat.title, stat.value));
-}
-
-/* ---------- Updated Scatterplot Functions ---------- */
-
+/* ---------- Scatterplot, Tooltip, and Brush Functions (Unchanged) ---------- */
 function initScatterplot() {
   const width = 800;
   const height = 600;
@@ -176,7 +84,6 @@ function updateScatterplot(chartCommits) {
   const svg = d3.select('#chart').select('svg');
   const container = svg.select('.plot-container');
 
-  // Update scales based on chartCommits
   xScale = d3.scaleTime()
     .domain(d3.extent(chartCommits, d => d.datetime))
     .range([usableArea.left, usableArea.right])
@@ -213,7 +120,6 @@ function updateScatterplot(chartCommits) {
   yAxisG.attr('transform', `translate(${usableArea.left}, 0)`)
         .call(d3.axisLeft(yScale).tickFormat(d => String(d % 24).padStart(2, '0') + ':00'));
 
-  // Sort commits by totalLines (largest first) so larger dots appear below
   const sortedCommits = d3.sort(chartCommits, d => -d.totalLines);
   const circles = container.selectAll('circle')
     .data(sortedCommits, d => d.id);
@@ -238,7 +144,6 @@ function updateScatterplot(chartCommits) {
     })
     .on('mouseout', function(event, d) {
       d3.select(this).classed('selected', false);
-      // Revert opacity to default if no selection is active.
       if (selectedCommits.length === 0) {
         d3.select(this).style('fill-opacity', 0.7);
       } else {
@@ -255,22 +160,20 @@ function updateScatterplot(chartCommits) {
   container.selectAll('.dots, .overlay ~ *').raise();
 }
 
-/* ---------- Updated File Details Function ---------- */
-// Update file details (the summary below the chart) based on all commits up to max visible commit.
+/* ---------- File Details (Original Commit File Aggregation) ---------- */
 function updateFileDetails(chartCommits) {
   let lines = chartCommits.flatMap(d => d.lines);
   let files = d3.groups(lines, d => d.file)
     .map(([name, lines]) => ({ name, lines }));
   files = d3.sort(files, d => -d.lines.length);
+  // This function may still be used for commit summary details.
   const dl = d3.select('#files');
-  // Data join for dt elements
   const dtSelection = dl.selectAll('dt')
     .data(files, d => d.name);
   dtSelection.exit().remove();
   dtSelection.join('dt')
     .html(d => `<code>${d.name}</code><small>${d.lines.length} lines</small>`);
   
-  // Data join for dd elements
   const ddSelection = dl.selectAll('dd')
     .data(files, d => d.name);
   ddSelection.exit().remove();
@@ -278,8 +181,71 @@ function updateFileDetails(chartCommits) {
     .html(d => d.lines.map(line => `<div class="line" style="background: ${fileTypeColors(line.type)}"></div>`).join(''));
 }
 
-/* ---------- Remaining Functions ---------- */
+/* ---------- New File Sizes Scrolly Functions ---------- */
+// Compute aggregated file data from all commits.
+// For each file, we group all commit lines, count them, and record the date of its oldest commit.
+function computeFileData() {
+  const allLines = commits.flatMap(d => d.lines);
+  let files = d3.groups(allLines, d => d.file)
+    .map(([file, lines]) => ({
+      file: file,
+      lines: lines,
+      totalLines: lines.length,
+      firstCommitDate: d3.min(lines, d => d.datetime)
+    }));
+  files.sort((a, b) => a.firstCommitDate - b.firstCommitDate);
+  fileDataGlobal = files; // store globally for scroll updates
+  return files;
+}
 
+// Render the file narratives (file name and line count) in the scrolly box.
+function renderFileSizes() {
+  const files = computeFileData();
+  d3.select("#items-container-files")
+    .selectAll("div.file-entry")
+    .data(files, d => d.file)
+    .join("div")
+    .attr("class", "file-entry")
+    .html(d => `<p class="file-name">${d.file}</p>
+                <p class="file-lines">${d.totalLines} lines</p>`);
+  updateFileSizesDots(files);
+}
+
+// Update the dot visualization next to the scrolly box.
+// We check the scroll position of the file narratives container and, for every file entry
+// that is visible (from the top up to the last visible entry), we draw a row of dots.
+// Each dot represents one commit line (colored by language).
+function updateFileSizesDots(files) {
+  const containerEl = document.getElementById('scroll-container-files');
+  const containerRect = containerEl.getBoundingClientRect();
+  const entries = d3.selectAll('#items-container-files .file-entry').nodes();
+  let lastVisibleIndex = -1;
+  entries.forEach((entry, i) => {
+    const rect = entry.getBoundingClientRect();
+    if (rect.bottom >= containerRect.top && rect.top <= containerRect.bottom) {
+      lastVisibleIndex = i;
+    }
+  });
+  let visibleFiles = [];
+  if (lastVisibleIndex >= 0) {
+    visibleFiles = files.slice(0, lastVisibleIndex + 1);
+  }
+  const dotContainer = d3.select("#file-dots");
+  dotContainer.html(""); // clear previous dots
+  visibleFiles.forEach(fileData => {
+    let row = dotContainer.append("div").attr("class", "file-dot-row");
+    fileData.lines.forEach(line => {
+      row.append("div")
+         .attr("class", "dot")
+         .style("background", fileTypeColors(line.type));
+    });
+  });
+}
+document.getElementById('scroll-container-files').addEventListener('scroll', function() {
+  updateFileSizesDots(fileDataGlobal);
+});
+
+/* ---------- Tooltip and Brush Functions (Unchanged) ---------- */
 function updateTooltipContent(commit) {
   const link = document.getElementById('commit-link');
   const date = document.getElementById('commit-date');
@@ -379,6 +345,93 @@ function updateLanguageBreakdown() {
     container.appendChild(dt);
     container.appendChild(dd);
   });
+}
+
+/* ---------- Data Loading and Initialization ---------- */
+async function loadData() {
+  try {
+    data = await d3.csv(
+      'https://nathansso.github.io/portfolio/meta/loc.csv',
+      (row) => ({
+        ...row,
+        line: +row.line,
+        depth: +row.depth,
+        length: +row.length,
+        date: new Date(row.date + 'T00:00' + row.timezone),
+        datetime: new Date(row.datetime)
+      })
+    );
+
+    displayStats();
+    processCommits();
+    renderItems();
+    updateView();
+    initScatterplot();
+    // Render file sizes section after commits are loaded.
+    renderFileSizes();
+  } catch (error) {
+    console.error('Error loading data:', error);
+  }
+}
+
+function processCommits() {
+  commits = d3.groups(data, d => d.commit).map(([commit, lines]) => {
+    const first = lines[0];
+    const commitObj = {
+      id: commit,
+      url: `https://github.com/vis-society/lab-7/commit/${commit}`,
+      author: first.author,
+      date: first.date,
+      time: first.time,
+      timezone: first.timezone,
+      datetime: first.datetime,
+      hourFrac: first.datetime.getHours() + first.datetime.getMinutes() / 60,
+      totalLines: lines.length
+    };
+    Object.defineProperty(commitObj, 'lines', {
+      value: lines,
+      writable: false,
+      enumerable: false,
+      configurable: false
+    });
+    return commitObj;
+  });
+  commits.sort((a, b) => a.datetime - b.datetime);
+}
+
+function addStat(dl, title, value) {
+  dl.append('dt')
+    .text(title)
+    .attr('class', 'stat-title');
+  dl.append('dd')
+    .text(value)
+    .attr('class', 'stat-value');
+}
+
+function displayStats() {
+  const statsContainer = d3.select('#stats').html('');
+  const dl = statsContainer.append('dl').attr('class', 'stats');
+
+  const numFiles = d3.group(data, d => d.file).size;
+  const numDays = d3.group(data, d => d.date.toISOString().slice(0, 10)).size;
+  const workByPeriod = d3.rollups(data, v => v.length, d =>
+    d.datetime.toLocaleString('en', { dayPeriod: 'short' })
+  );
+  const busiestPeriod = d3.greatest(workByPeriod, d => d[1]);
+  const workByWeekday = d3.rollups(data, v => v.length, d =>
+    d.datetime.toLocaleString('en', { weekday: 'long' })
+  );
+  const busiestWeekday = d3.greatest(workByWeekday, d => d[1]);
+
+  const stats = [
+    { title: 'Lines of Code', value: data.length },
+    { title: 'Number of Files', value: numFiles },
+    { title: 'Number of days worked on site', value: numDays },
+    { title: 'Busiest period', value: `${busiestPeriod[0]} with ${busiestPeriod[1]} entries` },
+    { title: 'Busiest day of week', value: `${busiestWeekday[0]} with ${busiestWeekday[1]} entries` }
+  ];
+
+  stats.forEach(stat => addStat(dl, stat.title, stat.value));
 }
 
 document.addEventListener('DOMContentLoaded', loadData);

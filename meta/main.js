@@ -7,6 +7,8 @@ let filteredCommits = [];
 let selectedCommits = [];
 let xScale, yScale;
 let commitProgress = 100;
+// Ordinal scale for file type colors (using Tableau10 scheme)
+let fileTypeColors = d3.scaleOrdinal(d3.schemeTableau10);
 // Initialize timeScale with only the range; the domain will be set after commits are processed.
 let timeScale = d3.scaleTime().range([0, 100]);
 let commitMaxTime; // Will be computed later
@@ -240,13 +242,16 @@ function updateScatterplot(filteredCommits) {
   container.selectAll('.dots, .overlay ~ *').raise();
 }
 
-/* ---------- Updated File Details ---------- */
+/* ---------- Updated File Details with Sorting and Color by Technology ---------- */
 
 function updateFileDetails() {
   // Obtain all lines from the filtered commits and group them by file
   let lines = filteredCommits.flatMap(d => d.lines);
   let files = d3.groups(lines, d => d.file)
     .map(([name, lines]) => ({ name, lines }));
+
+  // Sort files by the number of lines (descending)
+  files = d3.sort(files, d => -d.lines.length);
 
   // Clear previous file details
   d3.select('#files').selectAll('div').remove();
@@ -259,17 +264,19 @@ function updateFileDetails() {
     .append('div');
 
   // Append a <dt> element that includes both the file name (in <code>) 
-  // and the total number of lines (in <small>)
+  // and the total number of lines (in <small>) on a separate line.
   filesContainer.append('dt')
     .html(d => `<code>${d.name}</code><small>${d.lines.length} lines</small>`);
 
   // Append a <dd> element and within it, for each line in the file, add a <div class="line">
+  // Each dot's background color is set using the fileTypeColors scale based on d.type.
   filesContainer.append('dd')
     .selectAll('div')
     .data(d => d.lines)
     .enter()
     .append('div')
-    .attr('class', 'line');
+    .attr('class', 'line')
+    .style('background', d => fileTypeColors(d.type));
 }
 
 /* ---------- Remaining Functions ---------- */

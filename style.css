@@ -692,6 +692,5 @@ circle:hover {
   display: flex;
   width: 0.5em;
   aspect-ratio: 1;
-  background: steelblue;
   border-radius: 50%;
 }

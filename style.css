@@ -653,11 +653,21 @@ dl.info a {
 circle {
   fill: steelblue;
   fill-opacity: 0.7;
-  r: 0; /* @starting-style: Start with radius 0 */
-  transition: r 0.5s ease-in-out;
+  transition: r 0.2s ease-in-out;
 }
 
 /* Optional: Hover effect */
 circle:hover {
   fill-opacity: 1;
 }
+
+/* ==========================================================================
+     Meta Files Div  styling
+========================================================================== */
+
+.files > div {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+

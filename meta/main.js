@@ -261,7 +261,7 @@ function updateFileDetails() {
   // Append a <dt> element that includes both the file name (in <code>) 
   // and the total number of lines (in <small>)
   filesContainer.append('dt')
-    .html(d => `<code>${d.name}</code><small>: ${d.lines.length} lines</small>`);
+    .html(d => `<code>${d.name}</code><small>${d.lines.length} lines</small>`);
 
   // Append a <dd> element and within it, for each line in the file, add a <div class="line">
   filesContainer.append('dd')

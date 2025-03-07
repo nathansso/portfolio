@@ -240,26 +240,39 @@ function updateScatterplot(filteredCommits) {
   container.selectAll('.dots, .overlay ~ *').raise();
 }
 
-/* ---------- Remaining Functions (unchanged) ---------- */
+/* ---------- Updated File Details ---------- */
 
 function updateFileDetails() {
+  // Obtain all lines from the filtered commits and group them by file
   let lines = filteredCommits.flatMap(d => d.lines);
   let files = d3.groups(lines, d => d.file)
     .map(([name, lines]) => ({ name, lines }));
-  
+
+  // Clear previous file details
   d3.select('#files').selectAll('div').remove();
+
+  // Bind data to file containers and create a new container for each file
   let filesContainer = d3.select('#files')
     .selectAll('div')
     .data(files)
     .enter()
     .append('div');
-  
+
+  // Append a <dt> element that includes both the file name (in <code>) 
+  // and the total number of lines (in <small>)
   filesContainer.append('dt')
-    .append('code')
-    .text(d => d.name);
+    .html(d => `<code>${d.name}</code><small>: ${d.lines.length} lines</small>`);
+
+  // Append a <dd> element and within it, for each line in the file, add a <div class="line">
   filesContainer.append('dd')
-    .text(d => d.lines.length + " lines");
+    .selectAll('div')
+    .data(d => d.lines)
+    .enter()
+    .append('div')
+    .attr('class', 'line');
 }
+
+/* ---------- Remaining Functions ---------- */
 
 function updateTooltipContent(commit) {
   const link = document.getElementById('commit-link');

@@ -9,8 +9,6 @@
   <script type="module" src="main.js"></script>
   <script type="module" src="../global.js"></script>
 </head>
-
-
 <body>
   <h1 class="meta-title">Meta</h1>
   <p>Hi! This is my meta page which contains stats about the code of this website.</p>
@@ -28,17 +26,8 @@
     </div>
   </div>
 
-  <dl id="files">
-
-    <div>
-      <dt>
-        <code>{file.name}</code>
-      </dt>
-    </div>
-    <div>
-
-    </div>
-  </dl>
+  <!-- Empty element: content will be added dynamically by updateFileDetails() -->
+  <dl id="files"></dl>
 
   <div id="commit-tooltip" class="info tooltip">
     <dt>Commit</dt>

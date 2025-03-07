@@ -9,24 +9,22 @@
   <script type="module" src="main.js"></script>
   <script type="module" src="../global.js"></script>
 </head>
-<body>
+<body class="meta-page">
   <h1 class="meta-title">Meta</h1>
   <p>Hi! This is my meta page which contains stats about the code of this website.</p>
 
   <div id="stats"></div>
 
   <h2>Commits by time of day</h2>
-  <div id="chart">
-    <div id="commit-filter-container">
-      <label id="commit-filter-label" for="commit-progress">
-        Show commits until:
-        <input type="range" min="0" max="100" value="100" id="commit-progress" />
-        <time id="selectedTime"></time>
-      </label>
+  <div id="scrollytelling">
+    <div id="scroll-container">
+      <div id="items-container"></div>
     </div>
+    <!-- Scatterplot area -->
+    <div id="chart"></div>
   </div>
 
-  <!-- Empty element: content will be added dynamically by updateFileDetails() -->
+  <!-- File details (commit summary) updated based on scrollytelling -->
   <dl id="files"></dl>
 
   <div id="commit-tooltip" class="info tooltip">
@@ -34,16 +32,12 @@
     <dd>
       <a id="commit-link" href="#" target="_blank"></a>
     </dd>
-
     <dt>Date</dt>
     <dd id="commit-date"></dd>
-
     <dt>Time</dt>
     <dd id="commit-time"></dd>
-
     <dt>Author</dt>
     <dd id="commit-author"></dd>
-
     <dt>Lines edited</dt>
     <dd id="commit-lines"></dd>
   </div>

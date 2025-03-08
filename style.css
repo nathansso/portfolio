@@ -586,49 +586,68 @@ dl.info a {
   gap: 20px;
   max-width: 1000px;
   margin: 1em auto;
+  align-items: flex-start;
 }
+
+/* Dot container on the left: will now contain multiple rows */
+#file-dots {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;              /* Gap between rows */
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  min-height: 300px;      /* Match height of scrolly box */
+}
+
+/* File dots row - new class for row containers */
+.file-dots-row {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+/* File group container */
+.file-dot-group {
+  align-items: flex-end;  /* Align columns at the bottom */
+}
+
+/* File narratives scrolly box on the right, right-aligned */
 #scroll-container-files {
-  width: 60%;
+  flex: 1;
   height: 300px;
   overflow-y: scroll;
   border: 1px solid #ccc;
   padding: 10px;
   box-sizing: border-box;
+  text-align: right;
 }
+
 #items-container-files .file-entry {
   border-bottom: 1px solid #ddd;
   padding: 5px 0;
 }
+
+/* File entry formatting */
 .file-name {
   font-size: 1.2rem;
   font-weight: bold;
   color: #000;
   margin: 0;
 }
+
 .file-lines {
   font-size: 0.8rem;
   color: gray;
   margin: 0;
 }
-#file-dots {
-  width: 40%;
-  height: 300px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-sizing: border-box;
-}
-.file-dot-row {
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-.file-dot-row .dot {
-  width: 20px;
-  height: 20px;
+
+/* Each dot styled with a fixed size */
+.dot {
   border-radius: 50%;
 }
+
+
 
 /* ==========================================================================
      Meta Scrollytelling Styling

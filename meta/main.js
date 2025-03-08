@@ -209,117 +209,122 @@ function renderFileSizes() {
   updateFileSizesDots(files);
 }
 
-// Update the dot visualization next to the file narratives.
-// Each file's dots are displayed in vertical columns that grow upward.
-// When a column reaches max height, new dots are added to a new column to the right.
 function updateFileSizesDots(files) {
   // Get the available width of the dot container
   const dotContainer = d3.select("#file-dots");
   const containerWidth = dotContainer.node().clientWidth;
-  
+
   // Define constants
-  const MAX_HEIGHT = 200; // Increased maximum height
-  const MAX_DOTS_PER_COLUMN = 20; // Increased dots per column
-  const DOT_SIZE = 6; // Fixed dot size for all dots
-  const individualGap = 2; // Gap between dots within a group
-  const groupGap = 10; // Gap between file groups
-  const columnGap = 2; // Gap between columns within a group
-  
-  // Determine which file entries are visible
-  const containerEl = document.getElementById('scroll-container-files');
+  const MAX_DOTS_PER_COLUMN = 20; // Maximum dots per vertical column
+  const DOT_SIZE = 6; // Dot size in pixels
+  const individualGap = 2; // Space between dots in a column
+  const columnGap = 2; // Space between columns
+  const groupGap = 10; // Space between file groups
+
+  // Determine visible file entries
+  const containerEl = document.getElementById("scroll-container-files");
   const containerRect = containerEl.getBoundingClientRect();
-  const entries = d3.selectAll('#items-container-files .file-entry').nodes();
+  const entries = d3.selectAll("#items-container-files .file-entry").nodes();
   let lastVisibleIndex = -1;
-  
+
   entries.forEach((entry, i) => {
     const rect = entry.getBoundingClientRect();
     if (rect.bottom >= containerRect.top && rect.top <= containerRect.bottom) {
       lastVisibleIndex = i;
     }
   });
-  
+
   let visibleFiles = [];
   if (lastVisibleIndex >= 0) {
     visibleFiles = files.slice(0, lastVisibleIndex + 1);
   }
-  
+
   // Clear the dot container
   dotContainer.html("");
-  dotContainer.style("height", "auto"); // Allow container to expand vertically as needed
-  
+  dotContainer.style("height", "auto"); // Allow expansion
+
   if (visibleFiles.length === 0) return;
-  
-  // Calculate width needed for each file group
-  const fileGroups = visibleFiles.map(fileData => {
+
+  // Calculate required columns per file group, ensuring they fit
+  const fileGroups = visibleFiles.map((fileData) => {
     const totalDots = fileData.totalLines;
     const columnsNeeded = Math.ceil(totalDots / MAX_DOTS_PER_COLUMN);
-    const groupWidth = (DOT_SIZE * columnsNeeded) + (columnGap * (columnsNeeded - 1));
-    return { 
-      file: fileData.file, 
-      data: fileData, 
-      columnsNeeded, 
-      groupWidth 
+    const maxColumns = Math.floor((containerWidth - groupGap) / (DOT_SIZE + columnGap)); // Strict limit
+    const actualColumns = Math.min(columnsNeeded, maxColumns);
+    const groupWidth = actualColumns * (DOT_SIZE + columnGap);
+    return {
+      file: fileData.file,
+      data: fileData,
+      columnsNeeded: actualColumns,
+      groupWidth,
     };
   });
-  
-  // Calculate how many groups can fit in a row
+
+  // Adjust row layout to avoid overflow
   const calculateRowLayout = (groups, containerWidth, groupGap) => {
     let rows = [[]];
     let currentRowWidth = 0;
-    
-    groups.forEach(group => {
-      // Check if adding this group exceeds container width
-      if (currentRowWidth + group.groupWidth + (rows[rows.length - 1].length > 0 ? groupGap : 0) > containerWidth) {
+
+    groups.forEach((group) => {
+      const groupTotalWidth = group.groupWidth + (rows[rows.length - 1].length > 0 ? groupGap : 0);
+
+      if (currentRowWidth + groupTotalWidth > containerWidth) {
         // Start a new row
         rows.push([group]);
         currentRowWidth = group.groupWidth;
       } else {
         // Add to current row
         rows[rows.length - 1].push(group);
-        currentRowWidth += group.groupWidth + (rows[rows.length - 1].length > 1 ? groupGap : 0);
+        currentRowWidth += groupTotalWidth;
       }
     });
-    
+
     return rows;
   };
-  
+
   const rows = calculateRowLayout(fileGroups, containerWidth, groupGap);
-  
-  // Create a container for each row
+
+  // Create rows of dots
   rows.forEach((rowGroups, rowIndex) => {
-    const rowContainer = dotContainer.append("div")
+    const rowContainer = dotContainer
+      .append("div")
       .attr("class", "file-dots-row")
       .style("display", "flex")
-      .style("flex-direction", "row")
+      .style("flex-wrap", "wrap") // Ensure wrapping on small screens
       .style("gap", groupGap + "px")
       .style("margin-bottom", rowIndex < rows.length - 1 ? "20px" : "0");
-    
+
     // Create file groups within this row
-    rowGroups.forEach(groupInfo => {
+    rowGroups.forEach((groupInfo) => {
       const fileData = groupInfo.data;
       const totalDots = fileData.totalLines;
-      
+      const actualColumns = groupInfo.columnsNeeded;
+
       // Create the file group container
-      let group = rowContainer.append("div")
+      let group = rowContainer
+        .append("div")
         .attr("class", "file-dot-group")
         .style("display", "flex")
         .style("flex-direction", "row")
-        .style("gap", columnGap + "px");
-      
+        .style("gap", columnGap + "px")
+        .style("max-width", groupInfo.groupWidth + "px") // Explicit width limit
+
       // Create columns of dots that grow upward
       let currentColumn;
-      
+
       for (let i = 0; i < totalDots; i++) {
-        // Start a new column if needed
         if (i % MAX_DOTS_PER_COLUMN === 0) {
-          currentColumn = group.append("div")
+          if (group.node().childNodes.length >= actualColumns) break; // Prevent extra columns
+          currentColumn = group
+            .append("div")
             .style("display", "flex")
             .style("flex-direction", "column-reverse") // Stack from bottom up
             .style("gap", individualGap + "px");
         }
-        
+
         // Add a dot to the current column
-        currentColumn.append("div")
+        currentColumn
+          .append("div")
           .attr("class", "dot")
           .style("width", DOT_SIZE + "px")
           .style("height", DOT_SIZE + "px")
@@ -328,7 +333,11 @@ function updateFileSizesDots(files) {
       }
     });
   });
+
+  // Recalculate on window resize to maintain layout
+  window.addEventListener("resize", () => updateFileSizesDots(files));
 }
+
 
 // Update dots on scroll of the file narratives scrolly box.
 document.getElementById('scroll-container-files').addEventListener('scroll', function() {

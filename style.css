@@ -578,6 +578,42 @@ dl.info a {
   text-decoration: none;
 }
 
+/* ==========================================================================
+     Meta Scrollytelling Styling
+========================================================================== */
+#scrollytelling {
+  display: flex;
+  gap: 20px;
+  margin: 2em auto;
+  max-width: 1200px;
+}
+#chart {
+  flex: 1;
+}
+#scroll-narratives {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ------------------------------------------------------------------
+   Styles for Commit scrollytelling (increased height)
+------------------------------------------------------------------ */
+#scroll-container-commits {
+  height: 400px; /* Increased from 250px */
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  background: #fefefe;
+}
+#items-container-commits .item {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
 /* ------------------------------------------------------------------
    File Sizes Section
 ------------------------------------------------------------------ */
@@ -589,19 +625,20 @@ dl.info a {
   align-items: flex-start;
 }
 
-/* Dot container on the left: will now contain multiple rows */
+/* Dot container on the left with reduced width and max-width */
 #file-dots {
-  flex: 1;
+  flex: 0.4;
+  max-width: 400px; /* Set a specific maximum width */
   display: flex;
   flex-direction: column;
-  gap: 20px;              /* Gap between rows */
-  border: 1px solid #ccc;
-  padding: 10px;
+  gap: 20px;
+  border: 2px solid #ccc;
+  padding: 15px;
   box-sizing: border-box;
-  min-height: 300px;      /* Match height of scrolly box */
+  min-height: 400px;
 }
 
-/* File dots row - new class for row containers */
+/* File dots row */
 .file-dots-row {
   width: 100%;
   justify-content: flex-start;
@@ -609,13 +646,13 @@ dl.info a {
 
 /* File group container */
 .file-dot-group {
-  align-items: flex-end;  /* Align columns at the bottom */
+  align-items: flex-end;
 }
 
-/* File narratives scrolly box on the right, right-aligned */
+/* File narratives scrolly box */
 #scroll-container-files {
-  flex: 1;
-  height: 300px;
+  flex: 0.6;
+  height: 400px;
   overflow-y: scroll;
   border: 1px solid #ccc;
   padding: 10px;
@@ -646,45 +683,6 @@ dl.info a {
 .dot {
   border-radius: 50%;
 }
-
-
-
-/* ==========================================================================
-     Meta Scrollytelling Styling
-========================================================================== */
-#scrollytelling {
-  display: flex;
-  gap: 20px;
-  margin: 2em auto;
-  max-width: 1200px;
-}
-#chart {
-  flex: 1;
-}
-#scroll-narratives {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ------------------------------------------------------------------
-   Styles for Commit scrollytelling (unchanged)
------------------------------------------------------------------- */
-#scroll-container-commits {
-  height: 250px;
-  overflow-y: scroll;
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-sizing: border-box;
-  background: #fefefe;
-}
-#items-container-commits .item {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-}
-
 /* ==========================================================================
      Meta ScatterPlot Circle styling
 ========================================================================== */

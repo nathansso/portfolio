@@ -789,7 +789,7 @@ index.html,9,html,058785bb,nathansso,2025-01-10,11:29:10,-08:00,2025-01-10T11:29
 index.html,10,html,be3bcd18,nathansso,2025-01-24,10:14:12,-08:00,2025-01-24T10:14:12-08:00,0,0
 index.html,11,html,d758bf42,nathansso,2025-01-10,17:27:28,-08:00,2025-01-10T17:27:28-08:00,0,21
 index.html,12,html,41175abf,nathansso,2025-02-07,18:16:25,-08:00,2025-02-07T18:16:25-08:00,0,71
-index.html,13,html,8f7ba7fe,nathansso,2025-02-24,10:35:24,-08:00,2025-02-24T10:35:24-08:00,0,263
+index.html,13,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,483
 index.html,14,html,8338fbc8,nathansso,2025-01-29,12:09:20,-08:00,2025-01-29T12:09:20-08:00,0,0
 index.html,15,html,8338fbc8,nathansso,2025-01-29,12:09:20,-08:00,2025-01-29T12:09:20-08:00,0,23
 index.html,16,html,8338fbc8,nathansso,2025-01-29,12:09:20,-08:00,2025-01-29T12:09:20-08:00,0,27
@@ -959,71 +959,79 @@ resume/index.html,9,html,bdace339,nathansso,2025-01-10,18:06:12,-08:00,2025-01-1
 resume/index.html,10,html,bdace339,nathansso,2025-01-10,18:06:12,-08:00,2025-01-10T18:06:12-08:00,0,14
 resume/index.html,11,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,32
 resume/index.html,12,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,29
-resume/index.html,13,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,40
-resume/index.html,14,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,134
+resume/index.html,13,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,43
+resume/index.html,14,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,121
 resume/index.html,15,html,df0dbeb4,nathansso,2025-01-17,16:09:49,-08:00,2025-01-17T16:09:49-08:00,0,5
 resume/index.html,16,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,32
 resume/index.html,17,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,69
-resume/index.html,18,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,82
-resume/index.html,19,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,43
-resume/index.html,20,html,df0dbeb4,nathansso,2025-01-17,16:09:49,-08:00,2025-01-17T16:09:49-08:00,0,5
-resume/index.html,21,html,bdace339,nathansso,2025-01-10,18:06:12,-08:00,2025-01-10T18:06:12-08:00,0,9
-resume/index.html,22,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,0
-resume/index.html,23,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,8
-resume/index.html,24,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,46
-resume/index.html,25,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
-resume/index.html,26,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,31
-resume/index.html,27,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,31
-resume/index.html,28,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,29
-resume/index.html,29,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,29
-resume/index.html,30,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,31
-resume/index.html,31,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,23
-resume/index.html,32,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,21
-resume/index.html,33,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,48
-resume/index.html,34,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,33
-resume/index.html,35,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,27
-resume/index.html,36,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,29
-resume/index.html,37,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,38
-resume/index.html,38,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,51
-resume/index.html,39,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
-resume/index.html,40,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,9
-resume/index.html,41,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,8
-resume/index.html,42,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,33
-resume/index.html,43,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
-resume/index.html,44,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,46
-resume/index.html,45,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,67
-resume/index.html,46,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,43
-resume/index.html,47,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
-resume/index.html,48,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,9
-resume/index.html,49,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,8
-resume/index.html,50,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,37
-resume/index.html,51,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,66
-resume/index.html,52,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,24
-resume/index.html,53,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
-resume/index.html,54,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,91
-resume/index.html,55,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,124
-resume/index.html,56,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,61
-resume/index.html,57,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
-resume/index.html,58,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,56
-resume/index.html,59,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,25
-resume/index.html,60,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
-resume/index.html,61,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,60
-resume/index.html,62,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,94
-resume/index.html,63,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,67
-resume/index.html,64,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
-resume/index.html,65,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,9
-resume/index.html,66,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,8
-resume/index.html,67,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,39
-resume/index.html,68,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
-resume/index.html,69,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,52
-resume/index.html,70,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,69
-resume/index.html,71,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,93
-resume/index.html,72,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
-resume/index.html,73,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,9
-resume/index.html,74,html,be3bcd18,nathansso,2025-01-24,10:14:12,-08:00,2025-01-24T10:14:12-08:00,0,0
-resume/index.html,75,html,41175abf,nathansso,2025-02-07,18:16:25,-08:00,2025-02-07T18:16:25-08:00,0,49
-resume/index.html,76,html,bdace339,nathansso,2025-01-10,18:06:12,-08:00,2025-01-10T18:06:12-08:00,0,6
-resume/index.html,77,html,df0dbeb4,nathansso,2025-01-17,16:09:49,-08:00,2025-01-17T16:09:49-08:00,0,6
+resume/index.html,18,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,133
+resume/index.html,19,html,df0dbeb4,nathansso,2025-01-17,16:09:49,-08:00,2025-01-17T16:09:49-08:00,0,5
+resume/index.html,20,html,bdace339,nathansso,2025-01-10,18:06:12,-08:00,2025-01-10T18:06:12-08:00,0,9
+resume/index.html,21,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,0
+resume/index.html,22,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,13
+resume/index.html,23,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,33
+resume/index.html,24,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
+resume/index.html,25,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,99
+resume/index.html,26,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,60
+resume/index.html,27,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
+resume/index.html,28,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,9
+resume/index.html,29,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,8
+resume/index.html,30,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,37
+resume/index.html,31,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,51
+resume/index.html,32,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,25
+resume/index.html,33,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,3
+resume/index.html,34,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,212
+resume/index.html,35,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,4
+resume/index.html,36,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,66
+resume/index.html,37,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,26
+resume/index.html,38,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
+resume/index.html,39,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,70
+resume/index.html,40,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,110
+resume/index.html,41,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,124
+resume/index.html,42,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
+resume/index.html,43,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,56
+resume/index.html,44,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,27
+resume/index.html,45,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
+resume/index.html,46,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,69
+resume/index.html,47,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,70
+resume/index.html,48,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,102
+resume/index.html,49,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,150
+resume/index.html,50,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,76
+resume/index.html,51,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,4
+resume/index.html,52,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,56
+resume/index.html,53,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,28
+resume/index.html,54,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,3
+resume/index.html,55,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,69
+resume/index.html,56,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,78
+resume/index.html,57,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,106
+resume/index.html,58,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,126
+resume/index.html,59,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,67
+resume/index.html,60,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
+resume/index.html,61,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,9
+resume/index.html,62,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,8
+resume/index.html,63,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,39
+resume/index.html,64,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,3
+resume/index.html,65,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,34
+resume/index.html,66,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,33
+resume/index.html,67,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,18
+resume/index.html,68,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,46
+resume/index.html,69,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,4
+resume/index.html,70,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,9
+resume/index.html,71,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,0
+resume/index.html,72,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,8
+resume/index.html,73,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,46
+resume/index.html,74,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,3
+resume/index.html,75,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,86
+resume/index.html,76,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,91
+resume/index.html,77,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,52
+resume/index.html,78,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,50
+resume/index.html,79,html,e64e6a2e,Nathaniel Oliver,2025-12-15,21:31:42,-08:00,2025-12-15T21:31:42-08:00,0,86
+resume/index.html,80,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,4
+resume/index.html,81,html,65307ca7,nathansso,2025-01-17,16:25:52,-08:00,2025-01-17T16:25:52-08:00,0,9
+resume/index.html,82,html,be3bcd18,nathansso,2025-01-24,10:14:12,-08:00,2025-01-24T10:14:12-08:00,0,0
+resume/index.html,83,html,41175abf,nathansso,2025-02-07,18:16:25,-08:00,2025-02-07T18:16:25-08:00,0,49
+resume/index.html,84,html,bdace339,nathansso,2025-01-10,18:06:12,-08:00,2025-01-10T18:06:12-08:00,0,6
+resume/index.html,85,html,df0dbeb4,nathansso,2025-01-17,16:09:49,-08:00,2025-01-17T16:09:49-08:00,0,6
 projects/projects.js,1,js,8338fbc8,nathansso,2025-01-29,12:09:20,-08:00,2025-01-29T12:09:20-08:00,0,56
 projects/projects.js,2,js,b79d9980,nathansso,2025-02-06,17:12:19,-08:00,2025-02-06T17:12:19-08:00,0,64
 projects/projects.js,3,js,8338fbc8,nathansso,2025-01-29,12:09:20,-08:00,2025-01-29T12:09:20-08:00,0,0

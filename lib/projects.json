@@ -11,10 +11,10 @@
         "year": 2025,
         "image": "imgs/DSC Project 01.png",
         "description": "A static graph which explores Airbnb bookings and revenue throughout the year in San Diego, California. The graph shows how the number of bookings and revenue changes throughout the year, with the highest peaks in the summer months.",
-        "url": null
+        "url": "https://sebastianferragut.github.io/miceexplorable/"
     },
     {
-        "title": "The Impact of Estrus on Female Rats Throughout the Day",
+        "title": "Study on the Impact of Estrus on Female Rats Throughout the Day",
         "year": 2025,
         "image": "imgs/DSC Project 02.png",
         "description": "This graph is a static visualization of the body temperature across male and female mice. Used to explore differences in the daily cylce of body temperature while highlighting the impact of female estrus.",

@@ -13,65 +13,101 @@
             <h1 class="name-title">NATHANIEL OLIVER</h1>
             <p class="contact-info"><a href="mailto:nathanielsoliver@gmail.com">nathanielsoliver@gmail.com</a> | San Jose, CA | <a href="https://www.linkedin.com/in/nathaniel-oliver-82239a265" target="_blank">LinkedIn</a></p>
         </div>
-        <div class="education-container">
-            <h2 class="university">University of California, San Diego (UCSD)</h2>
-            <p class="degree-info">M.S., Data Science - Expected June 2027 (GPA: 4.0/4.0)<br>
-            <em>Coursework: Data Management, Machine Learning, Statistics</em><br><br>
-            B.S., Mathematics & Economics, Minor in Data Science - June 2025<br>
-            <em>Notable Coursework: OOP, DSA, Micro/Macroeconomics, Econometrics, ML & Probabilistic Modeling</em></p>
+        <div class="education-container" style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px; border: 2px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                <h2 class="university" style="margin-top: 0;">University of California, San Diego</h2>
+                <p class="degree-info"><strong>M.S., Data Science</strong> - Expected June 2027<br>
+                GPA: 4.0/4.0<br>
+                <em>Coursework: Data Management, Machine Learning, Statistics</em></p>
+            </div>
+            <div style="flex: 1; min-width: 280px; border: 2px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                <h2 class="university" style="margin-top: 0;">University of California, San Diego</h2>
+                <p class="degree-info"><strong>B.S., Mathematics & Economics</strong><br>
+                Minor in Data Science - June 2025<br>
+                <em>Notable Coursework: OOP, DSA, Micro/Macroeconomics, Econometrics, ML & Probabilistic Modeling</em></p>
+            </div>
         </div>
     </section>
     
     <details open>
         <summary><h2>Skills</h2></summary>
         <ul>
-            <li><strong>Languages & Libraries:</strong> Python (pandas, NumPy, scikit-learn, Matplotlib, PyTorch), R, SQL</li>
-            <li><strong>AI & Machine Learning:</strong> Prompt Engineering, LLM-Assisted Analysis (ChatGPT), Classification and Regression, Time-Series Analysis, Feature Engineering, Model Evaluation, A/B Testing, Ensemble Methods, Hyperparameter Optimization</li>
-            <li><strong>Data Engineering:</strong> ETL Pipelines, Data Wrangling, PostgreSQL, MongoDB, AWS S3</li>
-        </ul>
-    </details>
-
-    <details>
-        <summary><h2>Projects</h2></summary>
-        <h3>AI-Driven Resume Quality & ATS Analysis System (Agentic Workflow)</h3>
-        <ul>
-            <li>Built a multi-agent AI system to ingest and normalize resumes, transcripts, LinkedIn exports, and GitHub metadata using Docling and reproducible ETL pipelines.</li>
-            <li>Integrated an open-source ATS scoring engine to evaluate alignment between structured candidate data and job requirements, enabling explainable gap analysis and evidence-backed scoring.</li>
-            <li>Designed AI workflows and prompt engineering strategies to generate compliant, non-fabricated resume improvements while documenting best practices for reliable AI-assisted analysis.</li>
-        </ul>
-        <h3>California Real Estate Price Prediction (Stacked Ensemble Model)</h3>
-        <ul>
-            <li>Built an end-to-end ML pipeline to predict single family home sales prices across California using on and off-market MLS sold data (100K+ observations), performing geospatial filtering, applying missingness mechanism analysis, and creating custom imputation strategies.</li>
-            <li>Engineered polynomial/interaction features, applied feature targeting, and implemented geo-clustering to capture non-linear, high-cardinality, and spatial pricing patterns.</li>
-            <li>Developed a 2-level stacked ensemble (XGBoost + LightGBM) with GBRegressor meta-learner using segment-aware weighting and RandomizedSearchCV, achieving sub-8% Median Absolute Percent Error, comparable to Redfin's model.</li>
+            <li><strong>Languages & Libraries:</strong> Python (pandas, NumPy, scikit-learn, Matplotlib, seaborn, PyTorch), R, SQL, JavaScript, Stata</li>
+            <li><strong>AI & Machine Learning:</strong> Classification and Regression, Ensemble Methods (XGBoost, LightGBM, Random Forest), Clustering (K-Means), Time-Series Analysis, Feature Engineering, Model Evaluation, Hyperparameter Optimization, Probabilistic Modeling, Bootstrapping</li>
+            <li><strong>Data Visualization:</strong> D3.js, Interactive Visualizations, Matplotlib, seaborn, QGIS (Geospatial)</li>
+            <li><strong>Data Engineering:</strong> ETL Pipelines, Data Wrangling, PostgreSQL, MongoDB, AWS S3, Jupyter Notebook</li>
+            <li><strong>Tools & Platforms:</strong> Microsoft Office, Excel, IBM Cognos, CivicRec</li>
         </ul>
     </details>
     <details>
         <summary><h2>Experience</h2></summary>
-        <h3>Senior Data Science Intern, IDX Exchange</h3>
-        <p>January 2026 – Present</p>
+        
+        <h3>Senior Data Science Intern</h3>
+        <p><strong>IDX Exchange</strong> · Internship<br>
+        <em>Jan 2026 – Present · Remote</em></p>
         <ul>
-            <li>Remote internship focused on predictive modeling for real estate pricing in California.</li>
+            <li>Working on predictive modeling for real estate pricing by exploring and preprocessing property datasets, training and evaluating machine learning models (e.g., regression and tree-based methods), and translating results into clear insights.</li>
             <li>Building ETL pipelines to process and prepare real estate data for modeling and analysis.</li>
+            <li>Creating predictive models (XGBoost) for real estate pricing, training and evaluating machine learning models.</li>
             <li>Gaining hands-on experience with Python, scikit-learn, and data visualization while collaborating cross-functionally in a proptech environment.</li>
-            <li>Creating predictive models (XGBoost) for real estate pricing by exploring and preprocessing property datasets, training and evaluating machine learning models.</li>
         </ul>
-        <h3>Economic Research Assistant, UCSD Department of Economics</h3>
-        <p>April 2024 – June 2025</p>
+        <p style="font-size: 0.9em; color: gray;"><em>Skills: Python, Extract Transform Load (ETL), XGBoost, scikit-learn</em></p>
+
+        <h3>Gap Year</h3>
+        <p><strong>Career Break</strong><br>
+        <em>Jul 2025 – Jan 2026 · San Jose, California</em></p>
         <ul>
-            <li>Worked closely with post-graduate researchers to aid their personal research projects.</li>
-            <li>Built reproducible ETL pipelines to source, aggregate, and clean large, multi-source datasets (UNHCR, UMPS, USCIS) using Python, R, and Stata, while documenting said pipelines.</li>
-            <li>Conducted Exploratory Data Analysis on refugee presence and crop prices in Sub-Saharan Africa (QGIS, Stata) as well as demographic impact on cohabitation across the US (R, Python).</li>
-            <li>Used Regression and DiD Analysis (Stata) to segment farming populations in Africa and determine if refugee presence increased crop prices.</li>
-            <li>Utilized Time-Series and Breakpoint Analysis (R, Python) to identify statistically-significant structural changes in cohabitation behavior in the US from 2007 to 2024 in major metropolitan areas, while using regression analysis to determine the most significant demographic factors in these changes.</li>
+            <li>Taking a semester off before beginning my Master's Degree.</li>
         </ul>
-        <h3>Financial Assistant/Student Lead, UCSD Student Life Business Office (SLBO)</h3>
-        <p>September 2023 – June 2025</p>
+
+        <h3>Research Assistant</h3>
+        <p><strong>UCSD Department of Economics</strong> · Internship<br>
+        <em>Mar 2025 – Jul 2025 · La Jolla, California · On-site</em></p>
+        <ul>
+            <li>Aggregated and analyzed census and immigration data from various sources, including UMPS and USCIS.</li>
+            <li>Conducted regression analysis using Python to explore cohabitation trends across diverse populations.</li>
+            <li>Employed Time-Series and Breakpoint Analysis to identify statistically-significant structural changes in cohabitation behavior in the US from 2007 to 2024 in major metropolitan areas.</li>
+            <li>Used regression analysis to determine the most significant demographic factors in these changes.</li>
+            <li>Collaborated closely with graduate and post-graduate researchers to enhance research outcomes.</li>
+        </ul>
+        <p style="font-size: 0.9em; color: gray;"><em>Skills: Research Skills, Econometrics, Python, R, Time-Series Analysis, Regression Analysis</em></p>
+
+        <h3>Financial Assistant / Student Lead</h3>
+        <p><strong>UC San Diego – Student Life Business Office (SLBO)</strong> · Part-time<br>
+        <em>Sep 2023 – Jun 2025 · La Jolla, California · On-site</em></p>
         <ul>
             <li>SLBO provides financial and HR management, event coordination, and transaction processing and reporting for student organizations.</li>
-            <li>Trained and managed a team of 3 students by creating a curriculum for the accounting and event planning applications, assigning work, and reporting progress to Student Fund Managers.</li>
-            <li>Worked with 200+ Student Organizations by planning, placing purchase orders, and managing transactions/account balances on their behalf.</li>
+            <li>Promoted to Student Lead: Trained and managed a team of 3 student workers, enhancing team productivity.</li>
+            <li>Created a curriculum for the accounting and event planning applications, assigning work, and reporting progress to Student Fund Managers.</li>
+            <li>Prepared invoices and purchase orders, ensuring accurate financial documentation.</li>
+            <li>Communicated with 450+ undergraduate student organizations, utilizing Payment Works, Concur, and other UCSD systems.</li>
+            <li>Facilitated effective event funding and planning, managing transactions/account balances on their behalf.</li>
         </ul>
+        <p style="font-size: 0.9em; color: gray;"><em>Skills: Microsoft Office, Excel, IBM Cognos, Financial Documentation, Team Management</em></p>
+
+        <h3>Research Assistant</h3>
+        <p><strong>UCSD Department of Economics</strong> · Internship<br>
+        <em>Jan 2024 – Mar 2024 · La Jolla, California · On-site</em></p>
+        <ul>
+            <li>Assisted in the collection and analysis of geospatial and economic data to support research initiatives.</li>
+            <li>Sourced and tidied large economic datasets from the UN/UNHCR.</li>
+            <li>Conducted exploratory data analysis on large datasets (Stata).</li>
+            <li>Investigated the effects of refugee camps on local wages and crop prices in Sub-Saharan Africa.</li>
+            <li>Used Geospatial Data to segment farmers based on the impact of Refugee camps and applied DiD analysis on historical pricing data (QGIS/Stata).</li>
+            <li>Collaborated closely with graduate and post-graduate researchers to enhance project outcomes.</li>
+        </ul>
+        <p style="font-size: 0.9em; color: gray;"><em>Skills: R, Stata, QGIS, Geospatial Analysis, DiD Analysis, Econometrics</em></p>
+
+        <h3>Manager</h3>
+        <p><strong>Campbell Community Center Aquatics</strong><br>
+        <em>2019 – 2022 · Campbell, California</em></p>
+        <ul>
+            <li>Managed the City of Campbell Aquatics, overseeing a team of 50 lifeguards and the Wave Swim team.</li>
+            <li>Developed competitive swim programs, enhancing client relationships and engagement.</li>
+            <li>Trained and managed over 50 lifeguards and scheduled swim team practices, incorporating project management strategies.</li>
+            <li>Utilized Microsoft Excel and CivicRec for efficient scheduling and membership management, improving operational efficiency.</li>
+        </ul>
+        <p style="font-size: 0.9em; color: gray;"><em>Skills: Microsoft Excel, CivicRec, Project Management, Team Leadership</em></p>
     </details>
     <details>
         <summary><h2>Achievements</h2></summary>

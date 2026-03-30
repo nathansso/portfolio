@@ -1,5 +1,19 @@
 [
     {
+        "title": "AI-Driven Resume Quality & ATS Analysis System",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Built a multi-agent AI system to ingest and normalize resumes, transcripts, LinkedIn exports, and GitHub metadata using Docling and reproducible ETL pipelines. Integrated an open-source ATS scoring engine to evaluate alignment between structured candidate data and job requirements, enabling explainable gap analysis and evidence-backed scoring. Designed AI workflows and prompt engineering strategies to generate compliant, non-fabricated resume improvements while documenting best practices for reliable AI-assisted analysis.",
+        "url": null
+    },
+    {
+        "title": "California Real Estate Price Prediction",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Built an end-to-end ML pipeline to predict single family home sales prices across California using on and off-market MLS sold data (100K+ observations), performing geospatial filtering, applying missingness mechanism analysis, and creating custom imputation strategies. Engineered polynomial/interaction features, applied feature targeting, and implemented geo-clustering to capture non-linear, high-cardinality, and spatial pricing patterns. Developed a 2-level stacked ensemble (XGBoost + LightGBM) with GBRegressor meta-learner using segment-aware weighting and RandomizedSearchCV, achieving sub-8% Median Absolute Percent Error, comparable to Redfin's model.",
+        "url": null
+    },
+    {
         "title": "Bike Traffic in Cambridge Interactive Visualization",
         "year": 2025,
         "image": "imgs/dsc106lab7.jpg",

@@ -56,11 +56,11 @@
         "url": "https://sebastianferragut.github.io/miced3/"
     },
     {
-        "title": "Aliquid rem magni veniam.",
-        "year": 2023,
+        "title": "eCommerce Session Review Analysis - Predicting Online Shopper Purchase Intent",
+        "year": 2026,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Quae minima eius aliquam quam distinctio sit a fuga fugit dolorem est cupiditate delectus recusandae neque voluptatem, autem assumenda blanditiis, nam in ducimus minus eos debitis nesciunt et architecto? Assumenda?",
-        "url": null
+        "description": "Analyzed 12,330 e-commerce browsing sessions to identify what drives revenue. Built Random Forest and XGBoost classifiers achieving ~90% accuracy, applied threshold tuning to optimize recall, and used K-Means clustering to uncover five distinct shopper archetypes — from 'bouncers'(0.4% conversion) to 'informed consumers' (24.3%). Key finding: product browsing depth and administrative page engagement are the strongest behavioral predictors of purchase intent, independent of page value analytics. Tools used include Python, scikit-learn, XGBoost, pandas, matplotlib, seaborn",
+        "url": "https://github.com/nathansso/dsc207finalproject.git"
     },
     {
         "title": "Nisi officia perspiciatis mollitia.",

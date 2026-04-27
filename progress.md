@@ -6,6 +6,12 @@
 - Created `CLAUDE.md` with development commands, CI/CD details, architecture overview, and workflow instructions
 - Created `progress.md` (this file) to track all future changes
 
+### Project card link bar
+- Added per-card links section to `renderProjects` in `global.js`: "View Project" pill (when `url` set) and GitHub icon pill (when `repo` field set)
+- Removed whole-card `<a>` wrap; projects without links render cleanly with no interactive elements
+- Inline SVG GitHub mark — no external icon dependency
+- Updated `style.css`: new `.project-links`, `.project-link-url`, `.project-link-github`, `.github-icon` styles; removed old `.project a.project-link` and conflicting `.project a` rules
+
 ### GitHub repo sync script
 - Created `scripts/sync-projects.js` — fetches all public repos for `nathansso`, updates descriptions from README content for projects with a `repo` field, and adds new repos not yet in the list
 - Created `.env.example` with `GITHUB_TOKEN` placeholder; `.env` added to `.gitignore`

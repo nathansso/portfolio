@@ -154,18 +154,10 @@
     border-radius: 5px;
   }
 
-    /* Make the whole project card clickable */
-  .project a.project-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  /* Hover effect for project cards */
+    /* Hover effect for project cards */
   .project:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-    cursor: pointer;
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
   }
   
   /* ==========================================================================
@@ -717,12 +709,49 @@ circle:hover {
   display: block;
   margin: 0 auto 16px;
 }
-.project a {
-  display: inline-block;
-  margin-top: 8px;
-  color: #007bff;
-  text-decoration: none;
+.project-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
 }
-.project a:hover {
-  text-decoration: underline;
+
+.project-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3em 0.8em;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.15s, opacity 0.15s;
+}
+
+.project-link-url {
+  background-color: var(--current-link-color);
+  color: canvas;
+  border-color: transparent;
+}
+
+.project-link-url:hover {
+  opacity: 0.8;
+}
+
+.project-link-github {
+  color: var(--text-color);
+}
+
+.project-link-github:hover {
+  background-color: var(--hover-color);
+}
+
+.github-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: middle;
 }

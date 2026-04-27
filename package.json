@@ -1,5 +1,10 @@
 {
+  "type": "module",
+  "scripts": {
+    "sync": "node scripts/sync-projects.js"
+  },
   "devDependencies": {
+    "dotenv": "^16.4.0",
     "elocuent": "^0.0.4"
   }
 }

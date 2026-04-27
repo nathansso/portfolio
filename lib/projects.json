@@ -18,7 +18,8 @@
         "year": 2025,
         "image": "imgs/dsc106lab7.jpg",
         "description": "An interactive map which highlights the bikepaths of Cambridge, Massachussets. The map also shows the bike traffic in the area, with the thickness of the lines representing the amount of bike traffic in that area.",
-        "url": "https://nathansso.github.io/datacycling/"
+        "url": "https://nathansso.github.io/datacycling/",
+        "repo": "datacycling"
     },
     {
         "title": "How Airbnb Tourism was impacted by the San Diego Sunshine",
@@ -74,27 +75,23 @@
         "year": 2026,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Analyzed 12,330 e-commerce browsing sessions to identify what drives revenue. Built Random Forest and XGBoost classifiers achieving ~90% accuracy, applied threshold tuning to optimize recall, and used K-Means clustering to uncover five distinct shopper archetypes — from 'bouncers'(0.4% conversion) to 'informed consumers' (24.3%). Key finding: product browsing depth and administrative page engagement are the strongest behavioral predictors of purchase intent, independent of page value analytics. Tools used include Python, scikit-learn, XGBoost, pandas, matplotlib, seaborn",
-        "url": "https://github.com/nathansso/dsc207finalproject.git"
+        "url": "https://github.com/nathansso/dsc207finalproject",
+        "repo": "dsc207finalproject"
     },
     {
-        "title": "Nisi officia perspiciatis mollitia.",
-        "year": 2022,
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Mollitia quae perferendis accusantium repudiandae aliquid esse magnam harum nihil soluta est, inventore id explicabo itaque hic suscipit reprehenderit placeat, totam officia, vero quaerat consectetur a. Accusantium consectetur doloribus quod?",
-        "url": null
-    },
-    {
-        "title": "Eveniet minus in magni.",
-        "year": 2023,
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Autem impedit dignissimos quidem voluptates ea aliquam iusto dolores nisi, tenetur fuga voluptas, assumenda suscipit praesentium, voluptatum maiores! Pariatur repudiandae doloribus maxime nihil ad perspiciatis facilis accusamus beatae sed in.",
-        "url": null
-    },
-    {
-        "title": "Rerum, asperiores fugiat. Corrupti?",
+        "title": "UCSD Research Lab",
         "year": 2025,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Libero, qui ipsa praesentium, recusandae ut nesciunt repellendus quaerat reiciendis adipisci corporis dolores molestiae, culpa maxime voluptates dolore. Vero, nemo omnis reprehenderit commodi rerum totam ipsa magni asperiores molestiae neque.",
-        "url": null
+        "description": "Research for Andre Gray",
+        "url": "https://github.com/nathansso/UCSD-Research-Lab",
+        "repo": "UCSD-Research-Lab"
+    },
+    {
+        "title": "DSC 80 Project Notebook",
+        "year": 2025,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Notebook Uploaded",
+        "url": "https://github.com/nathansso/DSC-80-Project-Notebook",
+        "repo": "DSC-80-Project-Notebook"
     }
 ]

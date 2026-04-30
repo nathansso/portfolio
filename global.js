@@ -8,12 +8,9 @@ const ARE_WE_HOME = document.documentElement.classList.contains('home');
 
 // Updated pages configuration with directory-style paths
 const pages = [
-  { url: '', title: 'Home' },          // Home points to root
+  { url: '', title: 'Home' },
   { url: 'projects/', title: 'Projects' },
   { url: 'resume/', title: 'Resume' },
-  { url: 'contact/', title: 'Contact' },
-  { url: 'meta/', title: 'Meta' },
-  { url: 'https://github.com/nathansso', title: 'GitHub', external: true }
 ];
 
 // Create navigation element
@@ -91,16 +88,6 @@ if (localStorage.colorScheme) {
   updateColorScheme("light dark");
 }
 
-// Contact form handling (unchanged)
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('.contact-form');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    location.href = `${form.action}?${new URLSearchParams(data)}`;
-  });
-});
-
 // JSON fetching helper
 export async function fetchJSON(url) {
   try {
@@ -153,18 +140,55 @@ export function renderProjects(projects, container, headingTag) {
       ? `<div class="project-links">${links.join('')}</div>`
       : '';
 
+    const skills = project.skills || [];
+    let skillsHtml = '';
+    if (skills.length) {
+      const visible = skills.slice(0, 5);
+      const hidden = skills.slice(5);
+      const visiblePills = visible.map(s => `<span class="skill-pill">#${s}</span>`).join('');
+      const hiddenPills = hidden.map(s => `<span class="skill-pill skill-pill--hidden">#${s}</span>`).join('');
+      const expandBtn = hidden.length
+        ? `<button class="skill-expand-btn">+${hidden.length} skills</button>`
+        : '';
+      skillsHtml = `<div class="skill-pills">${visiblePills}${hiddenPills}${expandBtn}</div>`;
+    }
+
+    let dateHtml = '';
+    if (project.lastCommit) {
+      const [y, m] = project.lastCommit.split('-').map(Number);
+      const label = new Date(y, m - 1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+      dateHtml = `<time class="project-date" datetime="${project.lastCommit}">${label}</time>`;
+    }
+
     return `
       <div class="project">
         <${headingTag}>${project.title}</${headingTag}>
+        ${dateHtml}
         <img src="${pathPrefix}${project.image}"
              alt="${project.title}"
              class="project-image"
              onerror="this.style.display='none'">
         <p>${project.description}</p>
         ${linksHtml}
+        ${skillsHtml}
       </div>`;
   }).join('');
 }
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.skill-expand-btn');
+  if (!btn) return;
+  const pills = btn.closest('.skill-pills');
+  if (btn.classList.contains('skill-collapse-btn')) {
+    Array.from(pills.querySelectorAll('.skill-pill')).slice(5).forEach(p => p.classList.add('skill-pill--hidden'));
+    btn.textContent = `+${pills.querySelectorAll('.skill-pill--hidden').length} skills`;
+    btn.classList.remove('skill-collapse-btn');
+  } else {
+    pills.querySelectorAll('.skill-pill--hidden').forEach(p => p.classList.remove('skill-pill--hidden'));
+    btn.textContent = 'show less';
+    btn.classList.add('skill-collapse-btn');
+  }
+});
 
 // GitHub data fetcher
 export async function fetchGitHubData(username) {

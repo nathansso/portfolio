@@ -24,25 +24,25 @@ There is no test framework. The "test" for UI changes is to serve the site local
 
 ## Architecture
 
-**Shared infrastructure** — `global.js` is loaded by every page and provides:
-- Navigation rendering (dynamically adjusts relative paths based on page depth)
-- Color scheme toggle (light/dark, persisted in `localStorage`)
-- `fetchJSON()` utility
-- `renderProjects()` — shared card renderer used on both home and projects pages
-- GitHub API data fetching
+**Data layer** — `data/site.js` is the single source of truth: `PROFILE`, `EXPERIENCES[]`, `PROJECTS[]`, `CATEGORIES`. Edit there and every page updates. Imported as ES module with a `?v=1` query string for cache busting — bump the version after meaningful edits.
 
-**Data layer** — `lib/projects.json` is the single source of truth for all project cards. Each entry: `{ title, year, image, description, url }`. The `url` field can be `null`.
+**Shared chrome** — `scripts/chrome.js` exports `mountChrome(currentPageId)` which renders the nav, footer, theme toggle, and mobile menu. Every page calls it on init.
 
-**Visualization pages** use D3.js v7 (CDN):
-- `projects/projects.js` — pie chart filtering by year; search filters both chart and cards
+**Design tokens** — `styles/tokens.css` holds all colors, type, spacing, radii, and base components (`.btn`, `.chip`, `.badge`, `.container`, `.nav`, `.footer`). Light + dark variants both defined; toggle persists in `localStorage` under `nso-theme`.
 
-**Page pattern**: every subdirectory (`projects/`, `resume/`) has its own `index.html` and optionally a `.js` file. Pages at subdirectory depth adjust `src`/`href` paths with a `../` prefix.
+**Pages** — flat at repo root: `index.html`, `about.html`, `projects.html`, `resume.html`. No build step. Each page has its own page-specific `<style>` block but pulls primitives from `tokens.css`.
+
+**Legacy scripts** — `scripts/sync-projects.js` and `scripts/infer_skills.py` are unused by the live site but kept for the user's external data-sync workflow (`npm run sync`). They no longer write to anything the site reads.
 
 ## Progress Tracking
 
-A `progress.md` file tracks all changes made in this project. **After completing each task:**
-1. Append an entry to `progress.md` describing what changed and why
-2. Commit all changes (including the `progress.md` update) to the repo
-3. Run `/compact` to keep conversation context manageable
+A `progress.md` file tracks all changes made in this project. **`progress.md` must be updated as part of every commit — never commit without it.**
+
+Workflow:
+1. Make code changes.
+2. Append an entry to `progress.md` describing what changed and why.
+3. Stage both the code changes and `progress.md` together and commit in a single commit.
+4. Push to the remote branch.
+5. Run `/compact` to keep conversation context manageable.
 
 When a new feature is added, create a corresponding test in `tests/`.

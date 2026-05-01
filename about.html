@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>About — Nathaniel Oliver</title>
+  <meta name="description" content="About Nathaniel Oliver — research, internships, and education.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <style>
+    /* ---------- About-page layout ---------- */
+    body { background: var(--surface-0); }
+
+    /* Layout */
+    .ab-layout {
+      display: flex;
+      align-items: flex-start;
+      min-height: calc(100vh - 56px);
+    }
+
+    .ab-sidebar {
+      width: clamp(380px, 35vw, 640px);
+      flex-shrink: 0;
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      padding: var(--sp-4) var(--sp-5) var(--sp-4) var(--sp-6);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      border-right: 1px solid var(--line-faint);
+    }
+
+    .ab-scroll-col {
+      flex: 1;
+      min-width: 0;
+      overflow-y: auto;
+      height: calc(100vh - 56px);
+    }
+
+    @media (max-width: 767px) {
+      .ab-layout { flex-direction: column; }
+      .ab-sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line-faint);
+      }
+      .ab-scroll-col {
+        height: auto;
+        overflow-y: visible;
+      }
+    }
+
+    .about-eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-2);
+    }
+    .about-eyebrow::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .about-title {
+      font-size: clamp(34px, 3.6vw, 48px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink-strong);
+      margin: 0 0 var(--sp-3);
+    }
+
+    .about-bio {
+      max-width: 65ch;
+      font-size: clamp(16px, 1.15vw, 18px);
+      line-height: 1.6;
+      color: var(--ink-body);
+      text-wrap: pretty;
+    }
+    .about-bio p + p { margin-top: var(--sp-3); }
+    .about-bio strong { color: var(--ink-strong); font-weight: 600; }
+
+    /* Sidebar-specific density: keep full bio visible without scrolling */
+    .ab-sidebar .about-title { margin-bottom: var(--sp-2); }
+    .ab-sidebar .about-bio { font-size: 18px; line-height: 1.45; max-width: none; }
+    .ab-sidebar .about-bio p + p { margin-top: var(--sp-2); }
+
+    /* ---------- Filter section ---------- */
+    .filter-section {
+      padding: var(--sp-4) 0 6px;
+      border-top: 1px solid var(--line-faint);
+      position: sticky;
+      top: 0;
+      background: color-mix(in oklab, var(--surface-0) 92%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    .filter-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-2);
+    }
+    .filter-label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-muted);
+    }
+    .filter-count {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      color: var(--ink-muted);
+    }
+    .filter-count strong { color: var(--ink-strong); font-weight: 600; }
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      padding-bottom: 6px;
+    }
+    .fchip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      background: var(--surface-1);
+      color: var(--ink-body);
+      border: 1px solid var(--line-faint);
+      cursor: pointer;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease, transform 120ms ease;
+    }
+    .fchip:hover { transform: translateY(-1px); border-color: var(--line-strong); }
+    .fchip-dot {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+    .fchip[data-cat="all"]                       { color: var(--ink-strong); }
+    .fchip[data-cat="research"]                  { color: var(--cat-research); }
+    .fchip[data-cat="internship"]                { color: var(--cat-internship); }
+    .fchip[data-cat="graduate"]                  { color: var(--cat-graduate); }
+    .fchip[data-cat="undergrad"]                 { color: var(--cat-undergrad); }
+
+    .fchip[aria-pressed="true"] {
+      background: var(--ink-strong);
+      color: var(--surface-0);
+      border-color: var(--ink-strong);
+    }
+    .fchip[aria-pressed="true"] .fchip-dot { background: var(--surface-0); }
+    .fchip[data-cat="research"][aria-pressed="true"]   { background: var(--cat-research); border-color: var(--cat-research); }
+    .fchip[data-cat="internship"][aria-pressed="true"] { background: var(--cat-internship); border-color: var(--cat-internship); }
+    .fchip[data-cat="graduate"][aria-pressed="true"]   { background: var(--cat-graduate); border-color: var(--cat-graduate); }
+    .fchip[data-cat="undergrad"][aria-pressed="true"]  { background: var(--cat-undergrad); border-color: var(--cat-undergrad); }
+
+    /* ---------- Timeline ---------- */
+    .timeline {
+      padding: var(--sp-3) 0 var(--sp-9);
+    }
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+    .exp-card {
+      background: var(--surface-1);
+      border: 1px solid var(--line-faint);
+      border-radius: var(--r-4);
+      padding: var(--sp-4) var(--sp-5);
+      box-shadow:
+        6px 6px 18px color-mix(in oklab, var(--ink-strong) 8%, transparent),
+        -4px -4px 14px color-mix(in oklab, var(--surface-2) 90%, white);
+      transition: transform 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .exp-card {
+      box-shadow:
+        6px 6px 22px rgba(0,0,0,0.5),
+        -4px -4px 14px color-mix(in oklab, var(--surface-2) 55%, transparent);
+    }
+    /* Left accent stripe colored by category */
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--exp-color, var(--ink-faint));
+    }
+    .exp-card[data-cat="research"]   { --exp-color: var(--cat-research); }
+    .exp-card[data-cat="internship"] { --exp-color: var(--cat-internship); }
+    .exp-card[data-cat="graduate"]   { --exp-color: var(--cat-graduate); }
+    .exp-card[data-cat="undergrad"]  { --exp-color: var(--cat-undergrad); }
+    .exp-card[data-cat="other"]      { --exp-color: var(--cat-other); }
+
+    .exp-card[hidden] { display: none; }
+    .exp-card.is-dim { opacity: 0.35; }
+
+    .exp-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--sp-2);
+    }
+    .exp-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .exp-title {
+      font-size: var(--fs-h3);
+      font-weight: 600;
+      color: var(--ink-strong);
+      line-height: 1.25;
+    }
+    .exp-org {
+      font-size: var(--fs-small);
+      color: var(--ink-muted);
+    }
+    .exp-org .exp-advisor { color: var(--ink-faint); margin-left: 4px; }
+
+    .exp-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+    }
+    .exp-range { color: var(--ink-strong); }
+    .exp-loc { color: var(--ink-muted); }
+
+    .exp-blurb {
+      font-size: var(--fs-body);
+      line-height: 1.6;
+      color: var(--ink-body);
+      max-width: 65ch;
+      margin-bottom: var(--sp-2);
+    }
+
+    .exp-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--sp-3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+    .exp-bullets li {
+      position: relative;
+      padding-left: var(--sp-5);
+      font-size: var(--fs-small);
+      color: var(--ink-body);
+      line-height: 1.55;
+    }
+    .exp-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 9px;
+      width: 8px;
+      height: 1px;
+      background: var(--exp-color, var(--ink-faint));
+    }
+
+    .exp-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-3);
+    }
+
+    /* Inline projects row */
+    .exp-projects {
+      border-top: 1px dashed var(--line-faint);
+      padding-top: var(--sp-3);
+    }
+    .exp-projects-label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: var(--sp-3);
+    }
+    .exp-projects-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--sp-3);
+    }
+    .ptile {
+      display: flex;
+      gap: var(--sp-3);
+      padding: var(--sp-3);
+      border-radius: var(--r-3);
+      background: var(--surface-2);
+      border: 1px solid var(--line-faint);
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+    .ptile:hover { transform: translateY(-1px); border-color: var(--line-strong); }
+    .ptile-thumb {
+      width: 64px; height: 64px;
+      border-radius: var(--r-2);
+      background: var(--surface-1);
+      flex-shrink: 0;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+    .ptile-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .ptile-thumb[data-cat="research"]   { color: var(--cat-research); background: var(--cat-research-bg); }
+    .ptile-thumb[data-cat="internship"] { color: var(--cat-internship); background: var(--cat-internship-bg); }
+    .ptile-thumb[data-cat="graduate"]   { color: var(--cat-graduate); background: var(--cat-graduate-bg); }
+    .ptile-thumb[data-cat="undergrad"]  { color: var(--cat-undergrad); background: var(--cat-undergrad-bg); }
+    .ptile-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+    .ptile-title {
+      font-size: var(--fs-small);
+      font-weight: 500;
+      color: var(--ink-strong);
+      line-height: 1.3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .ptile-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: var(--sp-8) var(--sp-5);
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
+      font-size: var(--fs-small);
+    }
+
+  </style>
+</head>
+<body>
+  <div id="site-nav-host"></div>
+
+  <main>
+    <div class="ab-layout">
+      <aside class="ab-sidebar">
+        <div class="about-eyebrow">About</div>
+        <h1 class="about-title">Nathaniel Oliver</h1>
+
+        <div class="about-bio" id="about-bio"></div>
+      </aside>
+
+      <div class="ab-scroll-col">
+        <!-- FILTER -->
+        <section class="filter-section">
+          <div class="container">
+            <div class="filter-head">
+              <div class="filter-label">Filter by category</div>
+              <div class="filter-count" id="filter-count"></div>
+            </div>
+            <div class="filter-chips" id="filter-chips" role="group" aria-label="Category filters"></div>
+          </div>
+        </section>
+
+        <!-- TIMELINE -->
+        <section class="timeline">
+          <div class="container">
+            <div class="timeline-list" id="timeline-list"></div>
+            <div class="empty-state" id="empty-state" hidden>
+              No experiences match the selected filter.
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-host"></div>
+
+  <script type="module">
+    import { mountChrome } from './scripts/chrome.js?v=1';
+    import { PROFILE, EXPERIENCES, PROJECTS, CATEGORIES, fmtRange, projectsByIds } from './data/site.js?v=1';
+
+    mountChrome('about');
+
+    // ----- Bio -----
+    const bioHost = document.getElementById('about-bio');
+    bioHost.innerHTML = PROFILE.bio
+      .split('\n\n')
+      .map(p => `<p>${p.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')}</p>`)
+      .join('');
+
+    // ----- Order: Graduate education first, then Internship, then Research, then Undergrad, then Other -----
+    const CATEGORY_ORDER = ['graduate', 'internship', 'research', 'undergrad', 'other'];
+    const sorted = [...EXPERIENCES].sort((a, b) => {
+      const ca = CATEGORY_ORDER.indexOf(a.category);
+      const cb = CATEGORY_ORDER.indexOf(b.category);
+      if (ca !== cb) return ca - cb;
+      // Within category, most recent first
+      return (b.start || '').localeCompare(a.start || '');
+    });
+
+    // ----- Filter chips -----
+    const FILTER_CATS = [
+      { id: 'all',        label: 'All' },
+      { id: 'research',   label: 'Research' },
+      { id: 'internship', label: 'Internship' },
+      { id: 'graduate',   label: 'Graduate' },
+      { id: 'undergrad',  label: 'Undergrad' },
+    ];
+    const counts = { all: sorted.length };
+    for (const e of sorted) counts[e.category] = (counts[e.category] || 0) + 1;
+
+    const chipHost = document.getElementById('filter-chips');
+    chipHost.innerHTML = FILTER_CATS.map((c, i) => `
+      <button class="fchip" data-cat="${c.id}" aria-pressed="${i === 0 ? 'true' : 'false'}">
+        ${c.id !== 'all' ? '<span class="fchip-dot" aria-hidden="true"></span>' : ''}
+        ${c.label}
+        <span style="opacity: 0.6; margin-left: 4px;">${counts[c.id] || 0}</span>
+      </button>
+    `).join('');
+
+    // ----- Render experiences -----
+    const list = document.getElementById('timeline-list');
+    list.innerHTML = sorted.map(exp => {
+      const projects = projectsByIds(exp.projectIds);
+      return `
+        <article class="exp-card" data-cat="${exp.category}" data-id="${exp.id}">
+          <div class="exp-head">
+            <div class="exp-title-wrap">
+              <div class="exp-title">${exp.title}</div>
+              <div class="exp-org">
+                ${exp.org}${exp.advisor ? `<span class="exp-advisor">· ${exp.advisor}</span>` : ''}
+              </div>
+            </div>
+            <div class="exp-meta">
+              <span class="exp-range">${fmtRange(exp.start, exp.end, exp.endLabel)}</span>
+              ${exp.location ? `<span class="exp-loc">${exp.location}</span>` : ''}
+            </div>
+          </div>
+
+          <p class="exp-blurb">${exp.blurb}</p>
+
+          ${exp.bullets && exp.bullets.length ? `
+            <ul class="exp-bullets">
+              ${exp.bullets.map(b => `<li>${b}</li>`).join('')}
+            </ul>
+          ` : ''}
+
+          ${exp.skills && exp.skills.length ? `
+            <div class="exp-skills">
+              ${exp.skills.map(s => `<span class="chip">${s}</span>`).join('')}
+            </div>
+          ` : ''}
+
+          ${projects.length ? `
+            <div class="exp-projects">
+              <div class="exp-projects-label">Linked projects · ${projects.length}</div>
+              <div class="exp-projects-row">
+                ${projects.map(p => `
+                  <a class="ptile" href="projects.html#${p.id}">
+                    <div class="ptile-thumb" data-cat="${p.category}">
+                      ${p.image ? `<img src="${p.image}" alt="">` : (p.course || p.category.slice(0,3))}
+                    </div>
+                    <div class="ptile-body">
+                      <div class="ptile-title">${p.title}</div>
+                      <div class="ptile-meta">${formatDate(p.date)}${p.course ? ' · ' + p.course : ''}</div>
+                    </div>
+                  </a>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </article>
+      `;
+    }).join('');
+
+    // ----- Filter logic -----
+    const empty = document.getElementById('empty-state');
+    const countEl = document.getElementById('filter-count');
+    function applyFilter(cat) {
+      const cards = list.querySelectorAll('.exp-card');
+      let shown = 0;
+      cards.forEach(card => {
+        const match = cat === 'all' || card.dataset.cat === cat;
+        card.hidden = !match;
+        if (match) shown++;
+      });
+      empty.hidden = shown > 0;
+      countEl.innerHTML = `<strong>${shown}</strong> of ${sorted.length} ${shown === 1 ? 'experience' : 'experiences'}`;
+    }
+    chipHost.addEventListener('click', (e) => {
+      const btn = e.target.closest('.fchip');
+      if (!btn) return;
+      chipHost.querySelectorAll('.fchip').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      applyFilter(btn.dataset.cat);
+    });
+    applyFilter('all');
+
+    function formatDate(yyyymm) {
+      if (!yyyymm) return '';
+      const [y, m] = yyyymm.split('-').map(Number);
+      return new Date(y, (m||1)-1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+    }
+  </script>
+</body>
+</html>

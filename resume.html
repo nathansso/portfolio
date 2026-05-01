@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Résumé — Nathaniel Oliver</title>
+  <meta name="description" content="Nathaniel Oliver — Data Scientist. One-page résumé.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <style>
+    body { background: var(--surface-2); }
+
+    /* ---------- Page chrome (web only) ---------- */
+    .rs-toolbar {
+      position: sticky;
+      top: 56px;
+      z-index: 10;
+      padding: var(--sp-3) 0;
+      background: color-mix(in oklab, var(--surface-2) 92%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line-faint);
+    }
+    .rs-toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-3);
+    }
+    .rs-toolbar-label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-muted);
+    }
+    .rs-toolbar-actions {
+      display: flex;
+      gap: var(--sp-2);
+      flex-wrap: wrap;
+    }
+
+    /* ---------- Page (the document itself) ---------- */
+    .rs-page-wrap {
+      padding: var(--sp-5) 0 var(--sp-9);
+      display: flex;
+      justify-content: center;
+    }
+    .rs-page {
+      width: 8.5in;
+      min-height: 11in;
+      background: var(--surface-0);
+      color: var(--ink-strong);
+      box-shadow:
+        0 1px 2px color-mix(in oklab, var(--ink-strong) 8%, transparent),
+        0 12px 40px color-mix(in oklab, var(--ink-strong) 12%, transparent);
+      padding: 0.55in 0.6in 0.5in;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.22in;
+      font-size: 10pt;
+      line-height: 1.42;
+      position: relative;
+    }
+    [data-theme="dark"] .rs-page {
+      background: oklch(96% 0.005 80);
+      color: oklch(20% 0.005 240);
+    }
+
+    /* Header */
+    .rs-head {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 0.18in;
+      border-bottom: 1.5px solid currentColor;
+    }
+    .rs-name {
+      font-family: var(--font-display);
+      font-size: 28pt;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin: 0;
+    }
+    .rs-name-accent { color: var(--accent); }
+    .rs-role-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      letter-spacing: 0.05em;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .rs-role {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .rs-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      color: oklch(35% 0.005 240);
+    }
+    [data-theme="dark"] .rs-contact { color: oklch(30% 0.005 240); }
+    .rs-contact a { color: inherit; text-decoration: none; }
+    .rs-contact a:hover { color: var(--accent); }
+    .rs-contact-sep {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: currentColor; opacity: 0.4;
+    }
+
+    /* Body grid */
+    .rs-body {
+      display: grid;
+      grid-template-columns: 1.85fr 1fr;
+      gap: 0.32in;
+    }
+
+    /* Section headers */
+    .rs-sec {
+      margin-bottom: 0.18in;
+    }
+    .rs-sec-title {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 7px;
+      padding-bottom: 3px;
+      border-bottom: 1px solid currentColor;
+    }
+
+    /* Experience entry */
+    .rs-entry {
+      margin-bottom: 9px;
+      break-inside: avoid;
+    }
+    .rs-entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .rs-entry-title {
+      font-size: 10.5pt;
+      font-weight: 600;
+      line-height: 1.25;
+      margin: 0;
+    }
+    .rs-entry-date {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      color: oklch(35% 0.005 240);
+    }
+    [data-theme="dark"] .rs-entry-date { color: oklch(30% 0.005 240); }
+    .rs-entry-org {
+      font-size: 9.5pt;
+      font-style: italic;
+      color: oklch(30% 0.005 240);
+      margin: 1px 0 4px;
+    }
+    [data-theme="dark"] .rs-entry-org { color: oklch(25% 0.005 240); }
+    .rs-bullets {
+      margin: 3px 0 0;
+      padding-left: 14px;
+      list-style: none;
+    }
+    .rs-bullets li {
+      position: relative;
+      padding-left: 0;
+      margin-bottom: 2px;
+      font-size: 9.5pt;
+      line-height: 1.4;
+    }
+    .rs-bullets li::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 0.6em;
+      width: 4px; height: 1px;
+      background: var(--accent);
+    }
+
+    /* Sidebar — skills */
+    .rs-skills-group { margin-bottom: 9px; }
+    .rs-skills-label {
+      font-family: var(--font-mono);
+      font-size: 8.25pt;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: oklch(40% 0.005 240);
+      margin-bottom: 3px;
+    }
+    [data-theme="dark"] .rs-skills-label { color: oklch(35% 0.005 240); }
+    .rs-skills-list {
+      font-size: 9.5pt;
+      line-height: 1.45;
+      color: var(--ink-strong);
+    }
+    [data-theme="dark"] .rs-skills-list { color: oklch(20% 0.005 240); }
+
+    /* Education sidebar entries */
+    .rs-edu-entry {
+      margin-bottom: 8px;
+      break-inside: avoid;
+    }
+    .rs-edu-degree {
+      font-size: 10pt;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.25;
+    }
+    .rs-edu-school {
+      font-size: 9pt;
+      font-style: italic;
+      color: oklch(30% 0.005 240);
+      margin: 1px 0 2px;
+    }
+    [data-theme="dark"] .rs-edu-school { color: oklch(25% 0.005 240); }
+    .rs-edu-meta {
+      font-family: var(--font-mono);
+      font-size: 8.25pt;
+      letter-spacing: 0.04em;
+      color: oklch(40% 0.005 240);
+    }
+    [data-theme="dark"] .rs-edu-meta { color: oklch(35% 0.005 240); }
+    .rs-edu-detail {
+      font-size: 9pt;
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    /* Selected projects in sidebar */
+    .rs-proj-item {
+      margin-bottom: 6px;
+      break-inside: avoid;
+    }
+    .rs-proj-title {
+      font-size: 9.5pt;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .rs-proj-meta {
+      font-family: var(--font-mono);
+      font-size: 8pt;
+      letter-spacing: 0.04em;
+      color: oklch(40% 0.005 240);
+    }
+    [data-theme="dark"] .rs-proj-meta { color: oklch(35% 0.005 240); }
+
+    /* Footer caption (web only, the "this is a 1-page résumé" hint) */
+    .rs-foot-cap {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      color: var(--ink-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: var(--sp-3);
+    }
+
+    /* ---------- Print ---------- */
+    @page {
+      size: letter;
+      margin: 0;
+    }
+    @media print {
+      body { background: white !important; }
+      #site-nav-host, #site-footer-host, .rs-toolbar, .rs-foot-cap { display: none !important; }
+      .rs-page-wrap { padding: 0; display: block; }
+      .rs-page {
+        width: 8.5in;
+        min-height: 0;
+        height: auto;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      [data-theme="dark"] .rs-page,
+      .rs-page {
+        background: white !important;
+        color: black !important;
+      }
+      a { color: inherit !important; text-decoration: none !important; }
+    }
+
+    /* Responsive: collapse to single column under 720px */
+    @media (max-width: 760px) {
+      .rs-page {
+        width: 100%;
+        padding: var(--sp-5) var(--sp-4);
+        font-size: 11pt;
+      }
+      .rs-body {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav-host"></div>
+
+  <main>
+    <section class="rs-toolbar">
+      <div class="container">
+        <div class="rs-toolbar-row">
+          <div class="rs-toolbar-label">One-page résumé · updated <span id="rs-updated"></span></div>
+          <div class="rs-toolbar-actions">
+            <a class="btn btn-ghost" href="#" id="rs-print">Print</a>
+            <a class="btn btn-primary" href="resume.pdf" download="Nathaniel-Oliver-Resume.pdf" id="rs-download">↓ Download PDF</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rs-page-wrap">
+      <article class="rs-page" id="rs-doc">
+        <!-- rendered by script -->
+      </article>
+    </div>
+
+    <p class="rs-foot-cap">Press Cmd/Ctrl + P to save as PDF · or use the download button</p>
+  </main>
+
+  <div id="site-footer-host"></div>
+
+  <script type="module">
+    import { mountChrome } from './scripts/chrome.js?v=1';
+    import { PROFILE, EXPERIENCES, PROJECTS } from './data/site.js?v=1';
+
+    mountChrome('resume');
+
+    // ---- Curate what fits on one page ----
+    // Experience: Internship + Research (3) + Other (2) — 5 entries, condensed bullets
+    const expIds = ['idx', 'econ-gray', 'econ-refugee', 'slbo', 'aquatics'];
+    const eduIds = ['msdsc', 'bsmath'];
+    const featuredProjectIds = ['ca-real-estate', 'ats-resume', 'ecommerce-intent', 'ucsd-research-lab'];
+
+    const expMap = Object.fromEntries(EXPERIENCES.map(e => [e.id, e]));
+    const projMap = Object.fromEntries(PROJECTS.map(p => [p.id, p]));
+
+    // ---- Skill groups (curated, not from per-experience tags) ----
+    const SKILL_GROUPS = [
+      { label: 'Languages', items: ['Python', 'R', 'SQL', 'JavaScript', 'HTML/CSS'] },
+      { label: 'ML & Modeling', items: ['scikit-learn', 'XGBoost', 'PyTorch', 'pandas', 'NumPy', 'statistical modeling', 'feature engineering'] },
+      { label: 'Data & Viz', items: ['D3.js', 'Plotly', 'matplotlib', 'seaborn', 'Tableau', 'PostgreSQL'] },
+      { label: 'AI/LLM', items: ['LangGraph', 'LangChain', 'OpenAI', 'sentence-transformers', 'prompt engineering', 'RAG'] },
+      { label: 'Tools', items: ['Git', 'Jupyter', 'Docker', 'AWS', 'Excel', 'IBM Cognos'] },
+    ];
+
+    // ---- Helpers ----
+    function fmtRange(start, end, endLabel) {
+      const fmt = (s) => {
+        if (!s) return '';
+        const [y, m] = s.split('-').map(Number);
+        return new Date(y, (m||1)-1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+      };
+      const e = end ? fmt(end) : (endLabel || 'Present');
+      return `${fmt(start)} — ${e}`;
+    }
+
+    // ---- Render ----
+    const expHtml = expIds.map(id => {
+      const e = expMap[id];
+      if (!e) return '';
+      // Cap bullets at 3 per entry to fit 1 page
+      const bullets = (e.bullets || []).slice(0, 3);
+      return `
+        <div class="rs-entry">
+          <div class="rs-entry-head">
+            <h3 class="rs-entry-title">${e.title}</h3>
+            <span class="rs-entry-date">${fmtRange(e.start, e.end, e.endLabel)}</span>
+          </div>
+          <p class="rs-entry-org">${e.org}${e.location ? ` · ${e.location}` : ''}</p>
+          ${bullets.length ? `<ul class="rs-bullets">${bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
+        </div>
+      `;
+    }).join('');
+
+    const eduHtml = eduIds.map(id => {
+      const e = expMap[id];
+      if (!e) return '';
+      return `
+        <div class="rs-edu-entry">
+          <h4 class="rs-edu-degree">${e.title}</h4>
+          <p class="rs-edu-school">${e.org}</p>
+          <div class="rs-edu-meta">${fmtRange(e.start, e.end, e.endLabel)}</div>
+          ${e.id === 'bsmath' ? '<div class="rs-edu-detail">Minor in Data Science · Provost Honors 2021–2025</div>' : ''}
+          ${e.id === 'msdsc' ? '<div class="rs-edu-detail">Coursework: ML, statistical NLP, recommender systems, scalable analytics</div>' : ''}
+        </div>
+      `;
+    }).join('');
+
+    const skillsHtml = SKILL_GROUPS.map(g => `
+      <div class="rs-skills-group">
+        <div class="rs-skills-label">${g.label}</div>
+        <div class="rs-skills-list">${g.items.join(' · ')}</div>
+      </div>
+    `).join('');
+
+    const projHtml = featuredProjectIds.map(id => {
+      const p = projMap[id];
+      if (!p) return '';
+      const exp = p.experienceId ? expMap[p.experienceId] : null;
+      const ctx = p.course || (exp ? exp.org.replace('UCSD ', '').replace('UC San Diego', 'UCSD') : '');
+      return `
+        <div class="rs-proj-item">
+          <h4 class="rs-proj-title">${p.title}</h4>
+          <div class="rs-proj-meta">${ctx}${ctx ? ' · ' : ''}${(p.skills || []).slice(0,3).join(', ')}</div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('rs-doc').innerHTML = `
+      <header class="rs-head">
+        <h1 class="rs-name">${PROFILE.name}<span class="rs-name-accent">.</span></h1>
+        <div class="rs-role-row">
+          <span class="rs-role">Data Scientist</span>
+          <div class="rs-contact">
+            <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>
+            <span class="rs-contact-sep"></span>
+            <a href="https://github.com/${PROFILE.github}">github.com/${PROFILE.github}</a>
+            <span class="rs-contact-sep"></span>
+            <a href="https://linkedin.com/in/${PROFILE.linkedin}">linkedin.com/in/${PROFILE.linkedin.split('-').slice(0,3).join('-')}</a>
+            <span class="rs-contact-sep"></span>
+            <span>${PROFILE.location}</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="rs-body">
+        <div class="rs-col-main">
+          <section class="rs-sec">
+            <h2 class="rs-sec-title">Experience</h2>
+            ${expHtml}
+          </section>
+
+          <section class="rs-sec">
+            <h2 class="rs-sec-title">Selected Projects</h2>
+            ${projHtml}
+          </section>
+        </div>
+
+        <aside class="rs-col-side">
+          <section class="rs-sec">
+            <h2 class="rs-sec-title">Education</h2>
+            ${eduHtml}
+          </section>
+
+          <section class="rs-sec">
+            <h2 class="rs-sec-title">Skills</h2>
+            ${skillsHtml}
+          </section>
+        </aside>
+      </div>
+    `;
+
+    // Updated date
+    const today = new Date();
+    document.getElementById('rs-updated').textContent =
+      today.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+    // Print button
+    document.getElementById('rs-print').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.print();
+    });
+  </script>
+</body>
+</html>

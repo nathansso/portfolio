@@ -1,5 +1,13 @@
 # Progress Log
 
+## 2026-04-30 — Full redesign
+
+- Replaced index/projects/resume/about pages with new design system.
+- New data layer at data/site.js; old lib/projects.json removed.
+- Shared chrome at scripts/chrome.js; tokens at styles/tokens.css.
+- Old top-level pages, helpers, and unused images removed.
+- PR: redesign/2026-04 → main.
+
 ## 2026-04-26
 
 ### CLAUDE.md + progress.md initialization

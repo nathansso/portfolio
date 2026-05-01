@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Projects — Nathaniel Oliver</title>
+  <meta name="description" content="Projects by Nathaniel Oliver — predictive modeling, data visualization, and applied research.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <style>
+    body { background: var(--surface-0); }
+
+    /* ---------- Hero ---------- */
+    .pj-hero {
+      padding: var(--sp-6) 0 var(--sp-3);
+      position: relative;
+      overflow: hidden;
+    }
+    .pj-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(110deg,
+          transparent 0%,
+          color-mix(in oklab, var(--cat-internship) 16%, transparent) 28%,
+          color-mix(in oklab, var(--cat-graduate) 14%, transparent) 52%,
+          color-mix(in oklab, var(--accent) 18%, transparent) 78%,
+          transparent 100%);
+      filter: blur(56px);
+      opacity: 0.7;
+      pointer-events: none;
+      mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+    }
+    [data-theme="dark"] .pj-hero::before { opacity: 0.55; }
+    .pj-hero > .container { position: relative; z-index: 1; }
+
+    .pj-eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-2);
+    }
+    .pj-eyebrow::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .pj-title {
+      font-size: clamp(34px, 3.6vw, 48px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink-strong);
+      margin: 0 0 var(--sp-3);
+    }
+    .pj-sub {
+      max-width: 60ch;
+      font-size: clamp(15px, 1vw, 17px);
+      line-height: 1.55;
+      color: var(--ink-body);
+      margin: 0;
+    }
+
+    /* ---------- Filter bar ---------- */
+    .pj-filter {
+      padding: var(--sp-3) 0 6px;
+      border-top: 1px solid var(--line-faint);
+      position: sticky;
+      top: 56px;
+      background: color-mix(in oklab, var(--surface-0) 92%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    .pj-filter-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-2);
+    }
+    .pj-filter-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--sp-3);
+      padding-bottom: 8px;
+    }
+    .pj-search {
+      position: relative;
+      flex: 1 1 220px;
+      max-width: 320px;
+      min-width: 180px;
+    }
+    .pj-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px;
+      color: var(--ink-muted);
+      pointer-events: none;
+    }
+    .pj-search input {
+      width: 100%;
+      padding: 8px 32px 8px 34px;
+      border-radius: 999px;
+      border: 1px solid var(--line-faint);
+      background: var(--surface-1);
+      color: var(--ink-strong);
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      letter-spacing: 0.04em;
+      outline: none;
+      transition: border-color 140ms ease, background 140ms ease;
+    }
+    .pj-search input::placeholder { color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .pj-search input:focus { border-color: var(--accent); background: var(--surface-0); }
+    .pj-search-clear {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-2);
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      cursor: pointer;
+      border: none;
+    }
+    .pj-search-clear:hover { color: var(--ink-strong); background: var(--surface-3, var(--surface-2)); }
+    .pj-search.has-value .pj-search-clear { display: inline-flex; }
+    .pj-filter-label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-muted);
+    }
+    .pj-filter-count {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      color: var(--ink-muted);
+    }
+    .pj-filter-count strong { color: var(--ink-strong); font-weight: 600; }
+    .fchip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      background: var(--surface-1);
+      color: var(--ink-body);
+      border: 1px solid var(--line-faint);
+      cursor: pointer;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease, transform 120ms ease;
+    }
+    .fchip:hover { transform: translateY(-1px); border-color: var(--line-strong); }
+    .fchip-dot { width: 8px; height: 8px; border-radius: 999px; background: currentColor; }
+    .fchip[data-cat="all"]        { color: var(--ink-strong); }
+    .fchip[data-cat="research"]   { color: var(--cat-research); }
+    .fchip[data-cat="internship"] { color: var(--cat-internship); }
+    .fchip[data-cat="graduate"]   { color: var(--cat-graduate); }
+    .fchip[data-cat="undergrad"]  { color: var(--cat-undergrad); }
+    .fchip[data-cat="personal"]   { color: var(--cat-personal); }
+    .fchip[data-cat="other"]      { color: var(--cat-other); }
+    .fchip[aria-pressed="true"] { background: var(--ink-strong); color: var(--surface-0); border-color: var(--ink-strong); }
+    .fchip[aria-pressed="true"] .fchip-dot { background: var(--surface-0); }
+    .fchip[data-cat="research"][aria-pressed="true"]   { background: var(--cat-research); border-color: var(--cat-research); }
+    .fchip[data-cat="internship"][aria-pressed="true"] { background: var(--cat-internship); border-color: var(--cat-internship); }
+    .fchip[data-cat="graduate"][aria-pressed="true"]   { background: var(--cat-graduate); border-color: var(--cat-graduate); }
+    .fchip[data-cat="undergrad"][aria-pressed="true"]  { background: var(--cat-undergrad); border-color: var(--cat-undergrad); }
+    .fchip[data-cat="personal"][aria-pressed="true"]   { background: var(--cat-personal); border-color: var(--cat-personal); }
+    .fchip[data-cat="other"][aria-pressed="true"]      { background: var(--cat-other); border-color: var(--cat-other); }
+    .pj-filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+    }
+
+    /* ---------- Grid ---------- */
+    .pj-grid-section {
+      padding: var(--sp-4) 0 var(--sp-9);
+    }
+    .pj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--sp-4);
+      align-items: start;
+    }
+
+    .pcard {
+      background: var(--surface-1);
+      border: 1px solid var(--line-faint);
+      border-radius: var(--r-4);
+      overflow: hidden;
+      box-shadow:
+        6px 6px 18px color-mix(in oklab, var(--ink-strong) 8%, transparent),
+        -4px -4px 14px color-mix(in oklab, var(--surface-2) 92%, white);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 160ms ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    [data-theme="dark"] .pcard {
+      box-shadow:
+        6px 6px 22px rgba(0,0,0,0.5),
+        -4px -4px 14px color-mix(in oklab, var(--surface-2) 55%, transparent);
+    }
+    .pcard:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+    }
+    .pcard.is-expanded {
+      grid-column: 1 / -1;
+      cursor: default;
+      transform: none;
+      border-color: var(--line-strong);
+      box-shadow:
+        10px 10px 30px color-mix(in oklab, var(--ink-strong) 12%, transparent),
+        -6px -6px 18px color-mix(in oklab, var(--surface-2) 95%, white);
+    }
+    [data-theme="dark"] .pcard.is-expanded {
+      box-shadow:
+        12px 12px 32px rgba(0,0,0,0.6),
+        -6px -6px 18px color-mix(in oklab, var(--surface-2) 70%, transparent);
+    }
+
+    .pcard-thumb {
+      aspect-ratio: 16 / 10;
+      position: relative;
+      overflow: hidden;
+    }
+    .pcard.is-expanded .pcard-thumb {
+      aspect-ratio: 21 / 9;
+    }
+    .pcard-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .pcard-thumb-empty {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink-strong);
+      background: linear-gradient(135deg,
+        color-mix(in oklab, currentColor 10%, var(--surface-1)) 0%,
+        color-mix(in oklab, currentColor 22%, var(--surface-1)) 100%);
+    }
+    .pcard-thumb-empty[data-cat="research"]   { color: var(--cat-research); }
+    .pcard-thumb-empty[data-cat="internship"] { color: var(--cat-internship); }
+    .pcard-thumb-empty[data-cat="graduate"]   { color: var(--cat-graduate); }
+    .pcard-thumb-empty[data-cat="undergrad"]  { color: var(--cat-undergrad); }
+    .pcard-thumb-empty[data-cat="personal"]   { color: var(--cat-personal); }
+    .pcard-thumb-empty[data-cat="other"]      { color: var(--accent); }
+
+    .pcard-body {
+      padding: var(--sp-4) var(--sp-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+    .pcard-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .pcard-title {
+      font-size: var(--fs-h3);
+      color: var(--ink-strong);
+      line-height: 1.25;
+      margin: 0;
+    }
+    .pcard-blurb {
+      font-size: var(--fs-small);
+      color: var(--ink-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Expanded content */
+    .pcard-expand {
+      display: none;
+      padding: var(--sp-5);
+      border-top: 1px dashed var(--line-faint);
+      gap: var(--sp-5);
+    }
+    .pcard.is-expanded .pcard-expand {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 800px) {
+      .pcard.is-expanded .pcard-expand {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+    .pcard-desc {
+      font-size: var(--fs-body);
+      line-height: 1.65;
+      color: var(--ink-body);
+      max-width: 70ch;
+      text-wrap: pretty;
+    }
+    .pcard-side {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-4);
+    }
+    .pcard-side-block { display: flex; flex-direction: column; gap: var(--sp-2); }
+    .pcard-side-label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+    }
+    .pcard-side-val {
+      font-size: var(--fs-small);
+      color: var(--ink-strong);
+    }
+    .pcard-side-val a { color: var(--accent); }
+    .pcard-side-val a:hover { text-decoration: underline; }
+
+    .pcard-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+    }
+
+    .pcard-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      margin-top: var(--sp-3);
+    }
+
+    .pcard-close {
+      position: absolute;
+      top: var(--sp-3);
+      right: var(--sp-3);
+      width: 32px; height: 32px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.55);
+      color: white;
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 500;
+      z-index: 2;
+    }
+    .pcard.is-expanded .pcard-close { display: inline-flex; }
+    .pcard-close:hover { background: rgba(0,0,0,0.75); color: white; }
+
+    /* Empty state */
+    .pj-empty {
+      text-align: center;
+      padding: var(--sp-8) var(--sp-5);
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
+      font-size: var(--fs-small);
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav-host"></div>
+
+  <main>
+    <section class="pj-hero">
+      <div class="container">
+        <div class="pj-eyebrow">Projects</div>
+        <h1 class="pj-title">Selected work</h1>
+        <p class="pj-sub">Predictive modeling, data visualization, and applied research — from undergraduate course projects to internship and graduate work. Click any card to expand.</p>
+      </div>
+    </section>
+
+    <section class="pj-filter">
+      <div class="container">
+        <div class="pj-filter-head">
+          <div class="pj-filter-label">Filter by category</div>
+          <div class="pj-filter-count" id="pj-count"></div>
+        </div>
+        <div class="pj-filter-controls">
+          <div class="pj-filter-chips" id="pj-chips" role="group" aria-label="Category filters"></div>
+          <label class="pj-search" id="pj-search" aria-label="Search projects by skill">
+            <svg class="pj-search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 L14 14"/></svg>
+            <input type="search" id="pj-search-input" placeholder="Search skills" autocomplete="off">
+            <button type="button" class="pj-search-clear" id="pj-search-clear" aria-label="Clear search">×</button>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="pj-grid-section">
+      <div class="container">
+        <div class="pj-grid" id="pj-grid"></div>
+        <div class="pj-empty" id="pj-empty" hidden>No projects match the selected filter.</div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer-host"></div>
+
+  <script type="module">
+    import { mountChrome } from './scripts/chrome.js?v=1';
+    import { PROJECTS, EXPERIENCES } from './data/site.js?v=1';
+
+    mountChrome('projects');
+
+    const expMap = Object.fromEntries(EXPERIENCES.map(e => [e.id, e]));
+
+    // Sort: most recent first
+    const projects = [...PROJECTS].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+    // Filter chips
+    const FCATS = [
+      { id: 'all',        label: 'All' },
+      { id: 'internship', label: 'Internship' },
+      { id: 'graduate',   label: 'Graduate' },
+      { id: 'research',   label: 'Research' },
+      { id: 'undergrad',  label: 'Undergrad' },
+      { id: 'personal',   label: 'Personal' },
+      { id: 'other',      label: 'Other' },
+    ];
+    const counts = { all: projects.length };
+    for (const p of projects) counts[p.category] = (counts[p.category] || 0) + 1;
+
+    const chipHost = document.getElementById('pj-chips');
+    chipHost.innerHTML = FCATS.map((c, i) => {
+      const cnt = counts[c.id] || 0;
+      if (cnt === 0 && c.id !== 'all') return '';
+      return `
+        <button class="fchip" data-cat="${c.id}" aria-pressed="${i === 0 ? 'true' : 'false'}">
+          ${c.id !== 'all' ? '<span class="fchip-dot" aria-hidden="true"></span>' : ''}
+          ${c.label}
+          <span style="opacity: 0.6; margin-left: 4px;">${cnt}</span>
+        </button>
+      `;
+    }).join('');
+
+    // Render grid
+    const grid = document.getElementById('pj-grid');
+    grid.innerHTML = projects.map(p => {
+      const exp = p.experienceId ? expMap[p.experienceId] : null;
+      const linksList = [];
+      if (p.url) linksList.push(`<a href="${p.url}" target="_blank" rel="noopener">Live →</a>`);
+      if (p.repo) linksList.push(`<a href="https://github.com/nathansso/${p.repo}" target="_blank" rel="noopener">Repo →</a>`);
+      return `
+        <article class="pcard" data-cat="${p.category}" data-id="${p.id}" id="${p.id}">
+          <button class="pcard-close" aria-label="Close" data-action="close">×</button>
+          <div class="pcard-thumb">
+            ${p.image
+              ? `<img src="${p.image}" alt="">`
+              : `<div class="pcard-thumb-empty" data-cat="${p.category}">${p.course || abbreviate(p.title)}</div>`
+            }
+          </div>
+          <div class="pcard-body">
+            <div class="pcard-meta">
+              <span class="badge" data-cat="${p.category}">${p.category}</span>
+              <span class="text-meta">${formatDate(p.date)}</span>
+            </div>
+            <h3 class="pcard-title">${p.title}</h3>
+            <p class="pcard-blurb">${p.blurb}</p>
+          </div>
+          <div class="pcard-expand">
+            <div>
+              <p class="pcard-desc">${p.description}</p>
+              ${linksList.length ? `
+                <div class="pcard-actions">
+                  ${p.url ? `<a class="btn btn-primary" href="${p.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Live demo</a>` : ''}
+                  ${p.repo ? `<a class="btn btn-ghost" href="https://github.com/nathansso/${p.repo}" target="_blank" rel="noopener" onclick="event.stopPropagation()">View on GitHub</a>` : ''}
+                </div>
+              ` : ''}
+            </div>
+            <aside class="pcard-side">
+              ${p.course ? `
+                <div class="pcard-side-block">
+                  <div class="pcard-side-label">Course</div>
+                  <div class="pcard-side-val">${p.course}</div>
+                </div>
+              ` : ''}
+              ${exp ? `
+                <div class="pcard-side-block">
+                  <div class="pcard-side-label">Linked experience</div>
+                  <div class="pcard-side-val">
+                    <a href="about.html#${exp.id}">${exp.title}</a><br>
+                    <span class="text-muted">${exp.org}</span>
+                  </div>
+                </div>
+              ` : ''}
+              <div class="pcard-side-block">
+                <div class="pcard-side-label">Skills · ${p.skills.length}</div>
+                <div class="pcard-skills">
+                  ${p.skills.map(s => `<span class="chip">${s}</span>`).join('')}
+                </div>
+              </div>
+            </aside>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    // Index skills per card for search
+    const skillIndex = new Map();
+    for (const p of projects) {
+      skillIndex.set(p.id, (p.skills || []).map(s => s.toLowerCase()).join(' | '));
+    }
+
+    // Combined filter: category + skill query
+    const empty = document.getElementById('pj-empty');
+    const countEl = document.getElementById('pj-count');
+    let activeCat = 'all';
+    let activeQuery = '';
+
+    function applyFilter() {
+      const q = activeQuery.trim().toLowerCase();
+      const cards = grid.querySelectorAll('.pcard');
+      let shown = 0;
+      cards.forEach(card => {
+        const catMatch = activeCat === 'all' || card.dataset.cat === activeCat;
+        const skills = skillIndex.get(card.dataset.id) || '';
+        const queryMatch = !q || skills.includes(q);
+        const match = catMatch && queryMatch;
+        card.hidden = !match;
+        if (!match && card.classList.contains('is-expanded')) card.classList.remove('is-expanded');
+        if (match) shown++;
+      });
+      empty.hidden = shown > 0;
+      countEl.innerHTML = `<strong>${shown}</strong> of ${projects.length} ${shown === 1 ? 'project' : 'projects'}`;
+    }
+
+    chipHost.addEventListener('click', (e) => {
+      const btn = e.target.closest('.fchip');
+      if (!btn) return;
+      chipHost.querySelectorAll('.fchip').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      activeCat = btn.dataset.cat;
+      applyFilter();
+    });
+
+    const searchInput = document.getElementById('pj-search-input');
+    const searchWrap = document.getElementById('pj-search');
+    const searchClear = document.getElementById('pj-search-clear');
+    searchInput.addEventListener('input', () => {
+      activeQuery = searchInput.value;
+      searchWrap.classList.toggle('has-value', activeQuery.length > 0);
+      applyFilter();
+    });
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      activeQuery = '';
+      searchWrap.classList.remove('has-value');
+      searchInput.focus();
+      applyFilter();
+    });
+
+    applyFilter();
+
+    // Expand/collapse
+    grid.addEventListener('click', (e) => {
+      // Don't intercept link clicks
+      if (e.target.closest('a')) return;
+
+      const closeBtn = e.target.closest('[data-action="close"]');
+      if (closeBtn) {
+        const card = closeBtn.closest('.pcard');
+        card.classList.remove('is-expanded');
+        history.replaceState(null, '', location.pathname + location.search);
+        return;
+      }
+
+      const card = e.target.closest('.pcard');
+      if (!card) return;
+      const isExpanded = card.classList.contains('is-expanded');
+      grid.querySelectorAll('.pcard.is-expanded').forEach(c => c.classList.remove('is-expanded'));
+      if (!isExpanded) {
+        card.classList.add('is-expanded');
+        history.replaceState(null, '', `#${card.dataset.id}`);
+      }
+    });
+
+    // Open from hash on load
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      const card = grid.querySelector(`.pcard[data-id="${id}"]`);
+      if (card) {
+        card.classList.add('is-expanded');
+        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
+    }
+
+    function formatDate(yyyymm) {
+      if (!yyyymm) return '';
+      const [y, m] = yyyymm.split('-').map(Number);
+      return new Date(y, (m||1)-1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+    }
+    function abbreviate(title) {
+      return title.split(/\s+/).filter(w => /^[A-Z]/.test(w)).map(w => w[0]).slice(0,3).join('') || title.slice(0,3);
+    }
+  </script>
+</body>
+</html>

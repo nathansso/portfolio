@@ -36,9 +36,13 @@ There is no test framework. The "test" for UI changes is to serve the site local
 
 ## Progress Tracking
 
-A `progress.md` file tracks all changes made in this project. **After completing each task:**
-1. Append an entry to `progress.md` describing what changed and why
-2. Commit all changes (including the `progress.md` update) to the repo
-3. Run `/compact` to keep conversation context manageable
+A `progress.md` file tracks all changes made in this project. **`progress.md` must be updated as part of every commit — never commit without it.**
+
+Workflow:
+1. Make code changes.
+2. Append an entry to `progress.md` describing what changed and why.
+3. Stage both the code changes and `progress.md` together and commit in a single commit.
+4. Push to the remote branch.
+5. Run `/compact` to keep conversation context manageable.
 
 When a new feature is added, create a corresponding test in `tests/`.

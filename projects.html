@@ -417,6 +417,29 @@
     .pcard.is-expanded .pcard-close { display: inline-flex; }
     .pcard-close:hover { background: rgba(0,0,0,0.75); color: white; }
 
+    /* Collapsed skill preview */
+    .pcard-skill-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      margin-top: var(--sp-2);
+    }
+    .pcard.is-expanded .pcard-skill-preview { display: none; }
+    .pcard-skill-more {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      background: var(--surface-2);
+      color: var(--ink-muted);
+      cursor: pointer;
+      border: none;
+      transition: color 120ms ease;
+    }
+    .pcard-skill-more:hover { color: var(--ink-strong); }
+
     /* Hidden cards — must beat .pcard { display: flex } in specificity */
     .pcard[hidden] { display: none; }
 
@@ -558,6 +581,11 @@
             </div>
             <h3 class="pcard-title">${p.title}</h3>
             <p class="pcard-blurb">${p.blurb}</p>
+            ${p.skills.length > 0 ? `
+            <div class="pcard-skill-preview">
+              ${p.skills.slice(0, 3).map(s => `<span class="chip">${s}</span>`).join('')}
+              ${p.skills.length > 3 ? `<button class="pcard-skill-more" aria-label="Expand to see all ${p.skills.length} skills" tabindex="-1">+${p.skills.length - 3}</button>` : ''}
+            </div>` : ''}
           </div>
           <div class="pcard-expand">
             <div>

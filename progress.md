@@ -1,5 +1,11 @@
 # Progress Log
 
+## 2026-05-01 — Show skill preview on collapsed project cards
+
+- Added `.pcard-skill-preview` inside `.pcard-body` (after the blurb): renders the first 3 skills as `.chip` elements matching the expanded panel's style.
+- If the project has more than 3 skills a `.pcard-skill-more` button shows `+N` after the chips; clicking it triggers the existing card-expand handler.
+- `.pcard.is-expanded .pcard-skill-preview { display: none }` hides the preview once the card is expanded so it doesn't duplicate the full skill list.
+
 ## 2026-05-01 — Arrow-key navigation in search autocomplete dropdown
 
 - ArrowDown/ArrowUp cycle the highlighted item in the autocomplete dropdown (`is-active` class); wraps at both ends.

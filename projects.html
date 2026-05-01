@@ -373,6 +373,9 @@
     .pcard.is-expanded .pcard-close { display: inline-flex; }
     .pcard-close:hover { background: rgba(0,0,0,0.75); color: white; }
 
+    /* Hidden cards — must beat .pcard { display: flex } in specificity */
+    .pcard[hidden] { display: none; }
+
     /* Empty state */
     .pj-empty {
       text-align: center;
@@ -381,6 +384,32 @@
       font-family: var(--font-mono);
       font-size: var(--fs-small);
     }
+
+    /* Search autocomplete dropdown */
+    .pj-autocomplete {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--surface-1);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--r-2);
+      box-shadow: 0 8px 24px color-mix(in oklab, var(--ink-strong) 12%, transparent);
+      z-index: 100;
+      list-style: none;
+      margin: 0;
+      padding: 4px 0;
+      overflow: hidden;
+    }
+    .pj-autocomplete-item {
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      color: var(--ink-body);
+    }
+    .pj-autocomplete-item:hover { background: var(--surface-2); color: var(--ink-strong); }
   </style>
 </head>
 <body>
@@ -403,11 +432,11 @@
         </div>
         <div class="pj-filter-controls">
           <div class="pj-filter-chips" id="pj-chips" role="group" aria-label="Category filters"></div>
-          <label class="pj-search" id="pj-search" aria-label="Search projects by skill">
+          <div class="pj-search" id="pj-search">
             <svg class="pj-search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 L14 14"/></svg>
-            <input type="search" id="pj-search-input" placeholder="Search skills" autocomplete="off">
+            <input type="search" id="pj-search-input" placeholder="Search skills" autocomplete="off" aria-label="Search projects by skill">
             <button type="button" class="pj-search-clear" id="pj-search-clear" aria-label="Clear search">×</button>
-          </label>
+          </div>
         </div>
       </div>
     </section>
@@ -562,15 +591,64 @@
     const searchInput = document.getElementById('pj-search-input');
     const searchWrap = document.getElementById('pj-search');
     const searchClear = document.getElementById('pj-search-clear');
+
+    // Deduplicated, sorted skill list for autocomplete
+    const allSkills = [...new Set(projects.flatMap(p => p.skills || []))].sort((a, b) => a.localeCompare(b));
+
+    const autocompleteEl = document.createElement('ul');
+    autocompleteEl.className = 'pj-autocomplete';
+    autocompleteEl.setAttribute('role', 'listbox');
+    autocompleteEl.hidden = true;
+    searchWrap.appendChild(autocompleteEl);
+
+    function showSuggestions(q) {
+      if (!q) { autocompleteEl.hidden = true; return; }
+      const lower = q.toLowerCase();
+      const matches = allSkills.filter(s => s.toLowerCase().includes(lower)).slice(0, 8);
+      if (!matches.length) { autocompleteEl.hidden = true; return; }
+      autocompleteEl.innerHTML = matches.map(s =>
+        `<li class="pj-autocomplete-item" role="option">${s}</li>`
+      ).join('');
+      autocompleteEl.hidden = false;
+    }
+
+    function closeAutocomplete() { autocompleteEl.hidden = true; }
+
+    function selectSuggestion(val) {
+      searchInput.value = val;
+      activeQuery = val;
+      searchWrap.classList.toggle('has-value', val.length > 0);
+      closeAutocomplete();
+      applyFilter();
+    }
+
+    autocompleteEl.addEventListener('mousedown', (e) => {
+      const item = e.target.closest('.pj-autocomplete-item');
+      if (!item) return;
+      e.preventDefault(); // prevent input blur before selection
+      selectSuggestion(item.textContent.trim());
+    });
+
     searchInput.addEventListener('input', () => {
       activeQuery = searchInput.value;
       searchWrap.classList.toggle('has-value', activeQuery.length > 0);
+      showSuggestions(searchInput.value);
       applyFilter();
     });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === 'Escape') closeAutocomplete();
+    });
+
+    searchInput.addEventListener('blur', () => {
+      setTimeout(closeAutocomplete, 150);
+    });
+
     searchClear.addEventListener('click', () => {
       searchInput.value = '';
       activeQuery = '';
       searchWrap.classList.remove('has-value');
+      closeAutocomplete();
       searchInput.focus();
       applyFilter();
     });

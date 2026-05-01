@@ -1,5 +1,14 @@
 # Progress Log
 
+## 2026-04-30 — About page sidebar layout refactor
+
+- Replaced `.about-hero` block-flow with sticky `.ab-sidebar` + scrollable `.ab-scroll-col` split layout.
+- Sidebar: `35vw` wide (clamped 380–640px), left-aligned content, full `PROFILE.bio` at 18px/1.45 line-height.
+- Removed "Currently / Internship / Based in" stat cards — info already present in bio and timeline.
+- Filter bar now sticks to top of right scroll column (`top: 0`) rather than viewport.
+- Reduced experience card padding and internal spacing so more cards are visible at once.
+- Mobile: collapses to single-column stack below 768px.
+
 ## 2026-04-30 — Full redesign
 
 - Replaced index/projects/resume/about pages with new design system.

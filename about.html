@@ -11,34 +11,47 @@
     /* ---------- About-page layout ---------- */
     body { background: var(--surface-0); }
 
-    /* Intro */
-    .about-hero {
-      padding: var(--sp-4) 0 var(--sp-1);
-      position: relative;
-      overflow: hidden;
+    /* Layout */
+    .ab-layout {
+      display: flex;
+      align-items: flex-start;
+      min-height: calc(100vh - 56px);
     }
-    .about-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background:
-        linear-gradient(110deg,
-          transparent 0%,
-          color-mix(in oklab, var(--cat-research) 14%, transparent) 28%,
-          color-mix(in oklab, var(--cat-graduate) 12%, transparent) 52%,
-          color-mix(in oklab, var(--accent) 18%, transparent) 78%,
-          transparent 100%);
-      filter: blur(56px);
-      opacity: 0.7;
-      pointer-events: none;
-      mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
-      -webkit-mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+
+    .ab-sidebar {
+      width: clamp(380px, 35vw, 640px);
+      flex-shrink: 0;
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      padding: var(--sp-4) var(--sp-5) var(--sp-4) var(--sp-6);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      border-right: 1px solid var(--line-faint);
     }
-    [data-theme="dark"] .about-hero::before {
-      opacity: 0.55;
+
+    .ab-scroll-col {
+      flex: 1;
+      min-width: 0;
+      overflow-y: auto;
+      height: calc(100vh - 56px);
     }
-    .about-hero > .container { position: relative; z-index: 1; }
+
+    @media (max-width: 767px) {
+      .ab-layout { flex-direction: column; }
+      .ab-sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line-faint);
+      }
+      .ab-scroll-col {
+        height: auto;
+        overflow-y: visible;
+      }
+    }
 
     .about-eyebrow {
       font-family: var(--font-mono);
@@ -76,12 +89,17 @@
     .about-bio p + p { margin-top: var(--sp-3); }
     .about-bio strong { color: var(--ink-strong); font-weight: 600; }
 
+    /* Sidebar-specific density: keep full bio visible without scrolling */
+    .ab-sidebar .about-title { margin-bottom: var(--sp-2); }
+    .ab-sidebar .about-bio { font-size: 18px; line-height: 1.45; max-width: none; }
+    .ab-sidebar .about-bio p + p { margin-top: var(--sp-2); }
+
     /* ---------- Filter section ---------- */
     .filter-section {
-      padding: var(--sp-2) 0 6px;
+      padding: var(--sp-4) 0 6px;
       border-top: 1px solid var(--line-faint);
       position: sticky;
-      top: 56px;
+      top: 0;
       background: color-mix(in oklab, var(--surface-0) 92%, transparent);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -161,13 +179,13 @@
     .timeline-list {
       display: flex;
       flex-direction: column;
-      gap: var(--sp-3);
+      gap: var(--sp-2);
     }
     .exp-card {
       background: var(--surface-1);
       border: 1px solid var(--line-faint);
       border-radius: var(--r-4);
-      padding: var(--sp-6);
+      padding: var(--sp-4) var(--sp-5);
       box-shadow:
         6px 6px 18px color-mix(in oklab, var(--ink-strong) 8%, transparent),
         -4px -4px 14px color-mix(in oklab, var(--surface-2) 90%, white);
@@ -203,7 +221,7 @@
       gap: var(--sp-4);
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: var(--sp-3);
+      margin-bottom: var(--sp-2);
     }
     .exp-title-wrap {
       display: flex;
@@ -241,13 +259,13 @@
       line-height: 1.6;
       color: var(--ink-body);
       max-width: 65ch;
-      margin-bottom: var(--sp-4);
+      margin-bottom: var(--sp-2);
     }
 
     .exp-bullets {
       list-style: none;
       padding: 0;
-      margin: 0 0 var(--sp-5);
+      margin: 0 0 var(--sp-3);
       display: flex;
       flex-direction: column;
       gap: var(--sp-2);
@@ -273,13 +291,13 @@
       display: flex;
       flex-wrap: wrap;
       gap: var(--sp-2);
-      margin-bottom: var(--sp-5);
+      margin-bottom: var(--sp-3);
     }
 
     /* Inline projects row */
     .exp-projects {
       border-top: 1px dashed var(--line-faint);
-      padding-top: var(--sp-5);
+      padding-top: var(--sp-3);
     }
     .exp-projects-label {
       font-family: var(--font-mono);
@@ -358,109 +376,43 @@
       font-size: var(--fs-small);
     }
 
-    /* ---------- Currently sidebar (right rail) ---------- */
-    @media (min-width: 1100px) {
-      .about-bio-grid {
-        display: grid;
-        grid-template-columns: 1fr 240px;
-        gap: var(--sp-5);
-        align-items: start;
-      }
-    }
-    .about-side {
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-2);
-    }
-    .stat-card {
-      padding: var(--sp-3) var(--sp-4);
-      border-radius: var(--r-3);
-      background: var(--surface-1);
-      border: 1px solid var(--line-faint);
-      box-shadow:
-        3px 3px 10px color-mix(in oklab, var(--ink-strong) 6%, transparent),
-        -2px -2px 8px color-mix(in oklab, var(--surface-2) 92%, white);
-    }
-    [data-theme="dark"] .stat-card {
-      box-shadow:
-        4px 4px 14px rgba(0,0,0,0.5),
-        -3px -3px 10px color-mix(in oklab, var(--surface-2) 55%, transparent);
-    }
-    .stat-label {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ink-muted);
-      margin-bottom: 2px;
-    }
-    .stat-val {
-      font-size: var(--fs-body);
-      font-weight: 600;
-      color: var(--ink-strong);
-      line-height: 1.2;
-    }
-    .stat-sub {
-      font-size: 12px;
-      color: var(--ink-muted);
-      margin-top: 2px;
-    }
   </style>
 </head>
 <body>
   <div id="site-nav-host"></div>
 
   <main>
-    <!-- HERO -->
-    <section class="about-hero">
-      <div class="container">
+    <div class="ab-layout">
+      <aside class="ab-sidebar">
         <div class="about-eyebrow">About</div>
         <h1 class="about-title">Nathaniel Oliver</h1>
 
-        <div class="about-bio-grid">
-          <div class="about-bio" id="about-bio"></div>
+        <div class="about-bio" id="about-bio"></div>
+      </aside>
 
-          <aside class="about-side" aria-label="At a glance">
-            <div class="stat-card">
-              <div class="stat-label">Currently</div>
-              <div class="stat-val">M.S. Data Science</div>
-              <div class="stat-sub">UC San Diego · Expected Jun 2027</div>
+      <div class="ab-scroll-col">
+        <!-- FILTER -->
+        <section class="filter-section">
+          <div class="container">
+            <div class="filter-head">
+              <div class="filter-label">Filter by category</div>
+              <div class="filter-count" id="filter-count"></div>
             </div>
-            <div class="stat-card">
-              <div class="stat-label">Internship</div>
-              <div class="stat-val">IDX Exchange</div>
-              <div class="stat-sub">Senior Data Science Intern · Remote</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Based in</div>
-              <div class="stat-val">San Diego, CA</div>
-              <div class="stat-sub">Open to remote &amp; relocation</div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
+            <div class="filter-chips" id="filter-chips" role="group" aria-label="Category filters"></div>
+          </div>
+        </section>
 
-    <!-- FILTER -->
-    <section class="filter-section">
-      <div class="container">
-        <div class="filter-head">
-          <div class="filter-label">Filter by category</div>
-          <div class="filter-count" id="filter-count"></div>
-        </div>
-        <div class="filter-chips" id="filter-chips" role="group" aria-label="Category filters"></div>
+        <!-- TIMELINE -->
+        <section class="timeline">
+          <div class="container">
+            <div class="timeline-list" id="timeline-list"></div>
+            <div class="empty-state" id="empty-state" hidden>
+              No experiences match the selected filter.
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
-
-    <!-- TIMELINE -->
-    <section class="timeline">
-      <div class="container">
-        <div class="timeline-list" id="timeline-list"></div>
-        <div class="empty-state" id="empty-state" hidden>
-          No experiences match the selected filter.
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <div id="site-footer-host"></div>

@@ -1,5 +1,28 @@
 # Progress Log
 
+## 2026-05-01 — Arrow-key navigation in search autocomplete dropdown
+
+- ArrowDown/ArrowUp cycle the highlighted item in the autocomplete dropdown (`is-active` class); wraps at both ends.
+- Enter confirms the highlighted item as a pill (if one is active), otherwise falls back to confirming the raw typed text.
+- Tab confirms the highlighted item if one is active, else the first suggestion (existing behaviour preserved).
+- `autocompleteActiveIndex` resets to -1 whenever the dropdown closes or suggestions are regenerated, so arrow state never bleeds across different queries.
+- CSS: `.pj-autocomplete-item.is-active` shares the existing hover style.
+
+## 2026-05-01 — Placeholder hide + multi-select category filter on projects page
+
+- **Placeholder:** `.pj-tag-input.has-pills input::placeholder { color: transparent }` hides the placeholder whenever at least one skill pill is present. `renderPills()` and the clear button both toggle the `has-pills` class to keep it in sync.
+- **Multi-select categories:** `activeCat` (single string) replaced with `activeCats` (Set). Clicking a non-All chip toggles it in/out of the set; clicking All clears the set. `applyFilter()` uses `activeCats.size === 0 || activeCats.has(card.dataset.cat)` (OR logic). A new `syncChipState()` helper updates `aria-pressed` on all chips after every click, allowing multiple chips to show the pressed style simultaneously.
+
+## 2026-05-01 — Multi-skill pill filter on projects page
+
+- Converted the single search `<input>` into a tag-input container (`.pj-tag-input`). Each confirmed skill becomes a removable pill inside the input area.
+- Replaced `activeQuery` (single string) with `activeSkillPills` (string[]). `applyFilter()` now requires every pill to match the card's skill list (AND logic), combined with the category chip filter.
+- Enter confirms the typed text as a pill; Backspace on empty input removes the last pill; × on a pill removes it individually; the global clear button wipes all pills and text at once.
+- Tab autocomplete: if the dropdown is open, Tab confirms the top suggestion as a pill and keeps focus in the input; if closed, Tab behaves normally.
+- Clicking an autocomplete suggestion now adds a pill instead of populating raw text.
+- Already-active pills are filtered out of autocomplete suggestions to avoid duplicates.
+- CSS: `.pj-search` max-width raised from 320px → 480px; `.pj-search-icon` and `.pj-search-clear` switched from `top: 50%` to fixed `top` so they don't float to the center of a tall pill container.
+
 ## 2026-05-01 — Fix projects page category filter and search
 
 - **Bug 1 (filter chips):** `.pcard { display: flex }` in the author stylesheet overrode the UA's `[hidden] { display: none }`, so `card.hidden = true` never hid cards. Fixed by adding `.pcard[hidden] { display: none; }` with higher specificity.

@@ -98,38 +98,82 @@
     .pj-search {
       position: relative;
       flex: 1 1 220px;
-      max-width: 320px;
+      max-width: 480px;
       min-width: 180px;
     }
     .pj-search-icon {
       position: absolute;
       left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 10px;
       width: 14px; height: 14px;
       color: var(--ink-muted);
       pointer-events: none;
     }
-    .pj-search input {
+    /* Tag-input container replaces the bare <input> */
+    .pj-tag-input {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
       width: 100%;
-      padding: 8px 32px 8px 34px;
+      padding: 6px 36px 6px 34px;
       border-radius: 999px;
       border: 1px solid var(--line-faint);
       background: var(--surface-1);
+      cursor: text;
+      box-sizing: border-box;
+      min-height: 36px;
+      transition: border-color 140ms ease, background 140ms ease;
+    }
+    .pj-search:focus-within .pj-tag-input { border-color: var(--accent); background: var(--surface-0); }
+    .pj-tag-input input {
+      flex: 1 1 80px;
+      min-width: 60px;
+      border: none;
+      background: transparent;
       color: var(--ink-strong);
       font-family: var(--font-mono);
       font-size: var(--fs-meta);
       letter-spacing: 0.04em;
       outline: none;
-      transition: border-color 140ms ease, background 140ms ease;
+      padding: 2px 0;
     }
-    .pj-search input::placeholder { color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-    .pj-search input:focus { border-color: var(--accent); background: var(--surface-0); }
+    .pj-tag-input input::placeholder { color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .pj-tag-input.has-pills input::placeholder { color: transparent; }
+    /* Skill pills inside the tag input */
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 4px 2px 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--surface-0);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .skill-pill-remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px; height: 14px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--surface-0) 20%, transparent);
+      border: none;
+      color: inherit;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+    }
+    .skill-pill-remove:hover { background: color-mix(in oklab, var(--surface-0) 35%, transparent); }
     .pj-search-clear {
       position: absolute;
       right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 8px;
       width: 22px; height: 22px;
       border-radius: 999px;
       display: none;
@@ -409,7 +453,8 @@
       cursor: pointer;
       color: var(--ink-body);
     }
-    .pj-autocomplete-item:hover { background: var(--surface-2); color: var(--ink-strong); }
+    .pj-autocomplete-item:hover,
+    .pj-autocomplete-item.is-active { background: var(--surface-2); color: var(--ink-strong); }
   </style>
 </head>
 <body>
@@ -434,8 +479,10 @@
           <div class="pj-filter-chips" id="pj-chips" role="group" aria-label="Category filters"></div>
           <div class="pj-search" id="pj-search">
             <svg class="pj-search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 L14 14"/></svg>
-            <input type="search" id="pj-search-input" placeholder="Search skills" autocomplete="off" aria-label="Search projects by skill">
-            <button type="button" class="pj-search-clear" id="pj-search-clear" aria-label="Clear search">×</button>
+            <div class="pj-tag-input" id="pj-tag-input">
+              <input type="text" id="pj-search-input" placeholder="Search skills" autocomplete="off" aria-label="Search projects by skill">
+            </div>
+            <button type="button" class="pj-search-clear" id="pj-search-clear" aria-label="Clear all skill filters">×</button>
           </div>
         </div>
       </div>
@@ -556,21 +603,28 @@
       skillIndex.set(p.id, (p.skills || []).map(s => s.toLowerCase()).join(' | '));
     }
 
-    // Combined filter: category + skill query
+    // Combined filter: category union + confirmed skill pills (AND logic)
     const empty = document.getElementById('pj-empty');
     const countEl = document.getElementById('pj-count');
-    let activeCat = 'all';
-    let activeQuery = '';
+    let activeCats = new Set(); // empty = show all (equivalent to "All")
+    let activeSkillPills = []; // each entry is a confirmed skill filter string
+
+    function syncChipState() {
+      chipHost.querySelectorAll('.fchip').forEach(b => {
+        const c = b.dataset.cat;
+        const pressed = c === 'all' ? activeCats.size === 0 : activeCats.has(c);
+        b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      });
+    }
 
     function applyFilter() {
-      const q = activeQuery.trim().toLowerCase();
       const cards = grid.querySelectorAll('.pcard');
       let shown = 0;
       cards.forEach(card => {
-        const catMatch = activeCat === 'all' || card.dataset.cat === activeCat;
+        const catMatch = activeCats.size === 0 || activeCats.has(card.dataset.cat);
         const skills = skillIndex.get(card.dataset.id) || '';
-        const queryMatch = !q || skills.includes(q);
-        const match = catMatch && queryMatch;
+        const pillMatch = activeSkillPills.every(p => skills.includes(p.toLowerCase()));
+        const match = catMatch && pillMatch;
         card.hidden = !match;
         if (!match && card.classList.contains('is-expanded')) card.classList.remove('is-expanded');
         if (match) shown++;
@@ -582,62 +636,140 @@
     chipHost.addEventListener('click', (e) => {
       const btn = e.target.closest('.fchip');
       if (!btn) return;
-      chipHost.querySelectorAll('.fchip').forEach(b => b.setAttribute('aria-pressed', 'false'));
-      btn.setAttribute('aria-pressed', 'true');
-      activeCat = btn.dataset.cat;
+      const cat = btn.dataset.cat;
+      if (cat === 'all') {
+        activeCats.clear();
+      } else if (activeCats.has(cat)) {
+        activeCats.delete(cat);
+      } else {
+        activeCats.add(cat);
+      }
+      syncChipState();
       applyFilter();
     });
 
     const searchInput = document.getElementById('pj-search-input');
     const searchWrap = document.getElementById('pj-search');
+    const tagInput   = document.getElementById('pj-tag-input');
     const searchClear = document.getElementById('pj-search-clear');
 
     // Deduplicated, sorted skill list for autocomplete
     const allSkills = [...new Set(projects.flatMap(p => p.skills || []))].sort((a, b) => a.localeCompare(b));
 
+    // Autocomplete dropdown (appended to searchWrap so it sits below the full container)
     const autocompleteEl = document.createElement('ul');
     autocompleteEl.className = 'pj-autocomplete';
     autocompleteEl.setAttribute('role', 'listbox');
     autocompleteEl.hidden = true;
     searchWrap.appendChild(autocompleteEl);
 
+    let autocompleteActiveIndex = -1;
+
+    function getDropdownItems() {
+      return [...autocompleteEl.querySelectorAll('.pj-autocomplete-item')];
+    }
+
+    function setAutocompleteActive(index) {
+      const items = getDropdownItems();
+      items.forEach((item, i) => item.classList.toggle('is-active', i === index));
+      autocompleteActiveIndex = index;
+    }
+
     function showSuggestions(q) {
-      if (!q) { autocompleteEl.hidden = true; return; }
+      if (!q) { autocompleteEl.hidden = true; autocompleteActiveIndex = -1; return; }
       const lower = q.toLowerCase();
-      const matches = allSkills.filter(s => s.toLowerCase().includes(lower)).slice(0, 8);
-      if (!matches.length) { autocompleteEl.hidden = true; return; }
+      const matches = allSkills
+        .filter(s => s.toLowerCase().includes(lower) && !activeSkillPills.includes(s))
+        .slice(0, 8);
+      if (!matches.length) { autocompleteEl.hidden = true; autocompleteActiveIndex = -1; return; }
       autocompleteEl.innerHTML = matches.map(s =>
         `<li class="pj-autocomplete-item" role="option">${s}</li>`
       ).join('');
       autocompleteEl.hidden = false;
+      autocompleteActiveIndex = -1;
     }
 
-    function closeAutocomplete() { autocompleteEl.hidden = true; }
+    function closeAutocomplete() { autocompleteEl.hidden = true; autocompleteActiveIndex = -1; }
 
-    function selectSuggestion(val) {
-      searchInput.value = val;
-      activeQuery = val;
-      searchWrap.classList.toggle('has-value', val.length > 0);
-      closeAutocomplete();
+    function syncHasValue() {
+      searchWrap.classList.toggle('has-value', activeSkillPills.length > 0 || searchInput.value.length > 0);
+    }
+
+    function renderPills() {
+      tagInput.querySelectorAll('.skill-pill').forEach(el => el.remove());
+      for (const skill of activeSkillPills) {
+        const pill = document.createElement('span');
+        pill.className = 'skill-pill';
+        pill.dataset.skill = skill;
+        pill.innerHTML = `${skill}<button class="skill-pill-remove" aria-label="Remove ${skill}" tabindex="-1">×</button>`;
+        tagInput.insertBefore(pill, searchInput);
+      }
+      tagInput.classList.toggle('has-pills', activeSkillPills.length > 0);
+      syncHasValue();
       applyFilter();
     }
+
+    function addPill(val) {
+      const trimmed = val.trim();
+      if (!trimmed || activeSkillPills.includes(trimmed)) return;
+      activeSkillPills.push(trimmed);
+      searchInput.value = '';
+      closeAutocomplete();
+      renderPills();
+    }
+
+    // Pill × remove button delegation
+    tagInput.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('.skill-pill-remove');
+      if (removeBtn) {
+        activeSkillPills = activeSkillPills.filter(s => s !== removeBtn.closest('.skill-pill').dataset.skill);
+        renderPills();
+        return;
+      }
+      // Clicking anywhere in the tag-input area focuses the text field
+      searchInput.focus();
+    });
 
     autocompleteEl.addEventListener('mousedown', (e) => {
       const item = e.target.closest('.pj-autocomplete-item');
       if (!item) return;
-      e.preventDefault(); // prevent input blur before selection
-      selectSuggestion(item.textContent.trim());
+      e.preventDefault(); // prevent input blur before pill is added
+      addPill(item.textContent.trim());
     });
 
     searchInput.addEventListener('input', () => {
-      activeQuery = searchInput.value;
-      searchWrap.classList.toggle('has-value', activeQuery.length > 0);
+      syncHasValue();
       showSuggestions(searchInput.value);
-      applyFilter();
     });
 
     searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === 'Escape') closeAutocomplete();
+      if (e.key === 'ArrowDown' && !autocompleteEl.hidden) {
+        e.preventDefault();
+        const items = getDropdownItems();
+        setAutocompleteActive((autocompleteActiveIndex + 1) % items.length);
+      } else if (e.key === 'ArrowUp' && !autocompleteEl.hidden) {
+        e.preventDefault();
+        const items = getDropdownItems();
+        setAutocompleteActive((autocompleteActiveIndex - 1 + items.length) % items.length);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (!autocompleteEl.hidden && autocompleteActiveIndex >= 0) {
+          addPill(getDropdownItems()[autocompleteActiveIndex].textContent.trim());
+        } else {
+          const val = searchInput.value.trim();
+          if (val) addPill(val);
+          else closeAutocomplete();
+        }
+      } else if (e.key === 'Tab' && !autocompleteEl.hidden) {
+        const items = getDropdownItems();
+        const target = autocompleteActiveIndex >= 0 ? items[autocompleteActiveIndex] : items[0];
+        if (target) { e.preventDefault(); addPill(target.textContent.trim()); }
+      } else if (e.key === 'Backspace' && searchInput.value === '' && activeSkillPills.length > 0) {
+        activeSkillPills.pop();
+        renderPills();
+      } else if (e.key === 'Escape') {
+        closeAutocomplete();
+      }
     });
 
     searchInput.addEventListener('blur', () => {
@@ -645,8 +777,10 @@
     });
 
     searchClear.addEventListener('click', () => {
+      activeSkillPills = [];
       searchInput.value = '';
-      activeQuery = '';
+      tagInput.querySelectorAll('.skill-pill').forEach(el => el.remove());
+      tagInput.classList.remove('has-pills');
       searchWrap.classList.remove('has-value');
       closeAutocomplete();
       searchInput.focus();

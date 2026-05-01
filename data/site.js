@@ -10,17 +10,13 @@ export const PROFILE = {
   github: 'nathansso',
   linkedin: 'nathaniel-oliver-82239a265',
   photo: 'imgs/porto_pic.jpg',
-  bio: `Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.
+  bio: `I'm currently pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Mathematics and Economics to turn messy, real-world data into useful models and decisions.
 
-My background spans applied research, predictive modeling, and data product development. 
+My background spans applied research, predictive modeling, and data product development. As a Research Assistant with UCSD's Department of Economics, I built reproducible data pipelines across large public datasets, cleaned and merged multi-source data, and used geospatial analysis, regression, difference-in-differences, and time-series methods to study refugee-market dynamics in Sub-Saharan Africa and demographic change across U.S. metro areas. That work strengthened my approach to asking rigorous questions, validating findings, and communicating results clearly.
 
-I'm currently a Data Science Intern at IDX Exchange, where I've built end-to-end modeling pipelines, using ETF and gradient boosting, and developed ensemble-based approaches for prediction. 
+I'm currently a Data Science Intern at IDX Exchange, where I work on ETL and machine learning workflows for California real estate pricing. Across my projects, I've built end-to-end modeling pipelines, engineered features for complex structured data, and developed ensemble-based approaches for prediction. I also enjoy building AI-assisted analytics tools, including systems that ingest resume, GitHub, and LinkedIn data, structure it for analysis, and evaluate job fit with explainable scoring.
 
-In my spare time, I've been exploring Agent-based Workflow/Development. My current project orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailoring resumes to specific roles.
-
-My toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETF, ML/predictive modeling, data visualization, and LLM-assisted workflows. 
-
-I'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.`,
+My toolkit includes Python, SQL, R, pandas, scikit-learn, XGBoost, statistical modeling, feature engineering, model evaluation, data visualization, and LLM-assisted workflows. I'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.`,
   shortBio: `M.S. Data Science at UC San Diego, building on a Math + Econ foundation. I turn messy real-world data into useful models and decisions — applied research, predictive modeling, and AI-assisted analytics.`,
   currently: 'Predictive modeling at IDX Exchange · MS Data Science at UCSD'
 };

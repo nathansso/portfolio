@@ -1,5 +1,11 @@
 # Progress Log
 
+## 2026-05-01 — Narrow about page sidebar and reduce divider gap
+
+- `.ab-sidebar` width reduced from `clamp(380px, 35vw, 640px)` to `clamp(320px, 28vw, 500px)`.
+- Sidebar right padding reduced from `var(--sp-5)` to `var(--sp-3)` to close the gap to the border divider.
+- `.ab-scroll-col .container` left padding overridden to `var(--sp-4)` (was inheriting `var(--sp-7)`) so content starts closer to the divider.
+
 ## 2026-05-01 — Show skill preview on collapsed project cards
 
 - Added `.pcard-skill-preview` inside `.pcard-body` (after the blurb): renders the first 3 skills as `.chip` elements matching the expanded panel's style.

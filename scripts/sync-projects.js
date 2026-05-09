@@ -4,7 +4,7 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const PROJECTS_PATH = resolve(__dirname, '../lib/projects.json');
+const PROJECTS_PATH = resolve(__dirname, '../data/projects-auto.json');
 const GITHUB_USERNAME = 'nathansso';
 const TOKEN = process.env.GITHUB_TOKEN;
 
@@ -88,9 +88,12 @@ async function main() {
 
   const repoMap = Object.fromEntries(repos.map(r => [r.name, r]));
 
-  // Index existing projects by their repo field
+  // Index existing projects by their repo field (handles array or string repo values)
   const byRepo = {};
-  projects.forEach((p, i) => { if (p.repo) byRepo[p.repo] = i; });
+  projects.forEach((p, i) => {
+    const repos = Array.isArray(p.repo) ? p.repo : p.repo ? [p.repo] : [];
+    for (const r of repos) byRepo[r] = i;
+  });
 
   let changed = 0;
 
@@ -141,7 +144,7 @@ async function main() {
 
   if (changed > 0) {
     writeFileSync(PROJECTS_PATH, JSON.stringify(projects, null, 4));
-    console.log(`\nWrote ${changed} change(s) to lib/projects.json`);
+    console.log(`\nWrote ${changed} change(s) to data/projects-auto.json`);
   } else {
     console.log('\nNo changes.');
   }

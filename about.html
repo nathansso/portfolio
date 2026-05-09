@@ -422,7 +422,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROFILE, EXPERIENCES, PROJECTS, CATEGORIES, fmtRange, projectsByIds } from './data/site.js?v=1';
+    import { PROFILE, EXPERIENCES, PROJECTS, CATEGORIES, fmtDate, fmtRange, projectsByIds } from './data/site.js?v=1';
 
     mountChrome('about');
 
@@ -507,7 +507,7 @@
                     </div>
                     <div class="ptile-body">
                       <div class="ptile-title">${p.title}</div>
-                      <div class="ptile-meta">${formatDate(p.date)}${p.course ? ' · ' + p.course : ''}</div>
+                      <div class="ptile-meta">${fmtDate(p.date)}${p.course ? ' · ' + p.course : ''}</div>
                     </div>
                   </a>
                 `).join('')}
@@ -541,11 +541,6 @@
     });
     applyFilter('all');
 
-    function formatDate(yyyymm) {
-      if (!yyyymm) return '';
-      const [y, m] = yyyymm.split('-').map(Number);
-      return new Date(y, (m||1)-1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-    }
   </script>
 </body>
 </html>

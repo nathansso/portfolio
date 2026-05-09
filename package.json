@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "sync": "node scripts/sync-projects.js"
+    "sync": "node scripts/sync-projects.js",
+    "merge": "node scripts/merge-projects.js"
   },
   "devDependencies": {
     "dotenv": "^16.4.0",

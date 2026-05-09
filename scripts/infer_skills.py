@@ -27,7 +27,7 @@ load_dotenv(Path(__file__).parent.parent / ".env")
 
 GITHUB_USERNAME = "nathansso"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
-PROJECTS_PATH = Path(__file__).parent.parent / "lib" / "projects.json"
+PROJECTS_PATH = Path(__file__).parent.parent / "data" / "projects-auto.json"
 
 DEPENDENCY_FILES = [
     "requirements.txt", "setup.py", "pyproject.toml",

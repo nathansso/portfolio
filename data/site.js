@@ -154,7 +154,7 @@ export const EXPERIENCES = [
   },
 ];
 
-// Projects — keyed by id so experiences can link
+// PROJECTS_AUTO_START — auto-updatable fields (description, skills, url, lastCommit) are managed by scripts/merge-projects.js
 export const PROJECTS = [
   {
     id: 'ca-real-estate',
@@ -340,6 +340,8 @@ export const PROJECTS = [
   },
 ];
 
+// PROJECTS_AUTO_END
+
 // Compute counts for the filter UI
 for (const p of PROJECTS) {
   if (CATEGORIES[p.category]) CATEGORIES[p.category].count++;
@@ -362,4 +364,7 @@ export function projectsByIds(ids) {
 }
 export function byExperience(expId) {
   return PROJECTS.filter(p => p.experienceId === expId);
+}
+export function abbreviate(title) {
+  return title.split(/\s+/).filter(w => /^[A-Z]/.test(w)).map(w => w[0]).slice(0, 3).join('') || title.slice(0, 3);
 }

@@ -477,7 +477,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROJECTS } from './data/site.js?v=1';
+    import { PROJECTS, fmtDate, abbreviate } from './data/site.js?v=1';
 
     mountChrome('home');
 
@@ -498,7 +498,7 @@
         <div class="tile-body">
           <div class="tile-meta">
             <span class="badge" data-cat="${p.category}">${p.category}</span>
-            <span class="text-meta">${formatDate(p.date)}</span>
+            <span class="text-meta">${fmtDate(p.date)}</span>
           </div>
           <h3 class="tile-title">${p.title}</h3>
           <p class="tile-blurb">${p.blurb}</p>
@@ -506,14 +506,6 @@
       </a>
     `).join('');
 
-    function formatDate(yyyymm) {
-      if (!yyyymm) return '';
-      const [y, m] = yyyymm.split('-').map(Number);
-      return new Date(y, (m||1)-1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-    }
-    function abbreviate(title) {
-      return title.split(/\s+/).filter(w => /^[A-Z]/.test(w)).map(w => w[0]).slice(0,3).join('') || title.slice(0,3);
-    }
   </script>
 </body>
 </html>

@@ -1,5 +1,22 @@
 # Progress Log
 
+## 2026-05-09 — Targeted refactor + automated sync pipeline
+
+### Refactor
+- Added `abbreviate(title)` as an exported function to `data/site.js` so all pages share one definition.
+- `data/site.js` already exported `fmtDate` and `fmtRange`; pages were duplicating them inline.
+- Removed inline `formatDate` / `abbreviate` definitions from `projects.html`, `index.html`, `about.html`. Each now imports `fmtDate` (and `abbreviate` where needed) from `data/site.js`.
+- Removed inline `fmtRange` from `resume.html`; added it to that page's import from `data/site.js`.
+- Extracted the 127-line skill autocomplete + pill system from `projects.html` into `scripts/autocomplete.js` (`initAutocomplete()`). `projects.html` now calls `initAutocomplete()` with DOM refs and a callback, dropping ~100 lines from its inline script.
+
+### Sync pipeline
+- Changed `scripts/sync-projects.js` output path from `lib/projects.json` (nonexistent) to `data/projects-auto.json`.
+- Changed `scripts/infer_skills.py` output path from `lib/projects.json` to `data/projects-auto.json`.
+- Added `// PROJECTS_AUTO_START` / `// PROJECTS_AUTO_END` markers around the PROJECTS array in `data/site.js` so the merge script can target it precisely.
+- Created `scripts/merge-projects.js`: reads `data/projects-auto.json`, dynamic-imports `data/site.js`, matches projects by `repo` field, merges `description`, `skills`, `url`, and `lastCommit` without touching editorial fields (`id`, `category`, `experienceId`, `blurb`, `course`), and writes the updated PROJECTS array back between the markers.
+- Initialized `data/projects-auto.json` from the existing `data/projects-source.json` snapshot.
+- Created `.github/workflows/sync.yml`: runs every Monday at 9am UTC (and on manual `workflow_dispatch`). Steps: checkout → sync-projects.js → infer_skills.py → merge-projects.js → auto-commit changed files. Requires `SYNC_GITHUB_TOKEN` and `ANTHROPIC_API_KEY` secrets set in GitHub repo settings.
+
 ## 2026-05-01 — Narrow about page sidebar and reduce divider gap
 
 - `.ab-sidebar` width reduced from `clamp(380px, 35vw, 640px)` to `clamp(320px, 28vw, 500px)`.

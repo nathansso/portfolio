@@ -341,7 +341,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROFILE, EXPERIENCES, PROJECTS } from './data/site.js?v=1';
+    import { PROFILE, EXPERIENCES, PROJECTS, fmtRange } from './data/site.js?v=1';
 
     mountChrome('resume');
 
@@ -362,17 +362,6 @@
       { label: 'AI/LLM', items: ['LangGraph', 'LangChain', 'OpenAI', 'sentence-transformers', 'prompt engineering', 'RAG'] },
       { label: 'Tools', items: ['Git', 'Jupyter', 'Docker', 'AWS', 'Excel', 'IBM Cognos'] },
     ];
-
-    // ---- Helpers ----
-    function fmtRange(start, end, endLabel) {
-      const fmt = (s) => {
-        if (!s) return '';
-        const [y, m] = s.split('-').map(Number);
-        return new Date(y, (m||1)-1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-      };
-      const e = end ? fmt(end) : (endLabel || 'Present');
-      return `${fmt(start)} — ${e}`;
-    }
 
     // ---- Render ----
     const expHtml = expIds.map(id => {

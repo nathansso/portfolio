@@ -523,7 +523,8 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROJECTS, EXPERIENCES } from './data/site.js?v=1';
+    import { PROJECTS, EXPERIENCES, fmtDate, abbreviate } from './data/site.js?v=1';
+    import { initAutocomplete } from './scripts/autocomplete.js';
 
     mountChrome('projects');
 
@@ -577,7 +578,7 @@
           <div class="pcard-body">
             <div class="pcard-meta">
               <span class="badge" data-cat="${p.category}">${p.category}</span>
-              <span class="text-meta">${formatDate(p.date)}</span>
+              <span class="text-meta">${fmtDate(p.date)}</span>
             </div>
             <h3 class="pcard-title">${p.title}</h3>
             <p class="pcard-blurb">${p.blurb}</p>
@@ -681,139 +682,23 @@
     const tagInput   = document.getElementById('pj-tag-input');
     const searchClear = document.getElementById('pj-search-clear');
 
-    // Deduplicated, sorted skill list for autocomplete
     const allSkills = [...new Set(projects.flatMap(p => p.skills || []))].sort((a, b) => a.localeCompare(b));
 
-    // Autocomplete dropdown (appended to searchWrap so it sits below the full container)
     const autocompleteEl = document.createElement('ul');
     autocompleteEl.className = 'pj-autocomplete';
     autocompleteEl.setAttribute('role', 'listbox');
     autocompleteEl.hidden = true;
     searchWrap.appendChild(autocompleteEl);
 
-    let autocompleteActiveIndex = -1;
-
-    function getDropdownItems() {
-      return [...autocompleteEl.querySelectorAll('.pj-autocomplete-item')];
-    }
-
-    function setAutocompleteActive(index) {
-      const items = getDropdownItems();
-      items.forEach((item, i) => item.classList.toggle('is-active', i === index));
-      autocompleteActiveIndex = index;
-    }
-
-    function showSuggestions(q) {
-      if (!q) { autocompleteEl.hidden = true; autocompleteActiveIndex = -1; return; }
-      const lower = q.toLowerCase();
-      const matches = allSkills
-        .filter(s => s.toLowerCase().includes(lower) && !activeSkillPills.includes(s))
-        .slice(0, 8);
-      if (!matches.length) { autocompleteEl.hidden = true; autocompleteActiveIndex = -1; return; }
-      autocompleteEl.innerHTML = matches.map(s =>
-        `<li class="pj-autocomplete-item" role="option">${s}</li>`
-      ).join('');
-      autocompleteEl.hidden = false;
-      autocompleteActiveIndex = -1;
-    }
-
-    function closeAutocomplete() { autocompleteEl.hidden = true; autocompleteActiveIndex = -1; }
-
-    function syncHasValue() {
-      searchWrap.classList.toggle('has-value', activeSkillPills.length > 0 || searchInput.value.length > 0);
-    }
-
-    function renderPills() {
-      tagInput.querySelectorAll('.skill-pill').forEach(el => el.remove());
-      for (const skill of activeSkillPills) {
-        const pill = document.createElement('span');
-        pill.className = 'skill-pill';
-        pill.dataset.skill = skill;
-        pill.innerHTML = `${skill}<button class="skill-pill-remove" aria-label="Remove ${skill}" tabindex="-1">×</button>`;
-        tagInput.insertBefore(pill, searchInput);
-      }
-      tagInput.classList.toggle('has-pills', activeSkillPills.length > 0);
-      syncHasValue();
-      applyFilter();
-    }
-
-    function addPill(val) {
-      const trimmed = val.trim();
-      if (!trimmed || activeSkillPills.includes(trimmed)) return;
-      activeSkillPills.push(trimmed);
-      searchInput.value = '';
-      closeAutocomplete();
-      renderPills();
-    }
-
-    // Pill × remove button delegation
-    tagInput.addEventListener('click', (e) => {
-      const removeBtn = e.target.closest('.skill-pill-remove');
-      if (removeBtn) {
-        activeSkillPills = activeSkillPills.filter(s => s !== removeBtn.closest('.skill-pill').dataset.skill);
-        renderPills();
-        return;
-      }
-      // Clicking anywhere in the tag-input area focuses the text field
-      searchInput.focus();
+    const { clearAll } = initAutocomplete({
+      autocompleteEl, searchWrap, tagInput, searchInput, allSkills,
+      onFilterChange(pills) {
+        activeSkillPills = pills;
+        applyFilter();
+      },
     });
 
-    autocompleteEl.addEventListener('mousedown', (e) => {
-      const item = e.target.closest('.pj-autocomplete-item');
-      if (!item) return;
-      e.preventDefault(); // prevent input blur before pill is added
-      addPill(item.textContent.trim());
-    });
-
-    searchInput.addEventListener('input', () => {
-      syncHasValue();
-      showSuggestions(searchInput.value);
-    });
-
-    searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowDown' && !autocompleteEl.hidden) {
-        e.preventDefault();
-        const items = getDropdownItems();
-        setAutocompleteActive((autocompleteActiveIndex + 1) % items.length);
-      } else if (e.key === 'ArrowUp' && !autocompleteEl.hidden) {
-        e.preventDefault();
-        const items = getDropdownItems();
-        setAutocompleteActive((autocompleteActiveIndex - 1 + items.length) % items.length);
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        if (!autocompleteEl.hidden && autocompleteActiveIndex >= 0) {
-          addPill(getDropdownItems()[autocompleteActiveIndex].textContent.trim());
-        } else {
-          const val = searchInput.value.trim();
-          if (val) addPill(val);
-          else closeAutocomplete();
-        }
-      } else if (e.key === 'Tab' && !autocompleteEl.hidden) {
-        const items = getDropdownItems();
-        const target = autocompleteActiveIndex >= 0 ? items[autocompleteActiveIndex] : items[0];
-        if (target) { e.preventDefault(); addPill(target.textContent.trim()); }
-      } else if (e.key === 'Backspace' && searchInput.value === '' && activeSkillPills.length > 0) {
-        activeSkillPills.pop();
-        renderPills();
-      } else if (e.key === 'Escape') {
-        closeAutocomplete();
-      }
-    });
-
-    searchInput.addEventListener('blur', () => {
-      setTimeout(closeAutocomplete, 150);
-    });
-
-    searchClear.addEventListener('click', () => {
-      activeSkillPills = [];
-      searchInput.value = '';
-      tagInput.querySelectorAll('.skill-pill').forEach(el => el.remove());
-      tagInput.classList.remove('has-pills');
-      searchWrap.classList.remove('has-value');
-      closeAutocomplete();
-      searchInput.focus();
-      applyFilter();
-    });
+    searchClear.addEventListener('click', clearAll);
 
     applyFilter();
 
@@ -850,14 +735,6 @@
       }
     }
 
-    function formatDate(yyyymm) {
-      if (!yyyymm) return '';
-      const [y, m] = yyyymm.split('-').map(Number);
-      return new Date(y, (m||1)-1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-    }
-    function abbreviate(title) {
-      return title.split(/\s+/).filter(w => /^[A-Z]/.test(w)).map(w => w[0]).slice(0,3).join('') || title.slice(0,3);
-    }
   </script>
 </body>
 </html>

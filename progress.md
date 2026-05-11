@@ -1,5 +1,10 @@
 # Progress Log
 
+## 2026-05-11 — Cleanup: remove stale bootstrap artifact, gitignore .claude/
+
+- Deleted `data/projects-source.json` — one-time seed file superseded by `data/projects-auto.json`; no scripts referenced it.
+- Added `.claude/` to `.gitignore` — Claude Code session/memory directory should not be tracked.
+
 ## 2026-05-11 — Fix "now" widget: GitHub integration + collapse-on-inactive rows
 
 ### Cloudflare Worker (`cloudflare-worker/now-proxy.js`)

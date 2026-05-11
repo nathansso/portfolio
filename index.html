@@ -397,12 +397,12 @@
     }
     [data-theme="dark"] {
       --now-surface: color-mix(in oklab, var(--surface-2) 80%, transparent);
-      --now-border:  color-mix(in oklab, var(--line-faint) 60%, transparent);
+      --now-border:  var(--line-faint);
     }
 
     .now-widget {
       position: fixed;
-      bottom: var(--sp-5);
+      top: calc(var(--sp-7) + var(--sp-3));  /* clears the ~56px sticky nav */
       right: var(--sp-5);
       z-index: 40;
       display: flex;
@@ -426,8 +426,8 @@
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(8px) scale(0.96);
-      transform-origin: bottom right;
+      transform: translateY(-8px) scale(0.96);
+      transform-origin: top right;
       transition: opacity 180ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     [data-theme="dark"] .now-panel {
@@ -483,8 +483,8 @@
 
     /* Status dot */
     .now-dot {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 999px;
       background: var(--now-accent);
       flex-shrink: 0;
@@ -635,7 +635,7 @@
     }
 
     @media (max-width: 720px) {
-      .now-widget { bottom: var(--sp-4); right: var(--sp-3); }
+      .now-widget { top: calc(var(--sp-6) + var(--sp-5)); right: var(--sp-3); }
       .now-panel  { width: min(272px, calc(100vw - var(--sp-6))); }
     }
   </style>
@@ -728,7 +728,11 @@
   <!-- Now widget: always visible pill, expands on hover -->
   <div id="now-widget" class="now-widget" data-now-state="idle"
        role="complementary" aria-label="Current activity">
-    <!-- Panel sits above the trigger in flex-column order -->
+    <div class="now-trigger" tabindex="0" role="button" aria-label="Current activity">
+      <span class="now-dot" aria-hidden="true"></span>
+      <span class="now-trigger-label" aria-hidden="true">now</span>
+    </div>
+    <!-- Panel sits below the trigger in flex-column order -->
     <div class="now-panel" aria-live="polite">
       <div class="now-art" aria-hidden="true">
         <img class="now-art-img" src="" alt="">
@@ -783,11 +787,6 @@
       </div>
 
       <div class="now-footer"><span id="now-updated">—</span></div>
-    </div>
-
-    <div class="now-trigger" tabindex="0" role="button" aria-label="Current activity">
-      <span class="now-dot" aria-hidden="true"></span>
-      <span class="now-trigger-label" aria-hidden="true">now</span>
     </div>
   </div>
 

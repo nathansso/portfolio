@@ -1,5 +1,13 @@
 # Progress Log
 
+## 2026-05-11 — Move "now" widget to top-right, increase visibility
+
+- Repositioned from `bottom: var(--sp-5)` to `top: calc(var(--sp-7) + var(--sp-3))` (~60px) so it clears the sticky nav.
+- Swapped DOM order (trigger now before panel) so the expanded panel opens downward from the pill.
+- Flipped panel animation: `translateY(-8px)` hidden → `translateY(0)` open, `transform-origin: top right`.
+- Mobile breakpoint updated accordingly: `top: calc(var(--sp-6) + var(--sp-5))`.
+- Visibility boost: `--now-border` raised to `var(--line-faint)` (dark mode full opacity); dot size 8px → 9px.
+
 ## 2026-05-10 — "Now" activity widget
 
 Added a fixed-position corner widget to `index.html` that surfaces real-time activity across three sources.

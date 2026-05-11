@@ -8,7 +8,7 @@
 const CONFIG = {
   // Cloudflare Worker URL — set after deploying cloudflare-worker/now-proxy.js
   // e.g. 'https://now-proxy.YOUR_SUBDOMAIN.workers.dev'
-  proxyUrl: null,
+  proxyUrl: 'https://now-proxy.noliversauce.workers.dev',
   pollMs:   30_000,  // 30 s — driven by Last.fm scrobble cadence
 };
 

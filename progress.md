@@ -1,5 +1,26 @@
 # Progress Log
 
+## 2026-05-10 — "Now" activity widget
+
+Added a fixed-position corner widget to `index.html` that surfaces real-time activity across three sources.
+
+### New files
+- `scripts/now-playing.js` — client-side module: polls Last.fm directly (CORS-safe), polls a Cloudflare Worker proxy for Steam + GitHub private events. Exports `initNowWidget()`.
+- `cloudflare-worker/now-proxy.js` — Cloudflare Worker that keeps Steam API key and GitHub PAT server-side, returns `{ steam, github }` JSON. Requires env vars `STEAM_API_KEY`, `STEAM_ID`, `GH_TOKEN`, `GH_USER` set in Cloudflare dashboard.
+
+### index.html changes
+- Added ~200 lines of CSS for the widget (glassmorphic pill trigger + expandable panel, waveform bars, dot animations, art strip, responsive breakpoints).
+- Added widget HTML between `#site-footer-host` and the `<script>` block.
+- Added `import { initNowWidget } from './scripts/now-playing.js'` and `initNowWidget()` call.
+
+### Behavior
+- Pill always visible at bottom-right; panel expands on hover (CSS `:hover`) or touch tap, keyboard navigable via focus-within.
+- State machine: `gaming > music > coding > idle` — dot color and panel accent shift per state (green / terracotta / purple / grey). Animated waveform bars when music plays; pulsing controller icon when in-game; blurred album art / game header as panel backdrop.
+- Polling: Last.fm every 30 s, proxy every 60 s (staggered 5 s).
+
+### Setup required before deploy
+Fill in `CONFIG` in `scripts/now-playing.js` (Last.fm API key + username, Cloudflare Worker URL). Deploy `cloudflare-worker/now-proxy.js` with env vars set.
+
 ## 2026-05-09 — Targeted refactor + automated sync pipeline
 
 ### Refactor

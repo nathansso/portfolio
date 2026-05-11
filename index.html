@@ -388,6 +388,256 @@
       transition: color 120ms ease, border-color 120ms ease;
     }
     .all-projects-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ---------- Now widget ---------- */
+    :root {
+      --now-accent:  var(--accent);
+      --now-surface: color-mix(in oklab, var(--surface-1) 85%, transparent);
+      --now-border:  color-mix(in oklab, var(--line-faint) 80%, transparent);
+    }
+    [data-theme="dark"] {
+      --now-surface: color-mix(in oklab, var(--surface-2) 80%, transparent);
+      --now-border:  color-mix(in oklab, var(--line-faint) 60%, transparent);
+    }
+
+    .now-widget {
+      position: fixed;
+      bottom: var(--sp-5);
+      right: var(--sp-5);
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--sp-2);
+    }
+
+    /* Panel — hidden by default, revealed on hover / focus-within / [data-expanded] */
+    .now-panel {
+      width: 272px;
+      border-radius: var(--r-4);
+      background: var(--now-surface);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--now-border);
+      box-shadow:
+        0 12px 40px color-mix(in oklab, var(--ink-strong) 14%, transparent),
+        0 2px  8px  color-mix(in oklab, var(--ink-strong) 6%, transparent),
+        inset 0 0 0 1px color-mix(in oklab, white 8%, transparent);
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px) scale(0.96);
+      transform-origin: bottom right;
+      transition: opacity 180ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    [data-theme="dark"] .now-panel {
+      box-shadow:
+        0 12px 40px rgba(0,0,0,0.6),
+        0 2px  8px  rgba(0,0,0,0.4),
+        inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .now-widget:hover .now-panel,
+    .now-widget:focus-within .now-panel,
+    .now-widget[data-expanded] .now-panel {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Collapsed trigger pill */
+    .now-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: 6px 12px 6px 8px;
+      border-radius: 999px;
+      background: var(--now-surface);
+      border: 1px solid var(--now-border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        0 4px 16px color-mix(in oklab, var(--ink-strong) 10%, transparent),
+        0 1px 4px  color-mix(in oklab, var(--ink-strong) 6%, transparent);
+      cursor: default;
+      font-family: var(--font-mono);
+      font-size: var(--fs-meta);
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      color: var(--ink-muted);
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+      user-select: none;
+    }
+    [data-theme="dark"] .now-trigger {
+      box-shadow:
+        0 4px 20px rgba(0,0,0,0.45),
+        0 1px 4px  rgba(0,0,0,0.3);
+    }
+    .now-widget:hover .now-trigger,
+    .now-widget:focus-within .now-trigger,
+    .now-widget[data-expanded] .now-trigger {
+      border-color: var(--now-accent);
+      box-shadow:
+        0 0 0 3px color-mix(in oklab, var(--now-accent) 14%, transparent),
+        0 4px 16px color-mix(in oklab, var(--ink-strong) 10%, transparent);
+    }
+
+    /* Status dot */
+    .now-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--now-accent);
+      flex-shrink: 0;
+      transition: background 400ms ease;
+    }
+    @keyframes now-dot-pulse {
+      0%   { box-shadow: 0 0 0 0    color-mix(in oklab, var(--now-accent) 60%, transparent); }
+      80%  { box-shadow: 0 0 0 10px transparent; }
+      100% { box-shadow: 0 0 0 0    transparent; }
+    }
+    .now-widget[data-now-state="music"]  .now-dot,
+    .now-widget[data-now-state="gaming"] .now-dot {
+      animation: now-dot-pulse 2.4s ease-out infinite;
+    }
+    .now-widget[data-now-state="idle"] .now-dot {
+      background: var(--ink-faint);
+      animation: none;
+    }
+    .now-trigger-label { opacity: 0.65; }
+
+    /* Art strip */
+    .now-art {
+      position: relative;
+      height: 60px;
+      overflow: hidden;
+      display: none;
+      background: var(--surface-1);
+    }
+    .now-art-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(10px) saturate(1.5);
+      transform: scale(1.12);
+    }
+    .now-art-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--now-accent) 10%, transparent) 0%,
+        color-mix(in oklab, var(--now-surface) 70%, transparent) 100%
+      );
+    }
+    .now-widget[data-now-state="music"]  .now-art,
+    .now-widget[data-now-state="gaming"] .now-art { display: block; }
+
+    /* Rows */
+    .now-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4);
+      border-bottom: 1px solid var(--now-border);
+      transition: opacity 300ms ease;
+    }
+    .now-row:last-of-type { border-bottom: none; }
+    .now-row[data-active="false"] { opacity: 0.35; }
+    .now-row[data-active="true"]  { opacity: 1; }
+
+    .now-row-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3px;
+      color: var(--now-accent);
+      transition: color 400ms ease;
+    }
+    .now-row-icon svg { width: 15px; height: 15px; }
+
+    .now-row-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+    }
+    .now-row-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      line-height: 1;
+    }
+    .now-row-primary {
+      font-size: var(--fs-small);
+      font-weight: 500;
+      color: var(--ink-strong);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+    .now-row-secondary {
+      font-size: 12px;
+      color: var(--ink-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Waveform bars — music active */
+    .now-wave {
+      display: none;
+      align-items: flex-end;
+      gap: 2px;
+      height: 13px;
+    }
+    .now-wave span {
+      display: block;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--now-accent);
+      transform-origin: bottom;
+    }
+    .now-wave span:nth-child(1) { height: 5px;  animation: now-wave-bar 0.9s ease-in-out infinite 0s; }
+    .now-wave span:nth-child(2) { height: 11px; animation: now-wave-bar 0.9s ease-in-out infinite 0.2s; }
+    .now-wave span:nth-child(3) { height: 7px;  animation: now-wave-bar 0.9s ease-in-out infinite 0.4s; }
+    @keyframes now-wave-bar {
+      0%, 100% { transform: scaleY(0.35); }
+      50%       { transform: scaleY(1); }
+    }
+    .now-widget[data-now-state="music"] #now-row-music .now-wave      { display: inline-flex; }
+    .now-widget[data-now-state="music"] #now-row-music .now-icon-idle { display: none; }
+
+    /* Gaming icon pulse */
+    .now-widget[data-now-state="gaming"] #now-row-gaming .now-row-icon {
+      animation: now-icon-pulse 2s ease-in-out infinite;
+    }
+    @keyframes now-icon-pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.5; }
+    }
+
+    /* Footer */
+    .now-footer {
+      padding: var(--sp-2) var(--sp-4);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-faint);
+      border-top: 1px solid var(--now-border);
+      text-align: right;
+    }
+
+    @media (max-width: 720px) {
+      .now-widget { bottom: var(--sp-4); right: var(--sp-3); }
+      .now-panel  { width: min(272px, calc(100vw - var(--sp-6))); }
+    }
   </style>
 </head>
 <body>
@@ -475,11 +725,79 @@
 
   <div id="site-footer-host"></div>
 
+  <!-- Now widget: always visible pill, expands on hover -->
+  <div id="now-widget" class="now-widget" data-now-state="idle"
+       role="complementary" aria-label="Current activity">
+    <!-- Panel sits above the trigger in flex-column order -->
+    <div class="now-panel" aria-live="polite">
+      <div class="now-art" aria-hidden="true">
+        <img class="now-art-img" src="" alt="">
+        <div class="now-art-overlay"></div>
+      </div>
+
+      <div class="now-row" id="now-row-music" data-active="false">
+        <div class="now-row-icon" aria-hidden="true">
+          <span class="now-wave"><span></span><span></span><span></span></span>
+          <svg class="now-icon-idle" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+        </div>
+        <div class="now-row-content">
+          <span class="now-row-label">music</span>
+          <span class="now-row-primary" id="now-music-track">—</span>
+          <span class="now-row-secondary" id="now-music-artist"></span>
+        </div>
+      </div>
+
+      <div class="now-row" id="now-row-gaming" data-active="false">
+        <div class="now-row-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="6" width="20" height="12" rx="4"/>
+            <path d="M6 12h4M8 10v4M15 11h.01M17 13h.01"/>
+          </svg>
+        </div>
+        <div class="now-row-content">
+          <span class="now-row-label">gaming</span>
+          <span class="now-row-primary" id="now-game-name">—</span>
+        </div>
+      </div>
+
+      <div class="now-row" id="now-row-coding" data-active="false">
+        <div class="now-row-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="now-row-content">
+          <span class="now-row-label">coding</span>
+          <span class="now-row-primary" id="now-repo-name">—</span>
+          <span class="now-row-secondary" id="now-repo-desc"></span>
+        </div>
+      </div>
+
+      <div class="now-footer"><span id="now-updated">—</span></div>
+    </div>
+
+    <div class="now-trigger" tabindex="0" role="button" aria-label="Current activity">
+      <span class="now-dot" aria-hidden="true"></span>
+      <span class="now-trigger-label" aria-hidden="true">now</span>
+    </div>
+  </div>
+
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
     import { PROJECTS, fmtDate, abbreviate } from './data/site.js?v=1';
+    import { initNowWidget } from './scripts/now-playing.js';
 
     mountChrome('home');
+    initNowWidget();
 
     // Selected projects — curated 3 (Bike Cambridge removed per user)
     const FEATURED_IDS = ['ca-real-estate', 'ats-resume', 'ecommerce-intent'];

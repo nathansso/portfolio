@@ -539,11 +539,32 @@
       gap: var(--sp-3);
       padding: var(--sp-3) var(--sp-4);
       border-bottom: 1px solid var(--now-border);
-      transition: opacity 300ms ease;
+      max-height: 80px;
+      overflow: hidden;
+      transition: max-height 280ms ease, opacity 280ms ease,
+                  padding-top 280ms ease, padding-bottom 280ms ease,
+                  border-color 280ms ease;
     }
     .now-row:last-of-type { border-bottom: none; }
-    .now-row[data-active="false"] { opacity: 0.35; }
-    .now-row[data-active="true"]  { opacity: 1; }
+
+    /* Inactive: collapsed by default */
+    .now-row[data-active="false"] {
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      opacity: 0;
+      border-color: transparent;
+    }
+    .now-row[data-active="true"] { opacity: 1; }
+
+    /* On panel hover: reveal inactive rows as "last known" hint */
+    .now-panel:hover .now-row[data-active="false"] {
+      max-height: 80px;
+      padding-top: var(--sp-3);
+      padding-bottom: var(--sp-3);
+      opacity: 0.5;
+      border-color: var(--now-border);
+    }
 
     .now-row-icon {
       flex-shrink: 0;

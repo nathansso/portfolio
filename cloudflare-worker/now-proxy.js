@@ -109,28 +109,45 @@ async function fetchSteam(env) {
   if (!player)  return { active: false, game: null, artUrl: null };
 
   const inGame = Boolean(player.gameid);
-  const gameId = player.gameid ?? null;
+  if (inGame) {
+    return {
+      active: true,
+      game:   player.gameextrainfo ?? null,
+      artUrl: `${STEAM_CDN}/${player.gameid}/header.jpg`,
+    };
+  }
+
+  // Not currently in-game — fetch most recently played for hover preview
+  const recentUrl = `${STEAM_API}/IPlayerService/GetRecentlyPlayedGames/v1/`
+                  + `?key=${env.STEAM_API_KEY}&steamid=${env.STEAM_ID}&count=1`;
+  const recentRes  = await fetch(recentUrl);
+  if (!recentRes.ok) return { active: false, game: null, artUrl: null };
+  const recentJson = await recentRes.json();
+  const lastGame   = recentJson?.response?.games?.[0];
 
   return {
-    active: inGame,
-    game:   player.gameextrainfo ?? null,
-    artUrl: gameId ? `${STEAM_CDN}/${gameId}/header.jpg` : null,
+    active: false,
+    game:   lastGame?.name ?? null,
+    artUrl: lastGame ? `${STEAM_CDN}/${lastGame.appid}/header.jpg` : null,
   };
 }
 
 async function fetchGitHub(env) {
-  if (!env.GH_TOKEN || !env.GH_USER) {
+  const user  = env.GH_USER;
+  const token = env.GH_TOKEN;
+  if (!user) {
     return { active: false, repo: null, pushedAt: null };
   }
 
-  const url = `${GITHUB_API}/users/${env.GH_USER}/events?per_page=10`;
-  const res  = await fetch(url, {
-    headers: {
-      'Accept': 'application/vnd.github+json',
-      'Authorization': `Bearer ${env.GH_TOKEN}`,
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
-  });
+  const headers = {
+    'Accept':               'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'User-Agent':           'now-proxy-worker',
+  };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const url = `${GITHUB_API}/users/${user}/events?per_page=30`;
+  const res  = await fetch(url, { headers });
   if (!res.ok) throw new Error(`github ${res.status}`);
 
   const events = await res.json();
@@ -139,7 +156,7 @@ async function fetchGitHub(env) {
 
   const pushedAt = push.created_at;
   const hoursAgo = (Date.now() - new Date(pushedAt)) / 3_600_000;
-  const repoName = (push.repo?.name ?? '').replace(`${env.GH_USER}/`, '');
+  const repoName = (push.repo?.name ?? '').replace(`${user}/`, '');
 
   return {
     active:   hoursAgo < 48,

@@ -1,5 +1,21 @@
 # Progress Log
 
+## 2026-05-11 — Fix "now" widget: GitHub integration + collapse-on-inactive rows
+
+### Cloudflare Worker (`cloudflare-worker/now-proxy.js`)
+- Added `User-Agent: now-proxy-worker` to GitHub API fetch — GitHub requires this header and was silently 403-ing all requests without it.
+- Made `GH_TOKEN` optional (auth header only sent when env var present); falls back to unauthenticated for public events.
+- Added `GetRecentlyPlayedGames` fallback for Steam: when not actively in-game, fetches most recent game for hover preview art.
+- Fixed GitHub to use `GH_TOKEN`/`GH_USER` env var names consistently.
+
+### index.html (now widget CSS)
+- Changed inactive rows from opacity dimming to full collapse: `max-height: 0`, `padding: 0`, `opacity: 0` when `data-active="false"`.
+- Hover reveal: hovering the panel slides inactive rows back in at 50% opacity with smooth `max-height` transition.
+- Row labels swap dynamically: "music" ↔ "last heard", "gaming" ↔ "last played".
+
+### scripts/now-playing.js
+- `updateMusicRow` / `updateGamingRow` always populate track/game name and swap the `.now-row-label` text based on active state.
+
 ## 2026-05-11 — Move "now" widget to top-right, increase visibility
 
 - Repositioned from `bottom: var(--sp-5)` to `top: calc(var(--sp-7) + var(--sp-3))` (~60px) so it clears the sticky nav.

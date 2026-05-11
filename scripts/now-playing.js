@@ -136,22 +136,26 @@ function resolveAccent(state) {
 
 function updateMusicRow() {
   const row    = document.getElementById('now-row-music');
+  const label  = row?.querySelector('.now-row-label');
   const track  = document.getElementById('now-music-track');
   const artist = document.getElementById('now-music-artist');
   if (!row) return;
 
-  row.dataset.active = String(S.music.active);
-  track.textContent  = S.music.active ? (S.music.track  ?? '—') : '—';
-  artist.textContent = S.music.active ? (S.music.artist ?? '')  : '';
+  row.dataset.active    = String(S.music.active);
+  track.textContent     = S.music.track  ?? '—';
+  artist.textContent    = S.music.artist ?? '';
+  if (label) label.textContent = S.music.active ? 'music' : 'last heard';
 }
 
 function updateGamingRow() {
-  const row  = document.getElementById('now-row-gaming');
-  const name = document.getElementById('now-game-name');
+  const row   = document.getElementById('now-row-gaming');
+  const label = row?.querySelector('.now-row-label');
+  const name  = document.getElementById('now-game-name');
   if (!row) return;
 
   row.dataset.active = String(S.gaming.active);
-  name.textContent   = S.gaming.active ? (S.gaming.game ?? '—') : '—';
+  name.textContent   = S.gaming.game ?? '—';
+  if (label) label.textContent = S.gaming.active ? 'gaming' : 'last played';
 }
 
 function updateCodingRow() {

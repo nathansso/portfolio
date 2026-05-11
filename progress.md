@@ -1,5 +1,55 @@
 # Progress Log
 
+## 2026-05-11 — Cleanup: remove stale bootstrap artifact, gitignore .claude/
+
+- Deleted `data/projects-source.json` — one-time seed file superseded by `data/projects-auto.json`; no scripts referenced it.
+- Added `.claude/` to `.gitignore` — Claude Code session/memory directory should not be tracked.
+
+## 2026-05-11 — Fix "now" widget: GitHub integration + collapse-on-inactive rows
+
+### Cloudflare Worker (`cloudflare-worker/now-proxy.js`)
+- Added `User-Agent: now-proxy-worker` to GitHub API fetch — GitHub requires this header and was silently 403-ing all requests without it.
+- Made `GH_TOKEN` optional (auth header only sent when env var present); falls back to unauthenticated for public events.
+- Added `GetRecentlyPlayedGames` fallback for Steam: when not actively in-game, fetches most recent game for hover preview art.
+- Fixed GitHub to use `GH_TOKEN`/`GH_USER` env var names consistently.
+
+### index.html (now widget CSS)
+- Changed inactive rows from opacity dimming to full collapse: `max-height: 0`, `padding: 0`, `opacity: 0` when `data-active="false"`.
+- Hover reveal: hovering the panel slides inactive rows back in at 50% opacity with smooth `max-height` transition.
+- Row labels swap dynamically: "music" ↔ "last heard", "gaming" ↔ "last played".
+
+### scripts/now-playing.js
+- `updateMusicRow` / `updateGamingRow` always populate track/game name and swap the `.now-row-label` text based on active state.
+
+## 2026-05-11 — Move "now" widget to top-right, increase visibility
+
+- Repositioned from `bottom: var(--sp-5)` to `top: calc(var(--sp-7) + var(--sp-3))` (~60px) so it clears the sticky nav.
+- Swapped DOM order (trigger now before panel) so the expanded panel opens downward from the pill.
+- Flipped panel animation: `translateY(-8px)` hidden → `translateY(0)` open, `transform-origin: top right`.
+- Mobile breakpoint updated accordingly: `top: calc(var(--sp-6) + var(--sp-5))`.
+- Visibility boost: `--now-border` raised to `var(--line-faint)` (dark mode full opacity); dot size 8px → 9px.
+
+## 2026-05-10 — "Now" activity widget
+
+Added a fixed-position corner widget to `index.html` that surfaces real-time activity across three sources.
+
+### New files
+- `scripts/now-playing.js` — client-side module: polls Last.fm directly (CORS-safe), polls a Cloudflare Worker proxy for Steam + GitHub private events. Exports `initNowWidget()`.
+- `cloudflare-worker/now-proxy.js` — Cloudflare Worker that keeps Steam API key and GitHub PAT server-side, returns `{ steam, github }` JSON. Requires env vars `STEAM_API_KEY`, `STEAM_ID`, `GH_TOKEN`, `GH_USER` set in Cloudflare dashboard.
+
+### index.html changes
+- Added ~200 lines of CSS for the widget (glassmorphic pill trigger + expandable panel, waveform bars, dot animations, art strip, responsive breakpoints).
+- Added widget HTML between `#site-footer-host` and the `<script>` block.
+- Added `import { initNowWidget } from './scripts/now-playing.js'` and `initNowWidget()` call.
+
+### Behavior
+- Pill always visible at bottom-right; panel expands on hover (CSS `:hover`) or touch tap, keyboard navigable via focus-within.
+- State machine: `gaming > music > coding > idle` — dot color and panel accent shift per state (green / terracotta / purple / grey). Animated waveform bars when music plays; pulsing controller icon when in-game; blurred album art / game header as panel backdrop.
+- Polling: Last.fm every 30 s, proxy every 60 s (staggered 5 s).
+
+### Setup required before deploy
+Fill in `CONFIG` in `scripts/now-playing.js` (Last.fm API key + username, Cloudflare Worker URL). Deploy `cloudflare-worker/now-proxy.js` with env vars set.
+
 ## 2026-05-09 — Targeted refactor + automated sync pipeline
 
 ### Refactor

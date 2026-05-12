@@ -1,5 +1,11 @@
 # Progress Log
 
+## 2026-05-11 — Rewrite README
+
+Replaced prompt-style README with an industry-standard project README. Documents the actual architecture (data layer, shared chrome, design token system, activity widget), explains key design decisions (oklch colors, `--nav-h` token, Cloudflare Worker pattern), and removes generic boilerplate instructions.
+
+
+
 ## 2026-05-11 — Implement GitHub project board items (issues #4–#10, #12–#14)
 
 ### styles/tokens.css

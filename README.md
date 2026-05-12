@@ -1,131 +1,106 @@
-# Nathaniel Oliver — Personal Site
+# nathansso.github.io
 
-A static personal website built with vanilla HTML, CSS, and JavaScript (ES modules). No build step, no framework, no dependencies.
+Personal portfolio for Nathaniel Oliver — Data Scientist, M.S. UC San Diego.
 
-**Live pages:**
-- `index.html` — landing
-- `about.html` — bio, experience timeline, filterable
-- `projects.html` — project grid, category filter + skill search
-- `resume.html` — one-page printable résumé with PDF download
+**Live:** [nathansso.github.io](https://nathansso.github.io/portfolio)
 
 ---
 
-## Project structure
+## Stack
+
+Vanilla HTML, CSS, and JavaScript (ES modules). No framework, no bundler, no build step. The site is a flat collection of `.html` files that can be served by any static host.
+
+---
+
+## Pages
+
+| File | Route | Description |
+|------|-------|-------------|
+| `index.html` | `/` | Hero, contact pills, featured project tiles, activity widget |
+| `about.html` | `/about` | Sticky bio sidebar + scrollable experience timeline with category filter |
+| `projects.html` | `/projects` | Full project grid with multi-select category filter and skill search |
+| `resume.html` | `/resume` | Rendered one-page resume with print/PDF download |
+
+---
+
+## Architecture
+
+### Data layer — `data/site.js`
+
+Single source of truth for all content. Exported as an ES module and imported by every page. Editing here updates every page simultaneously.
 
 ```
-.
-├── index.html              # Landing
-├── about.html              # Bio + experience timeline
-├── projects.html           # Project grid
-├── resume.html             # One-page résumé
-├── resume.pdf              # ← Drop your résumé PDF here
-├── favicon.svg
-├── data/
-│   └── site.js             # Single source of truth: profile, experiences, projects
-├── scripts/
-│   └── chrome.js           # Shared nav, footer, theme toggle
-├── styles/
-│   └── tokens.css          # Design tokens + base components (light + dark)
-└── imgs/                   # Project thumbnails, profile photo
+PROFILE       — name, contact, bio, photo
+EXPERIENCES[] — research, internship, education, and other roles
+PROJECTS[]    — projects, each optionally linked to an experience via experienceId
+CATEGORIES    — defines the filter vocabulary and color palette for each category
 ```
 
-All page content (bio, experiences, projects, skills) lives in **`data/site.js`** — edit there and every page updates.
+Projects in `PROJECTS[]` are populated and kept in sync by `scripts/sync-projects.js` (fetches GitHub repo metadata) and `scripts/merge-projects.js` (merges auto-generated data back into `site.js` without overwriting editorial fields like `blurb` and `category`). Manual fields are never touched by the sync.
+
+### Shared chrome — `scripts/chrome.js`
+
+Exports `mountChrome(currentPageId)`, called once on page load by every page. Renders the sticky nav, footer, theme toggle, and mobile menu into pre-existing host elements (`#site-nav-host`, `#site-footer-host`). The nav dynamically marks the active page via `aria-current`. Also includes a `#nav-activity` pill that the activity widget populates when music, gaming, or coding is live.
+
+### Design tokens — `styles/tokens.css`
+
+All visual decisions live here — no magic numbers elsewhere in the codebase.
+
+- **Color:** `oklch()` across the board for perceptually uniform hue shifts. Light and dark variants both defined under `:root` and `[data-theme="dark"]`. Theme preference persisted in `localStorage` under `nso-theme`.
+- **Category palette:** six semantic colors (`--cat-research`, `--cat-internship`, `--cat-graduate`, `--cat-undergrad`, `--cat-personal`, `--cat-other`) used consistently across badges, filter chips, experience card accents, and project thumbnails.
+- **Spacing:** 4px base scale (`--sp-1` through `--sp-10`).
+- **Nav height:** `--nav-h: 65px` — shared by the sticky nav, the about sidebar, the resume toolbar, and the activity widget top offset so they all stay in sync.
+- **Components:** `.btn`, `.chip`, `.badge`, `.container`, `.nav`, `.footer` defined here and composed by page-level styles.
+
+### Activity widget — `scripts/now-playing.js` + `cloudflare-worker/`
+
+A fixed pill in the top-right corner of the landing page that surfaces real-time activity across three sources: Last.fm (music), Steam (gaming), GitHub (recent pushes). Expands on hover/click to show a panel with per-source rows.
+
+All API keys live server-side in a Cloudflare Worker (`cloudflare-worker/now-proxy.js`) — the client makes a single unauthenticated request to the Worker URL and receives a unified `{ music, steam, github }` payload. The Worker requires the following environment variables set in the Cloudflare dashboard:
+
+```
+LASTFM_API_KEY   LASTFM_USER
+STEAM_API_KEY    STEAM_ID
+GH_TOKEN         GH_USER
+ALLOWED_ORIGIN   (defaults to nathansso.github.io)
+```
+
+State machine: `gaming > music > coding > idle`. Each state shifts the accent color and triggers source-specific animations (waveform bars for music, pulsing icon for gaming). Inactive rows collapse to zero height and reveal at reduced opacity on panel hover as a "last known" hint. Polling interval: 30 seconds.
 
 ---
 
 ## Local development
 
-ES modules can't be loaded over `file://`, so you need a local server.
-
-**Option A — Python:**
+ES modules require a server — `file://` won't work.
 
 ```bash
 python3 -m http.server 8000
+# or
+npx serve .
 ```
 
-Then open <http://localhost:8000>.
-
-**Option B — Node:**
-
-```bash
-npx serve
-```
-
-**Option C — VS Code:** install the "Live Server" extension, right-click `index.html` → "Open with Live Server".
+Open `http://localhost:8000`. The Cloudflare Worker already allows `localhost` origins, so the activity widget will function locally without any extra configuration.
 
 ---
 
-## Deploy
+## Project sync
 
-This is a static site — drop the folder anywhere that serves files.
-
-### Vercel (drag-and-drop, fastest)
-
-1. Sign in at <https://vercel.com>
-2. Click **Add New → Project → Import**, or drag this folder onto the dashboard
-3. Accept defaults (no build command, output directory = root)
-4. Live at `your-project.vercel.app` in ~30s
-
-### Netlify (drag-and-drop)
-
-1. Sign in at <https://app.netlify.com>
-2. Drag this folder onto the **Sites** dashboard
-3. Live at `your-site.netlify.app`
-
-### GitHub Pages
-
-1. Create a repo, push these files
-2. **Settings → Pages → Source:** Deploy from a branch · `main` · `/ (root)`
-3. Live at `https://<username>.github.io/<repo>/` in ~1 minute
-
-**Custom domain:** all three hosts let you attach one in the project settings.
-
----
-
-## Editing content
-
-### Update bio, experiences, projects, skills
-
-Edit `data/site.js`. The structure:
-
-- `PROFILE` — name, contact, photo, bio
-- `EXPERIENCES[]` — research / internship / education / other roles
-- `PROJECTS[]` — projects, each linked to an experience by `experienceId`
-- `CATEGORIES` — drives the filter chips on /projects and /about
-
-### Update the résumé PDF
-
-Replace `resume.pdf` with your own file (keep the filename). The download button on `/resume.html` already points at it.
-
-### Theme
-
-`styles/tokens.css` holds all design tokens — colors, type scale, spacing, shadows. Light and dark variants both defined. Toggle in the top-right of every page.
-
-### Add a new page
-
-1. Copy any existing page as a template
-2. Add an entry to `PAGES` in `scripts/chrome.js` so it appears in the nav
-3. Use shared components from `styles/tokens.css` (`.btn`, `.chip`, `.badge`, `.container`, etc.)
-
-### Cache busting after edits to `data/site.js`
-
-Module imports use a query string (`?v=1`) for cache control. After meaningful changes to `data/site.js` or `scripts/chrome.js`, bump the version in every importing file to force browsers to refetch:
+GitHub repo metadata (descriptions, skills, last commit date) can be refreshed by running:
 
 ```bash
-# Find all imports
-grep -rE "data/site\.js|scripts/chrome\.js" --include="*.html" --include="*.js" .
+npm run sync
 ```
 
-Production hosts (Vercel, Netlify, Pages) generally serve files with reasonable cache headers, so this matters most when you're iterating locally and want to force a hard reload.
+This runs `scripts/sync-projects.js` → `scripts/infer_skills.py` → `scripts/merge-projects.js` in sequence. Requires a `.env` file with `GITHUB_TOKEN` (see `.env.example`). Output is written to `data/projects-auto.json` and merged back into `data/site.js`.
 
 ---
 
 ## Browser support
 
-Modern evergreen browsers (Chrome, Firefox, Safari, Edge — last 2 versions). Uses CSS custom properties, ES modules, and `oklch()` colors.
+Modern evergreen browsers (Chrome, Firefox, Safari, Edge). Requires CSS custom properties, ES modules, `oklch()` color syntax, and `backdrop-filter`.
 
 ---
 
 ## License
 
-Personal use. Content (text, images) © Nathaniel Oliver. Code structure free to adapt.
+Content (bio, project descriptions, images) © Nathaniel Oliver. Code structure is unlicensed — adapt freely.

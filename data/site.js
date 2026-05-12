@@ -117,7 +117,7 @@ export const EXPERIENCES = [
       'Economics: Macro, Micro, Econometrics. Finance: Financial Math, Financial Analytics.',
     ],
     skills: ['Python','R','D3.js','Probability','Econometrics'],
-    projectIds: ['dsc80-notebook','allrecipes','bike-cambridge','mice-temp','airbnb-sd','estrus-rats','math189-edu','asteroid','image-processor'],
+    projectIds: ['dsc80-notebook','allrecipes','bike-cambridge','mice-temp','mice-explorable','airbnb-sd','estrus-rats','math189-edu','asteroid','image-processor'],
   },
   // 'other' — appears in ALL but not as a filter
   {
@@ -410,6 +410,28 @@ export const PROJECTS = [
       "data visualization",
       "time series",
       "EDA"
+    ],
+    "url": null,
+    "repo": null
+  },
+  {
+    "id": "mice-explorable",
+    "title": "MICE Explorable",
+    "category": "undergrad",
+    "experienceId": "bsmath",
+    "course": "DSC 106",
+    "date": "2025-03",
+    "image": null,
+    "blurb": "Interactive D3 explorable letting users drill into mouse body-temperature data by sex, estrus phase, and time of day.",
+    "description": "Group project built in DSC 106. An interactive explorable visualization of mouse body-temperature data, allowing users to filter by sex and estrus cycle phase, adjust the time range, and hover individual data points for detail. Built with D3.js, HTML, and CSS.",
+    "skills": [
+      "D3.js",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "data visualization",
+      "interactive viz",
+      "time series"
     ],
     "url": "https://sebastianferragut.github.io/miceexplorable/",
     "repo": null

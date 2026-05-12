@@ -35,8 +35,10 @@ export default {
     const ALLOWED_ORIGIN = env.ALLOWED_ORIGIN ?? 'nathansso.github.io';
     const origin  = request.headers.get('Origin')  ?? '';
     const referer = request.headers.get('Referer') ?? '';
-    const ok = !origin                           // same-origin request (no Origin header)
-             || origin === 'null'                // file:// or localhost in some browsers
+    const isLocal = origin.includes('localhost') || origin.includes('127.0.0.1');
+    const ok = !origin
+             || origin === 'null'
+             || isLocal
              || origin.includes(ALLOWED_ORIGIN)
              || referer.includes(ALLOWED_ORIGIN);
     if (!ok) {
@@ -44,7 +46,7 @@ export default {
     }
 
     if (request.method === 'OPTIONS') {
-      return new Response(null, { headers: corsHeaders(env) });
+      return new Response(null, { headers: corsHeaders(env, origin) });
     }
 
     const [musicResult, steamResult, githubResult] = await Promise.allSettled([
@@ -57,11 +59,19 @@ export default {
     const steam  = steamResult.status  === 'fulfilled' ? steamResult.value  : { active: false, game: null, artUrl: null };
     const github = githubResult.status === 'fulfilled' ? githubResult.value : { active: false, repo: null, pushedAt: null };
 
-    return new Response(JSON.stringify({ music, steam, github }), {
+    const debug = env.DEBUG === '1' ? {
+      steamErr:  steamResult.status  === 'rejected' ? steamResult.reason?.message : null,
+      musicErr:  musicResult.status  === 'rejected' ? musicResult.reason?.message : null,
+      githubErr: githubResult.status === 'rejected' ? githubResult.reason?.message : null,
+      steamConfigured: Boolean(env.STEAM_API_KEY && env.STEAM_ID),
+      musicConfigured: Boolean(env.LASTFM_API_KEY && env.LASTFM_USER),
+    } : undefined;
+
+    return new Response(JSON.stringify({ music, steam, github, ...(debug && { debug }) }), {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-store',
-        ...corsHeaders(env),
+        ...corsHeaders(env, origin),
       },
     });
   },
@@ -165,10 +175,11 @@ async function fetchGitHub(env) {
   };
 }
 
-function corsHeaders(env) {
-  const domain = env.ALLOWED_ORIGIN ?? 'nathansso.github.io';
+function corsHeaders(env, requestOrigin) {
+  const domain  = env.ALLOWED_ORIGIN ?? 'nathansso.github.io';
+  const isLocal = requestOrigin?.includes('localhost') || requestOrigin?.includes('127.0.0.1');
   return {
-    'Access-Control-Allow-Origin':  `https://${domain}`,
+    'Access-Control-Allow-Origin':  isLocal ? (requestOrigin || '*') : `https://${domain}`,
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Max-Age':       '86400',
   };

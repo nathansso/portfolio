@@ -37,23 +37,29 @@ export function initNowWidget() {
 function setupHover(widget) {
   const trigger = widget.querySelector('.now-trigger');
 
-  // Touch devices: tap trigger to toggle panel
-  trigger.addEventListener('click', () => {
-    if (window.matchMedia('(hover: none)').matches) {
-      widget.toggleAttribute('data-expanded');
+  function setExpanded(val) {
+    if (val) {
+      widget.setAttribute('data-expanded', '');
+      trigger.setAttribute('aria-expanded', 'true');
+    } else {
+      widget.removeAttribute('data-expanded');
+      trigger.setAttribute('aria-expanded', 'false');
     }
-  });
+  }
+
+  // All devices: click trigger toggles panel
+  trigger.addEventListener('click', () => setExpanded(!widget.hasAttribute('data-expanded')));
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && widget.hasAttribute('data-expanded')) {
-      widget.removeAttribute('data-expanded');
+      setExpanded(false);
       trigger.focus();
     }
   });
 
   document.addEventListener('click', (e) => {
     if (widget.hasAttribute('data-expanded') && !widget.contains(e.target)) {
-      widget.removeAttribute('data-expanded');
+      setExpanded(false);
     }
   });
 }
@@ -117,6 +123,7 @@ function updateDOM() {
   updateCodingRow();
   updateArt(widget, dominant);
   updateFooter();
+  updateNavIndicator(dominant);
 }
 
 function setWidgetState(widget, state) {
@@ -197,6 +204,25 @@ function updateArt(widget, dominant) {
 function updateFooter() {
   const el = document.getElementById('now-updated');
   if (el) el.textContent = `updated ${relativeTime(new Date())}`;
+}
+
+function updateNavIndicator(dominant) {
+  const indicator = document.getElementById('nav-activity');
+  const textEl    = document.getElementById('nav-activity-text');
+  if (!indicator || !textEl) return;
+
+  let text = null;
+  if (dominant === 'music'  && S.music.track)  text = S.music.track;
+  if (dominant === 'gaming' && S.gaming.game)  text = S.gaming.game;
+  if (dominant === 'coding' && S.coding.repo)  text = S.coding.repo;
+
+  if (text) {
+    textEl.textContent = text;
+    indicator.setAttribute('data-active', '');
+  } else {
+    textEl.textContent = '';
+    indicator.removeAttribute('data-active');
+  }
 }
 
 // ─── Utilities ────────────────────────────────────────────────────────────────

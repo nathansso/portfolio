@@ -7,7 +7,7 @@ const PAGES = [
   { id: 'home',      href: 'index.html',    label: 'Home' },
   { id: 'about',     href: 'about.html',    label: 'About' },
   { id: 'projects',  href: 'projects.html', label: 'Projects' },
-  { id: 'resume',    href: 'resume.html',   label: 'Résumé', resume: true },
+  { id: 'resume',    href: 'resume.html',   label: 'Resume', resume: true },
 ];
 
 export function renderNav(currentId) {
@@ -27,6 +27,10 @@ export function renderNav(currentId) {
         <a class="nav-mark" href="index.html" aria-label="Home">nso</a>
         <ul class="nav-links">${links}</ul>
         <div style="display:flex; gap: 8px; align-items:center;">
+          <div id="nav-activity" class="nav-activity" aria-live="polite" aria-label="Current activity">
+            <span class="nav-activity-dot" aria-hidden="true"></span>
+            <span id="nav-activity-text" class="nav-activity-text"></span>
+          </div>
           <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
             <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>

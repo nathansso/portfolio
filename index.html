@@ -13,6 +13,32 @@
       background: var(--surface-0);
       position: relative;
     }
+
+    /* Reactive mouse-tracking glow */
+    #bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 600ms ease;
+      background: radial-gradient(
+        600px circle at var(--mx, 50%) var(--my, 50%),
+        color-mix(in oklab, var(--accent) 6%, transparent) 0%,
+        transparent 70%
+      );
+    }
+    body.mouse-active #bg-glow { opacity: 1; }
+    [data-theme="dark"] #bg-glow {
+      background: radial-gradient(
+        600px circle at var(--mx, 50%) var(--my, 50%),
+        color-mix(in oklab, var(--accent) 9%, transparent) 0%,
+        transparent 70%
+      );
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #bg-glow { display: none; }
+    }
     /* Diagonal neumorphic swath across the top — sits behind hero content */
     .hero::before {
       content: '';
@@ -402,7 +428,7 @@
 
     .now-widget {
       position: fixed;
-      top: calc(var(--sp-7) + var(--sp-3));  /* clears the ~56px sticky nav */
+      top: calc(var(--nav-h) + var(--sp-3));
       right: var(--sp-5);
       z-index: 40;
       display: flex;
@@ -458,14 +484,20 @@
       box-shadow:
         0 4px 16px color-mix(in oklab, var(--ink-strong) 10%, transparent),
         0 1px 4px  color-mix(in oklab, var(--ink-strong) 6%, transparent);
-      cursor: default;
+      cursor: pointer;
       font-family: var(--font-mono);
       font-size: var(--fs-meta);
       letter-spacing: 0.06em;
       text-transform: lowercase;
       color: var(--ink-muted);
-      transition: border-color 200ms ease, box-shadow 200ms ease;
+      transition: border-color 200ms ease, box-shadow 200ms ease, transform 150ms ease, color 160ms ease;
       user-select: none;
+    }
+    .now-trigger:hover { color: var(--ink-strong); }
+    .now-trigger:active { transform: scale(0.96); }
+    .now-trigger:focus-visible {
+      outline: 2px solid var(--now-accent);
+      outline-offset: 3px;
     }
     [data-theme="dark"] .now-trigger {
       box-shadow:
@@ -656,12 +688,13 @@
     }
 
     @media (max-width: 720px) {
-      .now-widget { top: calc(var(--sp-6) + var(--sp-5)); right: var(--sp-3); }
+      .now-widget { top: calc(var(--nav-h) + var(--sp-3)); right: var(--sp-3); }
       .now-panel  { width: min(272px, calc(100vw - var(--sp-6))); }
     }
   </style>
 </head>
 <body>
+  <div id="bg-glow" aria-hidden="true"></div>
   <div id="site-nav-host"></div>
 
   <main>
@@ -749,10 +782,10 @@
   <!-- Now widget: always visible pill, expands on hover -->
   <div id="now-widget" class="now-widget" data-now-state="idle"
        role="complementary" aria-label="Current activity">
-    <div class="now-trigger" tabindex="0" role="button" aria-label="Current activity">
+    <button class="now-trigger" aria-label="Toggle activity panel" aria-expanded="false">
       <span class="now-dot" aria-hidden="true"></span>
-      <span class="now-trigger-label" aria-hidden="true">now</span>
-    </div>
+      <span class="now-trigger-label" aria-hidden="true">activity</span>
+    </button>
     <!-- Panel sits below the trigger in flex-column order -->
     <div class="now-panel" aria-live="polite">
       <div class="now-art" aria-hidden="true">
@@ -810,6 +843,24 @@
       <div class="now-footer"><span id="now-updated">—</span></div>
     </div>
   </div>
+
+  <script>
+    // Reactive background glow — tracks mouse, respects reduced-motion
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const glow = document.getElementById('bg-glow');
+      let rafId;
+      document.addEventListener('mousemove', (e) => {
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          const x = (e.clientX / window.innerWidth  * 100).toFixed(1) + '%';
+          const y = (e.clientY / window.innerHeight * 100).toFixed(1) + '%';
+          glow.style.setProperty('--mx', x);
+          glow.style.setProperty('--my', y);
+          document.body.classList.add('mouse-active');
+        });
+      });
+    }
+  </script>
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';

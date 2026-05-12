@@ -1,5 +1,46 @@
 # Progress Log
 
+## 2026-05-11 — Implement GitHub project board items (issues #4–#10, #12–#14)
+
+### styles/tokens.css
+- Added `--nav-h: 65px` CSS variable (actual nav height: 16px padding × 2 + 32px content + 1px border).
+- Added `.nav-activity` pill styles: a compact indicator that fades into the nav when music/gaming/coding is live.
+
+### scripts/chrome.js
+- Added `#nav-activity` pill element to nav-inner; populated by `now-playing.js`.
+- Nav label changed from "Résumé" → "Resume".
+
+### index.html — activity widget (#4, #6, #8)
+- Fixed widget `top` to use `calc(var(--nav-h) + var(--sp-3))` so it clears the nav on all screen sizes (#4).
+- Renamed trigger label from "now" → "activity" (#6).
+- Changed trigger from `<div tabindex="0">` to a semantic `<button>` with `aria-expanded`.
+- Added `cursor: pointer`, hover color shift, `:active` scale, and `:focus-visible` outline to trigger (#8).
+- Added `#bg-glow` reactive mouse-tracking gradient background; respects `prefers-reduced-motion` (#14).
+
+### scripts/now-playing.js — nav indicator (#5), interaction fix
+- `setupHover` now manages `aria-expanded` on the trigger and works via click on all devices.
+- Added `updateNavIndicator(dominant)` — updates `#nav-activity` text and shows/hides based on active state (#5).
+- Called `updateNavIndicator` at the end of each `updateDOM` cycle.
+
+### cloudflare-worker/now-proxy.js — Steam debug + CORS (#7)
+- Added localhost/127.0.0.1 to the CORS origin allowlist for local development.
+- `corsHeaders()` returns the request origin (not a hardcoded domain) when the request comes from localhost.
+- Added optional `debug` field to response when `DEBUG=1` env var is set; surfaces per-source errors and config status.
+
+### about.html — layout (#9, #10)
+- Updated sidebar `top`/`height` to use `var(--nav-h)` instead of hardcoded `56px` (#4).
+- Increased sidebar bio `line-height` from 1.45 → 1.65 and paragraph margin from `--sp-2` → `--sp-3` (#9).
+- Reduced sidebar right padding from `--sp-3` → `--sp-2` and scroll-col left padding from `--sp-4` → `--sp-3` (#10).
+
+### resume.html — remove accent marks (#12)
+- Updated toolbar `top` from `56px` to `var(--nav-h)` (#4).
+- Replaced "Résumé" → "Resume" in `<title>`, `<meta>` description, and toolbar label text.
+
+### data/site.js — MICE Explorable + URL fix (#13)
+- Added `mice-explorable` project entry (DSC 106 group project, URL: sebastianferragut.github.io/miceexplorable/).
+- Fixed `airbnb-sd` URL: was incorrectly pointing to the MICE Explorable URL; set to `null`.
+- Added `mice-explorable` to `bsmath` experience `projectIds`.
+
 ## 2026-05-11 — Cleanup: remove stale bootstrap artifact, gitignore .claude/
 
 - Deleted `data/projects-source.json` — one-time seed file superseded by `data/projects-auto.json`; no scripts referenced it.

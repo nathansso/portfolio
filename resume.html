@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>Résumé — Nathaniel Oliver</title>
-  <meta name="description" content="Nathaniel Oliver — Data Scientist. One-page résumé.">
+  <title>Resume — Nathaniel Oliver</title>
+  <meta name="description" content="Nathaniel Oliver — Data Scientist. One-page resume.">
   <link rel="stylesheet" href="styles/tokens.css">
   <style>
     body { background: var(--surface-2); }
@@ -13,7 +13,7 @@
     /* ---------- Page chrome (web only) ---------- */
     .rs-toolbar {
       position: sticky;
-      top: 56px;
+      top: var(--nav-h);
       z-index: 10;
       padding: var(--sp-3) 0;
       background: color-mix(in oklab, var(--surface-2) 92%, transparent);
@@ -262,7 +262,7 @@
     }
     [data-theme="dark"] .rs-proj-meta { color: oklch(35% 0.005 240); }
 
-    /* Footer caption (web only, the "this is a 1-page résumé" hint) */
+    /* Footer caption (web only, the "this is a 1-page resume" hint) */
     .rs-foot-cap {
       text-align: center;
       font-family: var(--font-mono);
@@ -319,7 +319,7 @@
     <section class="rs-toolbar">
       <div class="container">
         <div class="rs-toolbar-row">
-          <div class="rs-toolbar-label">One-page résumé · updated <span id="rs-updated"></span></div>
+          <div class="rs-toolbar-label">One-page resume · updated <span id="rs-updated"></span></div>
           <div class="rs-toolbar-actions">
             <a class="btn btn-ghost" href="#" id="rs-print">Print</a>
             <a class="btn btn-primary" href="resume.pdf" download="Nathaniel-Oliver-Resume.pdf" id="rs-download">↓ Download PDF</a>

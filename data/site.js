@@ -196,7 +196,7 @@ export const PROJECTS = [
   },
   {
     "id": "ats-resume",
-    "title": "AI-Driven Résumé Quality & ATS Analysis",
+    "title": "AI-Driven Resume Quality & ATS Analysis",
     "category": "personal",
     "experienceId": null,
     "course": null,

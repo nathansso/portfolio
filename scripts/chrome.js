@@ -7,7 +7,7 @@ const PAGES = [
   { id: 'home',      href: 'index.html',    label: 'Home' },
   { id: 'about',     href: 'about.html',    label: 'About' },
   { id: 'projects',  href: 'projects.html', label: 'Projects' },
-  { id: 'resume',    href: 'resume.html',   label: 'Résumé', resume: true },
+  { id: 'resume',    href: 'resume.html',   label: 'Resume', resume: true },
 ];
 
 export function renderNav(currentId) {

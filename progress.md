@@ -31,12 +31,12 @@
 - Increased sidebar bio `line-height` from 1.45 → 1.65 and paragraph margin from `--sp-2` → `--sp-3` (#9).
 - Reduced sidebar right padding from `--sp-3` → `--sp-2` and scroll-col left padding from `--sp-4` → `--sp-3` (#10).
 
-### resume.html — remove accents (#12)
+### resume.html — remove accent marks (#12)
 - Updated toolbar `top` from `56px` to `var(--nav-h)` (#4).
-- `.rs-name-accent`: color set to `inherit` (was `var(--accent)`).
-- `.rs-sec-title`: color changed to neutral dark; border-bottom uses a neutral line instead of `currentColor`.
-- `.rs-role`: color changed to neutral `oklch(40%)` (was accent).
-- `.rs-bullets li::before`: background changed to neutral `oklch(55%)` (was accent).
+- Replaced "Résumé" → "Resume" in `<title>`, `<meta>` description, and toolbar label text.
+
+### scripts/chrome.js — remove accent mark
+- Nav label changed from "Résumé" → "Resume".
 
 ### data/site.js — MICE Explorable + URL fix (#13)
 - Added `mice-explorable` project entry (DSC 106 group project, URL: sebastianferragut.github.io/miceexplorable/).

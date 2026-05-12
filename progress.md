@@ -8,6 +8,7 @@
 
 ### scripts/chrome.js
 - Added `#nav-activity` pill element to nav-inner; populated by `now-playing.js`.
+- Nav label changed from "Résumé" → "Resume".
 
 ### index.html — activity widget (#4, #6, #8)
 - Fixed widget `top` to use `calc(var(--nav-h) + var(--sp-3))` so it clears the nav on all screen sizes (#4).
@@ -35,15 +36,10 @@
 - Updated toolbar `top` from `56px` to `var(--nav-h)` (#4).
 - Replaced "Résumé" → "Resume" in `<title>`, `<meta>` description, and toolbar label text.
 
-### scripts/chrome.js — remove accent mark
-- Nav label changed from "Résumé" → "Resume".
-
 ### data/site.js — MICE Explorable + URL fix (#13)
 - Added `mice-explorable` project entry (DSC 106 group project, URL: sebastianferragut.github.io/miceexplorable/).
 - Fixed `airbnb-sd` URL: was incorrectly pointing to the MICE Explorable URL; set to `null`.
 - Added `mice-explorable` to `bsmath` experience `projectIds`.
-
-
 
 ## 2026-05-11 — Cleanup: remove stale bootstrap artifact, gitignore .claude/
 

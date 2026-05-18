@@ -1,5 +1,13 @@
 # Progress Log
 
+## 2026-05-18 — Issue workflow + dependency tracking in CLAUDE.md
+
+Added structured issue workflow to `CLAUDE.md`: enter plan mode when starting an issue, draft and revise the implementation plan with the user before writing code, verify in-browser after implementing, then confirm with the user before marking Done. Added dependency tracking rules — new issues get a `## Dependencies` section assessed against open issues, and remaining Todo issues are re-evaluated for ordering after each completion. Also updated `/new-issue` skill to derive a clean title and generate a summary from the user's prompt instead of using the raw input verbatim. Backfilled `## Dependencies: None` on all three currently open issues (#11, #15, #19).
+
+## 2026-05-18 — Add GitHub project board slash commands
+
+Added `.claude/commands/` with six slash commands (`/projects`, `/ready`, `/issue`, `/start`, `/done`, `/new-issue`) that manage the Portfolio Improvements project board (number 1, owner `nathansso`) without manual API calls. Migrated from the ART repo pattern; adapted for this project's Todo/In Progress/Done status schema. Documented the commands and project IDs in `CLAUDE.md`.
+
 ## 2026-05-11 — Rewrite README
 
 Replaced prompt-style README with an industry-standard project README. Documents the actual architecture (data layer, shared chrome, design token system, activity widget), explains key design decisions (oklch colors, `--nav-h` token, Cloudflare Worker pattern), and removes generic boilerplate instructions.

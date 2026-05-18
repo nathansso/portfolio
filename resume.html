@@ -10,7 +10,31 @@
   <style>
     body { background: var(--surface-2); }
 
-    /* ---------- Page chrome (web only) ---------- */
+    /* ---------- Reactive background glow ---------- */
+    #bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 600ms ease;
+      background: radial-gradient(
+        600px circle at var(--mx, 50%) var(--my, 50%),
+        color-mix(in oklab, var(--accent) 6%, transparent) 0%,
+        transparent 70%
+      );
+    }
+    body.mouse-active #bg-glow { opacity: 1; }
+    [data-theme="dark"] #bg-glow {
+      background: radial-gradient(
+        600px circle at var(--mx, 50%) var(--my, 50%),
+        color-mix(in oklab, var(--accent) 9%, transparent) 0%,
+        transparent 70%
+      );
+    }
+    @media (prefers-reduced-motion: reduce) { #bg-glow { display: none; } }
+
+    /* ---------- Page chrome ---------- */
     .rs-toolbar {
       position: sticky;
       top: var(--nav-h);
@@ -41,229 +65,41 @@
       flex-wrap: wrap;
     }
 
-    /* ---------- Page (the document itself) ---------- */
+    /* ---------- Document ---------- */
     .rs-page-wrap {
+      position: relative;
+      z-index: 1;
       padding: var(--sp-5) 0 var(--sp-9);
       display: flex;
       justify-content: center;
     }
+    /* Wrapper gives us a positioned parent for link overlays */
     .rs-page {
-      width: 8.5in;
-      min-height: 11in;
-      background: var(--surface-0);
-      color: var(--ink-strong);
+      position: relative;
+      display: inline-block;
+      line-height: 0;
       box-shadow:
         0 1px 2px color-mix(in oklab, var(--ink-strong) 8%, transparent),
         0 12px 40px color-mix(in oklab, var(--ink-strong) 12%, transparent);
-      padding: 0.55in 0.6in 0.5in;
-      box-sizing: border-box;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.22in;
-      font-size: 10pt;
-      line-height: 1.42;
-      position: relative;
     }
-    [data-theme="dark"] .rs-page {
-      background: oklch(96% 0.005 80);
-      color: oklch(20% 0.005 240);
+    #pdf-canvas {
+      display: block;
+      width: 8.5in;
     }
-
-    /* Header */
-    .rs-head {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding-bottom: 0.18in;
-      border-bottom: 1.5px solid currentColor;
+    [data-theme="dark"] #pdf-canvas {
+      filter: invert(0.9) hue-rotate(180deg);
     }
-    .rs-name {
-      font-family: var(--font-display);
-      font-size: 28pt;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin: 0;
-    }
-    .rs-name-accent { color: var(--accent); }
-    .rs-role-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      font-family: var(--font-mono);
-      font-size: 9pt;
-      letter-spacing: 0.05em;
-      align-items: center;
-      margin-top: 4px;
-    }
-    .rs-role {
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-weight: 600;
-      color: var(--accent);
-    }
-    .rs-contact {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      align-items: center;
-      color: oklch(35% 0.005 240);
-    }
-    [data-theme="dark"] .rs-contact { color: oklch(30% 0.005 240); }
-    .rs-contact a { color: inherit; text-decoration: none; }
-    .rs-contact a:hover { color: var(--accent); }
-    .rs-contact-sep {
-      width: 3px; height: 3px; border-radius: 50%;
-      background: currentColor; opacity: 0.4;
-    }
-
-    /* Body grid */
-    .rs-body {
-      display: grid;
-      grid-template-columns: 1.85fr 1fr;
-      gap: 0.32in;
-    }
-
-    /* Section headers */
-    .rs-sec {
-      margin-bottom: 0.18in;
-    }
-    .rs-sec-title {
-      font-family: var(--font-mono);
-      font-size: 8.5pt;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 7px;
-      padding-bottom: 3px;
-      border-bottom: 1px solid currentColor;
-    }
-
-    /* Experience entry */
-    .rs-entry {
-      margin-bottom: 9px;
-      break-inside: avoid;
-    }
-    .rs-entry-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-    }
-    .rs-entry-title {
-      font-size: 10.5pt;
-      font-weight: 600;
-      line-height: 1.25;
-      margin: 0;
-    }
-    .rs-entry-date {
-      font-family: var(--font-mono);
-      font-size: 8.5pt;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-      color: oklch(35% 0.005 240);
-    }
-    [data-theme="dark"] .rs-entry-date { color: oklch(30% 0.005 240); }
-    .rs-entry-org {
-      font-size: 9.5pt;
-      font-style: italic;
-      color: oklch(30% 0.005 240);
-      margin: 1px 0 4px;
-    }
-    [data-theme="dark"] .rs-entry-org { color: oklch(25% 0.005 240); }
-    .rs-bullets {
-      margin: 3px 0 0;
-      padding-left: 14px;
-      list-style: none;
-    }
-    .rs-bullets li {
-      position: relative;
-      padding-left: 0;
-      margin-bottom: 2px;
-      font-size: 9.5pt;
-      line-height: 1.4;
-    }
-    .rs-bullets li::before {
-      content: '';
+    /* Invisible link overlays */
+    .pdf-link {
       position: absolute;
-      left: -10px;
-      top: 0.6em;
-      width: 4px; height: 1px;
-      background: var(--accent);
+      display: block;
+      cursor: pointer;
     }
 
-    /* Sidebar — skills */
-    .rs-skills-group { margin-bottom: 9px; }
-    .rs-skills-label {
-      font-family: var(--font-mono);
-      font-size: 8.25pt;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: oklch(40% 0.005 240);
-      margin-bottom: 3px;
-    }
-    [data-theme="dark"] .rs-skills-label { color: oklch(35% 0.005 240); }
-    .rs-skills-list {
-      font-size: 9.5pt;
-      line-height: 1.45;
-      color: var(--ink-strong);
-    }
-    [data-theme="dark"] .rs-skills-list { color: oklch(20% 0.005 240); }
-
-    /* Education sidebar entries */
-    .rs-edu-entry {
-      margin-bottom: 8px;
-      break-inside: avoid;
-    }
-    .rs-edu-degree {
-      font-size: 10pt;
-      font-weight: 600;
-      margin: 0;
-      line-height: 1.25;
-    }
-    .rs-edu-school {
-      font-size: 9pt;
-      font-style: italic;
-      color: oklch(30% 0.005 240);
-      margin: 1px 0 2px;
-    }
-    [data-theme="dark"] .rs-edu-school { color: oklch(25% 0.005 240); }
-    .rs-edu-meta {
-      font-family: var(--font-mono);
-      font-size: 8.25pt;
-      letter-spacing: 0.04em;
-      color: oklch(40% 0.005 240);
-    }
-    [data-theme="dark"] .rs-edu-meta { color: oklch(35% 0.005 240); }
-    .rs-edu-detail {
-      font-size: 9pt;
-      margin-top: 3px;
-      line-height: 1.4;
-    }
-
-    /* Selected projects in sidebar */
-    .rs-proj-item {
-      margin-bottom: 6px;
-      break-inside: avoid;
-    }
-    .rs-proj-title {
-      font-size: 9.5pt;
-      font-weight: 600;
-      margin: 0;
-      line-height: 1.3;
-    }
-    .rs-proj-meta {
-      font-family: var(--font-mono);
-      font-size: 8pt;
-      letter-spacing: 0.04em;
-      color: oklch(40% 0.005 240);
-    }
-    [data-theme="dark"] .rs-proj-meta { color: oklch(35% 0.005 240); }
-
-    /* Footer caption (web only, the "this is a 1-page resume" hint) */
+    /* Footer caption */
     .rs-foot-cap {
+      position: relative;
+      z-index: 1;
       text-align: center;
       font-family: var(--font-mono);
       font-size: var(--fs-meta);
@@ -274,201 +110,112 @@
     }
 
     /* ---------- Print ---------- */
-    @page {
-      size: letter;
-      margin: 0;
-    }
+    @page { size: letter; margin: 0; }
     @media print {
       body { background: white !important; }
-      #site-nav-host, #site-footer-host, .rs-toolbar, .rs-foot-cap { display: none !important; }
-      .rs-page-wrap { padding: 0; display: block; }
-      .rs-page {
-        width: 8.5in;
-        min-height: 0;
-        height: auto;
-        box-shadow: none !important;
-        page-break-inside: avoid;
-        break-inside: avoid;
-      }
-      [data-theme="dark"] .rs-page,
-      .rs-page {
-        background: white !important;
-        color: black !important;
-      }
-      a { color: inherit !important; text-decoration: none !important; }
+      #site-nav-host, #site-footer-host, .rs-toolbar, .rs-foot-cap, #bg-glow { display: none !important; }
+      .rs-page-wrap { padding: 0; }
+      #pdf-canvas { width: 8.5in; }
+      .rs-page { box-shadow: none !important; }
     }
 
-    /* Responsive: collapse to single column under 720px */
+    /* Responsive */
     @media (max-width: 760px) {
-      .rs-page {
-        width: 100%;
-        padding: var(--sp-5) var(--sp-4);
-        font-size: 11pt;
-      }
-      .rs-body {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
+      #pdf-canvas { width: 100%; }
     }
   </style>
 </head>
 <body>
+  <div id="bg-glow" aria-hidden="true"></div>
   <div id="site-nav-host"></div>
 
   <main>
     <section class="rs-toolbar">
       <div class="container">
         <div class="rs-toolbar-row">
-          <div class="rs-toolbar-label">One-page resume · updated <span id="rs-updated"></span></div>
+          <div class="rs-toolbar-label">One-page resume</div>
           <div class="rs-toolbar-actions">
-            <a class="btn btn-ghost" href="#" id="rs-print">Print</a>
-            <a class="btn btn-primary" href="resume.pdf" download="Nathaniel-Oliver-Resume.pdf" id="rs-download">↓ Download PDF</a>
+            <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">Print</a>
+            <a class="btn btn-primary" href="resume.pdf" download="Nathaniel-Oliver-Resume.pdf">↓ Download PDF</a>
           </div>
         </div>
       </div>
     </section>
 
     <div class="rs-page-wrap">
-      <article class="rs-page" id="rs-doc">
-        <!-- rendered by script -->
-      </article>
+      <div class="rs-page">
+        <canvas id="pdf-canvas"></canvas>
+      </div>
     </div>
 
-    <p class="rs-foot-cap">Press Cmd/Ctrl + P to save as PDF · or use the download button</p>
+    <p class="rs-foot-cap">Open in new tab to print · or use the download button</p>
   </main>
 
   <div id="site-footer-host"></div>
 
+  <!-- Reactive glow -->
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const glow = document.getElementById('bg-glow');
+      let rafId;
+      document.addEventListener('mousemove', (e) => {
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          glow.style.setProperty('--mx', (e.clientX / window.innerWidth  * 100).toFixed(1) + '%');
+          glow.style.setProperty('--my', (e.clientY / window.innerHeight * 100).toFixed(1) + '%');
+          document.body.classList.add('mouse-active');
+        });
+      });
+    }
+  </script>
+
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROFILE, EXPERIENCES, PROJECTS, fmtRange } from './data/site.js?v=1';
-
     mountChrome('resume');
 
-    // ---- Curate what fits on one page ----
-    // Experience: Internship + Research (3) + Other (2) — 5 entries, condensed bullets
-    const expIds = ['idx', 'econ-gray', 'econ-refugee', 'slbo', 'aquatics'];
-    const eduIds = ['msdsc', 'bsmath'];
-    const featuredProjectIds = ['ca-real-estate', 'ats-resume', 'ecommerce-intent', 'ucsd-research-lab'];
+    import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
 
-    const expMap = Object.fromEntries(EXPERIENCES.map(e => [e.id, e]));
-    const projMap = Object.fromEntries(PROJECTS.map(p => [p.id, p]));
+    const canvas  = document.getElementById('pdf-canvas');
+    const pageEl  = canvas.parentElement;
+    const dpr     = window.devicePixelRatio || 1;
+    const cssWidth = 8.5 * 96; // 8.5in at 96px/in
 
-    // ---- Skill groups (curated, not from per-experience tags) ----
-    const SKILL_GROUPS = [
-      { label: 'Languages', items: ['Python', 'R', 'SQL', 'JavaScript', 'HTML/CSS'] },
-      { label: 'ML & Modeling', items: ['scikit-learn', 'XGBoost', 'PyTorch', 'pandas', 'NumPy', 'statistical modeling', 'feature engineering'] },
-      { label: 'Data & Viz', items: ['D3.js', 'Plotly', 'matplotlib', 'seaborn', 'Tableau', 'PostgreSQL'] },
-      { label: 'AI/LLM', items: ['LangGraph', 'LangChain', 'OpenAI', 'sentence-transformers', 'prompt engineering', 'RAG'] },
-      { label: 'Tools', items: ['Git', 'Jupyter', 'Docker', 'AWS', 'Excel', 'IBM Cognos'] },
-    ];
+    const pdf  = await pdfjsLib.getDocument('resume.pdf').promise;
+    const page = await pdf.getPage(1);
 
-    // ---- Render ----
-    const expHtml = expIds.map(id => {
-      const e = expMap[id];
-      if (!e) return '';
-      // Cap bullets at 3 per entry to fit 1 page
-      const bullets = (e.bullets || []).slice(0, 3);
-      return `
-        <div class="rs-entry">
-          <div class="rs-entry-head">
-            <h3 class="rs-entry-title">${e.title}</h3>
-            <span class="rs-entry-date">${fmtRange(e.start, e.end, e.endLabel)}</span>
-          </div>
-          <p class="rs-entry-org">${e.org}${e.location ? ` · ${e.location}` : ''}</p>
-          ${bullets.length ? `<ul class="rs-bullets">${bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
-        </div>
-      `;
-    }).join('');
+    const baseVp  = page.getViewport({ scale: 1 });
+    const scale   = (cssWidth * dpr) / baseVp.width;
+    const viewport = page.getViewport({ scale });
 
-    const eduHtml = eduIds.map(id => {
-      const e = expMap[id];
-      if (!e) return '';
-      return `
-        <div class="rs-edu-entry">
-          <h4 class="rs-edu-degree">${e.title}</h4>
-          <p class="rs-edu-school">${e.org}</p>
-          <div class="rs-edu-meta">${fmtRange(e.start, e.end, e.endLabel)}</div>
-          ${e.id === 'bsmath' ? '<div class="rs-edu-detail">Minor in Data Science · Provost Honors 2021–2025</div>' : ''}
-          ${e.id === 'msdsc' ? '<div class="rs-edu-detail">Coursework: ML, statistical NLP, recommender systems, scalable analytics</div>' : ''}
-        </div>
-      `;
-    }).join('');
+    canvas.width  = viewport.width;
+    canvas.height = viewport.height;
+    canvas.style.height = `${viewport.height / dpr}px`;
 
-    const skillsHtml = SKILL_GROUPS.map(g => `
-      <div class="rs-skills-group">
-        <div class="rs-skills-label">${g.label}</div>
-        <div class="rs-skills-list">${g.items.join(' · ')}</div>
-      </div>
-    `).join('');
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
 
-    const projHtml = featuredProjectIds.map(id => {
-      const p = projMap[id];
-      if (!p) return '';
-      const exp = p.experienceId ? expMap[p.experienceId] : null;
-      const ctx = p.course || (exp ? exp.org.replace('UCSD ', '').replace('UC San Diego', 'UCSD') : '');
-      return `
-        <div class="rs-proj-item">
-          <h4 class="rs-proj-title">${p.title}</h4>
-          <div class="rs-proj-meta">${ctx}${ctx ? ' · ' : ''}${(p.skills || []).slice(0,3).join(', ')}</div>
-        </div>
-      `;
-    }).join('');
+    // Overlay clickable <a> elements for each link annotation
+    const annotations = await page.getAnnotations({ intent: 'display' });
+    for (const ann of annotations) {
+      if (ann.subtype !== 'Link' || !ann.url) continue;
 
-    document.getElementById('rs-doc').innerHTML = `
-      <header class="rs-head">
-        <h1 class="rs-name">${PROFILE.name}<span class="rs-name-accent">.</span></h1>
-        <div class="rs-role-row">
-          <span class="rs-role">Data Scientist</span>
-          <div class="rs-contact">
-            <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>
-            <span class="rs-contact-sep"></span>
-            <a href="https://github.com/${PROFILE.github}">github.com/${PROFILE.github}</a>
-            <span class="rs-contact-sep"></span>
-            <a href="https://linkedin.com/in/${PROFILE.linkedin}">linkedin.com/in/${PROFILE.linkedin.split('-').slice(0,3).join('-')}</a>
-            <span class="rs-contact-sep"></span>
-            <span>${PROFILE.location}</span>
-          </div>
-        </div>
-      </header>
+      const vr = viewport.convertToViewportRectangle(ann.rect);
+      const left   = Math.min(vr[0], vr[2]) / dpr;
+      const top    = Math.min(vr[1], vr[3]) / dpr;
+      const width  = Math.abs(vr[2] - vr[0]) / dpr;
+      const height = Math.abs(vr[3] - vr[1]) / dpr;
 
-      <div class="rs-body">
-        <div class="rs-col-main">
-          <section class="rs-sec">
-            <h2 class="rs-sec-title">Experience</h2>
-            ${expHtml}
-          </section>
-
-          <section class="rs-sec">
-            <h2 class="rs-sec-title">Selected Projects</h2>
-            ${projHtml}
-          </section>
-        </div>
-
-        <aside class="rs-col-side">
-          <section class="rs-sec">
-            <h2 class="rs-sec-title">Education</h2>
-            ${eduHtml}
-          </section>
-
-          <section class="rs-sec">
-            <h2 class="rs-sec-title">Skills</h2>
-            ${skillsHtml}
-          </section>
-        </aside>
-      </div>
-    `;
-
-    // Updated date
-    const today = new Date();
-    document.getElementById('rs-updated').textContent =
-      today.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-
-    // Print button
-    document.getElementById('rs-print').addEventListener('click', (e) => {
-      e.preventDefault();
-      window.print();
-    });
+      const a = document.createElement('a');
+      a.className = 'pdf-link';
+      a.href = ann.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.style.left   = `${left}px`;
+      a.style.top    = `${top}px`;
+      a.style.width  = `${width}px`;
+      a.style.height = `${height}px`;
+      pageEl.appendChild(a);
+    }
   </script>
 </body>
 </html>

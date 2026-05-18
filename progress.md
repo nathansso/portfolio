@@ -1,5 +1,15 @@
 # Progress Log
 
+## 2026-05-18 — Issue #11: Resume page PDF embed
+
+Replaced the data-driven HTML resume renderer with an embedded PDF viewer using PDF.js (v4.4.168 via CDN). Key changes:
+
+- `resume.pdf` replaced with the updated resume file (`Nathaniel Oliver Resume - 5_18_26.pdf`)
+- `resume.html` rewritten: PDF rendered to `<canvas>` at 8.5in width via PDF.js, matching the original white-card-on-dark-background layout
+- Link annotations extracted from the PDF and overlaid as real `<a>` elements so URLs are clickable
+- Reactive mouse-tracking glow background added (same as landing page)
+- Dark mode support: `filter: invert(0.9) hue-rotate(180deg)` on the canvas adapts the PDF to the site's dark theme
+
 ## 2026-05-18 — Issue workflow + dependency tracking in CLAUDE.md
 
 Added structured issue workflow to `CLAUDE.md`: enter plan mode when starting an issue, draft and revise the implementation plan with the user before writing code, verify in-browser after implementing, then confirm with the user before marking Done. Added dependency tracking rules — new issues get a `## Dependencies` section assessed against open issues, and remaining Todo issues are re-evaluated for ordering after each completion. Also updated `/new-issue` skill to derive a clean title and generate a summary from the user's prompt instead of using the raw input verbatim. Backfilled `## Dependencies: None` on all three currently open issues (#11, #15, #19).

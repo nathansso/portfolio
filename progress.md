@@ -1,5 +1,13 @@
 # Progress Log
 
+## 2026-05-18 — Issue #19: Remove activity indicator from navbar
+
+Removed the duplicate nav activity pill that mirrored the landing page activity widget.
+
+- `scripts/chrome.js`: removed `#nav-activity` pill element from nav HTML
+- `scripts/now-playing.js`: removed `updateNavIndicator` call in `updateDOM` and the full function
+- `styles/tokens.css`: removed `.nav-activity`, `.nav-activity-dot`, `.nav-activity-text`, `@keyframes nav-dot-pulse`, and the mobile hide rule
+
 ## 2026-05-18 — Issue #11: Resume page PDF embed
 
 Replaced the data-driven HTML resume renderer with an embedded PDF viewer using PDF.js (v4.4.168 via CDN). Key changes:

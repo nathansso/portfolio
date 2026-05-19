@@ -245,52 +245,6 @@ p + p { margin-top: var(--sp-3); }
 .nav-link.is-resume { opacity: 0.55; }
 .nav-link.is-resume:hover { opacity: 1; }
 
-/* Activity indicator pill (populated by now-playing.js) */
-.nav-activity {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: var(--surface-1);
-  border: 1px solid var(--line-faint);
-  font-family: var(--font-mono);
-  font-size: var(--fs-meta);
-  letter-spacing: 0.04em;
-  color: var(--ink-muted);
-  white-space: nowrap;
-  max-width: 180px;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 300ms ease, border-color 300ms ease;
-}
-.nav-activity[data-active] {
-  opacity: 1;
-  pointer-events: auto;
-  border-color: var(--line-strong);
-}
-.nav-activity-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: var(--accent);
-  animation: nav-dot-pulse 2.4s ease-out infinite;
-}
-@keyframes nav-dot-pulse {
-  0%   { box-shadow: 0 0 0 0   color-mix(in oklab, var(--accent) 50%, transparent); }
-  80%  { box-shadow: 0 0 0 7px transparent; }
-  100% { box-shadow: 0 0 0 0   transparent; }
-}
-.nav-activity-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-@media (max-width: 720px) {
-  .nav-activity { display: none; }
-}
-
 /* Theme toggle */
 .theme-toggle {
   width: 32px; height: 32px;

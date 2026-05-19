@@ -123,7 +123,6 @@ function updateDOM() {
   updateCodingRow();
   updateArt(widget, dominant);
   updateFooter();
-  updateNavIndicator(dominant);
 }
 
 function setWidgetState(widget, state) {
@@ -204,25 +203,6 @@ function updateArt(widget, dominant) {
 function updateFooter() {
   const el = document.getElementById('now-updated');
   if (el) el.textContent = `updated ${relativeTime(new Date())}`;
-}
-
-function updateNavIndicator(dominant) {
-  const indicator = document.getElementById('nav-activity');
-  const textEl    = document.getElementById('nav-activity-text');
-  if (!indicator || !textEl) return;
-
-  let text = null;
-  if (dominant === 'music'  && S.music.track)  text = S.music.track;
-  if (dominant === 'gaming' && S.gaming.game)  text = S.gaming.game;
-  if (dominant === 'coding' && S.coding.repo)  text = S.coding.repo;
-
-  if (text) {
-    textEl.textContent = text;
-    indicator.setAttribute('data-active', '');
-  } else {
-    textEl.textContent = '';
-    indicator.removeAttribute('data-active');
-  }
 }
 
 // ─── Utilities ────────────────────────────────────────────────────────────────

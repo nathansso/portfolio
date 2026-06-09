@@ -11,9 +11,10 @@ export const PROFILE = {
   "linkedin": "nathaniel-oliver-82239a265",
   "photo": "imgs/porto_pic.jpg",
   "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently a Data Science Intern at IDX Exchange, where I've built end-to-end modeling pipelines, using ETF and gradient boosting, and developed ensemble-based approaches for prediction. \n\nIn my spare time, I've been exploring Agent-based Workflow/Development. My current project orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailoring resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETF, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",
-  "shortBio": "M.S. Data Science at UC San Diego, building on a Math + Econ foundation. I turn messy real-world data into useful models and decisions — applied research, predictive modeling, and AI-assisted analytics.",
-  "currently": "Predictive modeling at IDX Exchange · MS Data Science at UCSD"
+  "shortBio": "M.S. Data Science at UC San Diego, building on a Math + Econ foundation. I turn messy real-world data into useful models and decisions � applied research, predictive modeling, and AI-assisted analytics.",
+  "currently": "Predictive modeling at IDX Exchange � MS Data Science at UCSD"
 };
+
 
 
 // Categories — the visual filter vocabulary
@@ -22,33 +23,34 @@ export const CATEGORIES = {
     "id": "research",
     "label": "Research",
     "hue": 250,
-    "count": 1
+    "count": 2
   },
   "internship": {
     "id": "internship",
     "label": "Internship",
     "hue": 145,
-    "count": 1
+    "count": 2
   },
   "graduate": {
     "id": "graduate",
     "label": "Graduate",
     "hue": 305,
-    "count": 1
+    "count": 2
   },
   "undergrad": {
     "id": "undergrad",
     "label": "Undergrad",
     "hue": 75,
-    "count": 10
+    "count": 20
   },
   "personal": {
     "id": "personal",
     "label": "Personal",
     "hue": 25,
-    "count": 1
+    "count": 4
   }
 };
+
 
 
 // Experiences — Research, Internship, Education entries that drive /about
@@ -81,13 +83,13 @@ export const EXPERIENCES = [
   {
     "id": "econ-gray",
     "category": "research",
-    "title": "Research Assistant — Cohabitation & Census",
+    "title": "Research Assistant � Cohabitation & Census",
     "org": "UCSD Department of Economics",
     "advisor": "Prof. Andre Gray",
     "location": "La Jolla, CA",
     "start": "2025-03",
     "end": "2025-07",
-    "blurb": "Aggregated and analyzed census and immigration data (UMPS, USCIS) to investigate cohabitation trends across diverse populations in major US metros, 2007–2024.",
+    "blurb": "Aggregated and analyzed census and immigration data (UMPS, USCIS) to investigate cohabitation trends across diverse populations in major US metros, 2007�2024.",
     "bullets": [
       "Time-series and breakpoint analysis identifying statistically significant structural changes.",
       "Regression analysis to surface the most important demographic factors.",
@@ -107,7 +109,7 @@ export const EXPERIENCES = [
   {
     "id": "econ-refugee",
     "category": "research",
-    "title": "Research Assistant — Refugee Camps & Local Economies",
+    "title": "Research Assistant � Refugee Camps & Local Economies",
     "org": "UCSD Department of Economics",
     "location": "La Jolla, CA",
     "start": "2024-01",
@@ -140,7 +142,7 @@ export const EXPERIENCES = [
     "blurb": "Graduate coursework in data management, machine learning, and statistics. Building applied projects that pair ensemble methods with rigorous evaluation and clear product framing.",
     "bullets": [
       "Coursework: Data Management, Machine Learning, Statistics.",
-      "GPA 4.0 · MDS Supplemental Scholarship Recipient."
+      "GPA 4.0 � MDS Supplemental Scholarship Recipient."
     ],
     "skills": [
       "Python",
@@ -160,7 +162,7 @@ export const EXPERIENCES = [
     "location": "La Jolla, CA",
     "start": "2021-09",
     "end": "2025-06",
-    "blurb": "Minor in Data Science. Coursework spanning real analysis, probability, econometrics, and applied data science. Provost Honors 2021–2025.",
+    "blurb": "Minor in Data Science. Coursework spanning real analysis, probability, econometrics, and applied data science. Provost Honors 2021�2025.",
     "bullets": [
       "Mathematics: Real Analysis, Probability, Linear Analysis, Graph Theory.",
       "Data Science: Applied DS, EDA, Probabilistic Modeling & ML, Representation & Unsupervised Learning.",
@@ -215,7 +217,7 @@ export const EXPERIENCES = [
     "location": "Campbell, CA",
     "start": "2019-06",
     "end": "2022-08",
-    "blurb": "Managed City of Campbell Aquatics — 50+ lifeguards and the Wave Swim Team. Developed competitive swim programs, scheduling, and membership management.",
+    "blurb": "Managed City of Campbell Aquatics � 50+ lifeguards and the Wave Swim Team. Developed competitive swim programs, scheduling, and membership management.",
     "bullets": [
       "Trained and managed 50+ lifeguards; scheduled swim-team practices.",
       "Project-management strategies applied to programming and operations.",
@@ -229,6 +231,7 @@ export const EXPERIENCES = [
     "projectIds": []
   }
 ];
+
 
 
 // PROJECTS_AUTO_START
@@ -280,8 +283,8 @@ export const PROJECTS = [
     "course": null,
     "date": "2026-06",
     "image": null,
-    "blurb": "GNN vs. flat-feature modeling of e-commerce session conversion on CIKM Cup 2016 data — bipartite item co-view graphs, heterogeneous GNNs, temporal splits, AUPRC-primary evaluation.",
-    "description": "Research project investigating whether explicit graph-based modeling of cross-session navigation structure (item co-view, query–item, item–category relations) improves session conversion prediction beyond flat aggregate features and sequential baselines. Built on the Diginetica (CIKM Cup 2016) dataset of 308K sessions with a ~4% conversion rate. Pipeline covers data ingest and EDA, temporal train/val/test splits (no random leakage), a GBM baseline, and a progression through bipartite and heterogeneous GNN architectures (HGT, HeteroSAGE) culminating in a hybrid GNN + sequence model. Class imbalance is treated as a hard constraint — AUPRC is the primary metric, all ablation results reported as mean ± std over ≥3 seeds.",
+    "blurb": "GNN vs. flat-feature modeling of e-commerce session conversion on CIKM Cup 2016 data � bipartite item co-view graphs, heterogeneous GNNs, temporal splits, AUPRC-primary evaluation.",
+    "description": "Research project investigating whether explicit graph-based modeling of cross-session navigation structure (item co-view, query�item, item�category relations) improves session conversion prediction beyond flat aggregate features and sequential baselines. Built on the Diginetica (CIKM Cup 2016) dataset of 308K sessions with a ~4% conversion rate. Pipeline covers data ingest and EDA, temporal train/val/test splits (no random leakage), a GBM baseline, and a progression through bipartite and heterogeneous GNN architectures (HGT, HeteroSAGE) culminating in a hybrid GNN + sequence model. Class imbalance is treated as a hard constraint � AUPRC is the primary metric, all ablation results reported as mean � std over =3 seeds.",
     "skills": [
       "python",
       "pytorch",
@@ -387,7 +390,7 @@ export const PROJECTS = [
     "course": "DSC 207",
     "date": "2026-03",
     "image": null,
-    "blurb": "Random Forest + XGBoost on 12,330 sessions. ~90% accuracy with threshold-tuned recall; 5-cluster behavioral segmentation revealing 0.4%–24.3% conversion span.",
+    "blurb": "Random Forest + XGBoost on 12,330 sessions. ~90% accuracy with threshold-tuned recall; 5-cluster behavioral segmentation revealing 0.4%�24.3% conversion span.",
     "description": "Built classification models using Random Forest and XGBoost on 12,330 e-commerce browsing sessions to predict purchase intent, with threshold tuning to maximize recall and reduce missed conversions, achieving ~90% accuracy. Applied K-Means clustering to segment shoppers into five behavioral archetypes, revealing conversion rates ranging from 0.4% for bounce-prone visitors to 24.3% for high-intent consumers. Identified product browsing depth and administrative page engagement as the strongest purchase predictors using Python, scikit-learn, pandas, and seaborn.",
     "skills": [
       "python",
@@ -417,7 +420,7 @@ export const PROJECTS = [
   },
   {
     "id": "dsc80-notebook",
-    "title": "DSC 80 — Project Notebook",
+    "title": "DSC 80 � Project Notebook",
     "category": "undergrad",
     "experienceId": "bsmath",
     "course": "DSC 80",
@@ -503,7 +506,7 @@ export const PROJECTS = [
   },
   {
     "id": "mice-temp",
-    "title": "Mice Body Temperature × Sex",
+    "title": "Mice Body Temperature � Sex",
     "category": "undergrad",
     "experienceId": "bsmath",
     "course": "DSC 106",
@@ -525,13 +528,13 @@ export const PROJECTS = [
   },
   {
     "id": "airbnb-sd",
-    "title": "Airbnb × San Diego Sunshine",
+    "title": "Airbnb � San Diego Sunshine",
     "category": "undergrad",
     "experienceId": "bsmath",
     "course": "DSC 106",
     "date": "2025-02",
     "image": "imgs/airbnb_sd.png",
-    "blurb": "Static graph exploring San Diego Airbnb bookings and revenue across the year — peaks in summer, dips in winter.",
+    "blurb": "Static graph exploring San Diego Airbnb bookings and revenue across the year � peaks in summer, dips in winter.",
     "description": "Static graph exploring Airbnb bookings and revenue throughout the year in San Diego, California. Shows how booking counts and revenue change month-over-month, with the highest peaks in summer.",
     "skills": [
       "Python",
@@ -552,7 +555,7 @@ export const PROJECTS = [
     "course": "DSC 106",
     "date": "2025-03",
     "image": null,
-    "blurb": "Narrative scrollable explorable of mouse body-temperature data — multi-view D3 dashboard with story mode, per-mouse tooltips, and estrus-cycle filtering.",
+    "blurb": "Narrative scrollable explorable of mouse body-temperature data � multi-view D3 dashboard with story mode, per-mouse tooltips, and estrus-cycle filtering.",
     "description": "Group project built in DSC 106 (Winter 2025). A multi-page interactive explorable visualization of mouse body-temperature data built with vanilla JavaScript, D3.js, HTML, and CSS. Features a narrative scrollytelling story mode that guides users through the dataset, a per-mouse detail view, pie chart breakdowns by sex and estrus phase, and an advanced analytics interface for open-ended exploration. Users can filter by sex and estrus cycle phase, adjust the time range, and hover individual data points for tooltips surfacing mouse ID and cycle status. Hosted via GitHub Pages.",
     "skills": [
       "D3.js",
@@ -599,7 +602,7 @@ export const PROJECTS = [
     "date": "2024-12",
     "image": "imgs/allrecipes.jpg",
     "blurb": "Multiclass Random Forest classifier predicting AllRecipes ratings from recipe-level features.",
-    "description": "Multiclass classification model predicting AllRecipes ratings from recipe-level features. Built with scikit-learn — feature engineering, preprocessing, hyperparameter tuning, and model evaluation.",
+    "description": "Multiclass classification model predicting AllRecipes ratings from recipe-level features. Built with scikit-learn � feature engineering, preprocessing, hyperparameter tuning, and model evaluation.",
     "skills": [
       "Python",
       "scikit-learn",
@@ -668,7 +671,7 @@ export const PROJECTS = [
     "date": "2024-04",
     "image": "imgs/image_processor.png",
     "blurb": "Python image-processing library: negate, grayscale, edge-detection filters on raw pixel arrays.",
-    "description": "Image processor that reads an image, applies a filter, and outputs the result. Filters implemented include negate, grayscale, and edge detection — operating directly on raw pixel arrays.",
+    "description": "Image processor that reads an image, applies a filter, and outputs the result. Filters implemented include negate, grayscale, and edge detection � operating directly on raw pixel arrays.",
     "skills": [
       "Python",
       "image processing",
@@ -681,6 +684,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 // PROJECTS_AUTO_END
 

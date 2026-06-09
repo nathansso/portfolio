@@ -1,5 +1,12 @@
 # Progress Log
 
+## 2026-06-09 — Project data updates
+
+- `data/site.js`: enhanced `mice-explorable` description + blurb with scrollytelling story mode, multi-view details, and estrus filtering — project already existed but was sparse
+- `data/site.js`: updated `ats-resume` (ARTie) `url` from GitHub repo to live Fly.dev demo (`https://artie-resume-tailoring.fly.dev`)
+- `data/site.js`: updated `ca-real-estate` `repo` from stale `idx_38` to correct public repo `idx-app`
+- GitHub scrape: `sleeper_fantasy_app_agentic` is essentially empty (only `.gitattributes`), skipped
+
 ## 2026-05-18 — Issue #19: Remove activity indicator from navbar
 
 Removed the duplicate nav activity pill that mirrored the landing page activity widget.

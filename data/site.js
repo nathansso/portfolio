@@ -2,157 +2,234 @@
 // Inlined here so static pages can import without a server.
 
 export const PROFILE = {
-  name: 'Nathaniel Oliver',
-  role: 'Data Scientist',
-  tagline: 'Predictive modeling, probabilistic methods & data visualization.',
-  location: 'San Diego, CA',
-  email: 'nathanielsoliver@gmail.com',
-  github: 'nathansso',
-  linkedin: 'nathaniel-oliver-82239a265',
-  photo: 'imgs/porto_pic.jpg',
-  bio: `Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.
-
-My background spans applied research, predictive modeling, and data product development. 
-
-I'm currently a Data Science Intern at IDX Exchange, where I've built end-to-end modeling pipelines, using ETF and gradient boosting, and developed ensemble-based approaches for prediction. 
-
-In my spare time, I've been exploring Agent-based Workflow/Development. My current project orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailoring resumes to specific roles.
-
-My toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETF, ML/predictive modeling, data visualization, and LLM-assisted workflows. 
-
-I'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.`,
-  shortBio: `M.S. Data Science at UC San Diego, building on a Math + Econ foundation. I turn messy real-world data into useful models and decisions — applied research, predictive modeling, and AI-assisted analytics.`,
-  currently: 'Predictive modeling at IDX Exchange · MS Data Science at UCSD'
+  "name": "Nathaniel Oliver",
+  "role": "Data Scientist",
+  "tagline": "Predictive modeling, probabilistic methods & data visualization.",
+  "location": "San Diego, CA",
+  "email": "nathanielsoliver@gmail.com",
+  "github": "nathansso",
+  "linkedin": "nathaniel-oliver-82239a265",
+  "photo": "imgs/porto_pic.jpg",
+  "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently a Data Science Intern at IDX Exchange, where I've built end-to-end modeling pipelines, using ETF and gradient boosting, and developed ensemble-based approaches for prediction. \n\nIn my spare time, I've been exploring Agent-based Workflow/Development. My current project orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailoring resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETF, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",
+  "shortBio": "M.S. Data Science at UC San Diego, building on a Math + Econ foundation. I turn messy real-world data into useful models and decisions — applied research, predictive modeling, and AI-assisted analytics.",
+  "currently": "Predictive modeling at IDX Exchange · MS Data Science at UCSD"
 };
+
 
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
-  research:   { id: 'research',   label: 'Research',   hue: 250, count: 0 },
-  internship: { id: 'internship', label: 'Internship', hue: 145, count: 0 },
-  graduate:   { id: 'graduate',   label: 'Graduate',   hue: 305, count: 0 },
-  undergrad:  { id: 'undergrad',  label: 'Undergrad',  hue: 75,  count: 0 },
-  personal:   { id: 'personal',   label: 'Personal',   hue: 25,  count: 0 },
-  // 'other' deliberately excluded from the filter UI but allowed on entries
+  "research": {
+    "id": "research",
+    "label": "Research",
+    "hue": 250,
+    "count": 1
+  },
+  "internship": {
+    "id": "internship",
+    "label": "Internship",
+    "hue": 145,
+    "count": 1
+  },
+  "graduate": {
+    "id": "graduate",
+    "label": "Graduate",
+    "hue": 305,
+    "count": 1
+  },
+  "undergrad": {
+    "id": "undergrad",
+    "label": "Undergrad",
+    "hue": 75,
+    "count": 10
+  },
+  "personal": {
+    "id": "personal",
+    "label": "Personal",
+    "hue": 25,
+    "count": 1
+  }
 };
+
 
 // Experiences — Research, Internship, Education entries that drive /about
 export const EXPERIENCES = [
   {
-    id: 'idx',
-    category: 'internship',
-    title: 'Senior Data Science Intern',
-    org: 'IDX Exchange',
-    location: 'Remote',
-    start: '2026-01', end: null,
-    blurb: 'Predictive modeling for real-estate pricing. Building ETL pipelines, training and evaluating tree-based models, and translating results into product-ready insights for a proptech team.',
-    bullets: [
-      'Predictive modeling on California MLS data; XGBoost regression for single-family home valuation.',
-      'ETL pipelines preparing 100K+ property records for downstream training.',
-      'Cross-functional collaboration on model evaluation and visualization for a proptech product.',
+    "id": "idx",
+    "category": "internship",
+    "title": "Senior Data Science Intern",
+    "org": "IDX Exchange",
+    "location": "Remote",
+    "start": "2026-01",
+    "end": null,
+    "blurb": "Predictive modeling for real-estate pricing. Building ETL pipelines, training and evaluating tree-based models, and translating results into product-ready insights for a proptech team.",
+    "bullets": [
+      "Predictive modeling on California MLS data; XGBoost regression for single-family home valuation.",
+      "ETL pipelines preparing 100K+ property records for downstream training.",
+      "Cross-functional collaboration on model evaluation and visualization for a proptech product."
     ],
-    skills: ['Python','XGBoost','scikit-learn','ETL','pandas'],
-    projectIds: ['ca-real-estate'],
+    "skills": [
+      "Python",
+      "XGBoost",
+      "scikit-learn",
+      "ETL",
+      "pandas"
+    ],
+    "projectIds": [
+      "ca-real-estate"
+    ]
   },
   {
-    id: 'econ-gray',
-    category: 'research',
-    title: 'Research Assistant — Cohabitation & Census',
-    org: 'UCSD Department of Economics',
-    advisor: 'Prof. Andre Gray',
-    location: 'La Jolla, CA',
-    start: '2025-03', end: '2025-07',
-    blurb: 'Aggregated and analyzed census and immigration data (UMPS, USCIS) to investigate cohabitation trends across diverse populations in major US metros, 2007–2024.',
-    bullets: [
-      'Time-series and breakpoint analysis identifying statistically significant structural changes.',
-      'Regression analysis to surface the most important demographic factors.',
-      'Collaborated with graduate and post-graduate researchers on reproducible analysis pipelines.',
+    "id": "econ-gray",
+    "category": "research",
+    "title": "Research Assistant — Cohabitation & Census",
+    "org": "UCSD Department of Economics",
+    "advisor": "Prof. Andre Gray",
+    "location": "La Jolla, CA",
+    "start": "2025-03",
+    "end": "2025-07",
+    "blurb": "Aggregated and analyzed census and immigration data (UMPS, USCIS) to investigate cohabitation trends across diverse populations in major US metros, 2007–2024.",
+    "bullets": [
+      "Time-series and breakpoint analysis identifying statistically significant structural changes.",
+      "Regression analysis to surface the most important demographic factors.",
+      "Collaborated with graduate and post-graduate researchers on reproducible analysis pipelines."
     ],
-    skills: ['Python','R','Time-series','Regression','Econometrics'],
-    projectIds: ['ucsd-research-lab'],
+    "skills": [
+      "Python",
+      "R",
+      "Time-series",
+      "Regression",
+      "Econometrics"
+    ],
+    "projectIds": [
+      "ucsd-research-lab"
+    ]
   },
   {
-    id: 'econ-refugee',
-    category: 'research',
-    title: 'Research Assistant — Refugee Camps & Local Economies',
-    org: 'UCSD Department of Economics',
-    location: 'La Jolla, CA',
-    start: '2024-01', end: '2024-03',
-    blurb: 'Investigated effects of refugee camps on local wages and crop prices in Sub-Saharan Africa, sourcing UN/UNHCR datasets and applying difference-in-differences over geospatial segments.',
-    bullets: [
-      'Sourced and tidied large UN/UNHCR economic and geospatial datasets.',
-      'Segmented farmers in QGIS based on proximity to refugee camps.',
-      'Applied DiD analysis on historical pricing data in Stata.',
+    "id": "econ-refugee",
+    "category": "research",
+    "title": "Research Assistant — Refugee Camps & Local Economies",
+    "org": "UCSD Department of Economics",
+    "location": "La Jolla, CA",
+    "start": "2024-01",
+    "end": "2024-03",
+    "blurb": "Investigated effects of refugee camps on local wages and crop prices in Sub-Saharan Africa, sourcing UN/UNHCR datasets and applying difference-in-differences over geospatial segments.",
+    "bullets": [
+      "Sourced and tidied large UN/UNHCR economic and geospatial datasets.",
+      "Segmented farmers in QGIS based on proximity to refugee camps.",
+      "Applied DiD analysis on historical pricing data in Stata."
     ],
-    skills: ['R','Stata','QGIS','Geospatial','DiD'],
-    projectIds: [],
+    "skills": [
+      "R",
+      "Stata",
+      "QGIS",
+      "Geospatial",
+      "DiD"
+    ],
+    "projectIds": []
   },
   {
-    id: 'msdsc',
-    category: 'graduate',
-    title: 'M.S. Data Science',
-    org: 'UC San Diego',
-    location: 'La Jolla, CA',
-    start: '2026-01', end: null,
-    endLabel: 'Expected Jun 2027',
-    gpa: '4.0 / 4.0',
-    blurb: 'Graduate coursework in data management, machine learning, and statistics. Building applied projects that pair ensemble methods with rigorous evaluation and clear product framing.',
-    bullets: [
-      'Coursework: Data Management, Machine Learning, Statistics.',
-      'GPA 4.0 · MDS Supplemental Scholarship Recipient.',
+    "id": "msdsc",
+    "category": "graduate",
+    "title": "M.S. Data Science",
+    "org": "UC San Diego",
+    "location": "La Jolla, CA",
+    "start": "2026-01",
+    "end": null,
+    "endLabel": "Expected Jun 2027",
+    "gpa": "4.0 / 4.0",
+    "blurb": "Graduate coursework in data management, machine learning, and statistics. Building applied projects that pair ensemble methods with rigorous evaluation and clear product framing.",
+    "bullets": [
+      "Coursework: Data Management, Machine Learning, Statistics.",
+      "GPA 4.0 · MDS Supplemental Scholarship Recipient."
     ],
-    skills: ['Python','XGBoost','scikit-learn','Statistics'],
-    projectIds: ['ecommerce-intent'],
+    "skills": [
+      "Python",
+      "XGBoost",
+      "scikit-learn",
+      "Statistics"
+    ],
+    "projectIds": [
+      "ecommerce-intent"
+    ]
   },
   {
-    id: 'bsmath',
-    category: 'undergrad',
-    title: 'B.S. Mathematics & Economics',
-    org: 'UC San Diego',
-    location: 'La Jolla, CA',
-    start: '2021-09', end: '2025-06',
-    blurb: 'Minor in Data Science. Coursework spanning real analysis, probability, econometrics, and applied data science. Provost Honors 2021–2025.',
-    bullets: [
-      'Mathematics: Real Analysis, Probability, Linear Analysis, Graph Theory.',
-      'Data Science: Applied DS, EDA, Probabilistic Modeling & ML, Representation & Unsupervised Learning.',
-      'Economics: Macro, Micro, Econometrics. Finance: Financial Math, Financial Analytics.',
+    "id": "bsmath",
+    "category": "undergrad",
+    "title": "B.S. Mathematics & Economics",
+    "org": "UC San Diego",
+    "location": "La Jolla, CA",
+    "start": "2021-09",
+    "end": "2025-06",
+    "blurb": "Minor in Data Science. Coursework spanning real analysis, probability, econometrics, and applied data science. Provost Honors 2021–2025.",
+    "bullets": [
+      "Mathematics: Real Analysis, Probability, Linear Analysis, Graph Theory.",
+      "Data Science: Applied DS, EDA, Probabilistic Modeling & ML, Representation & Unsupervised Learning.",
+      "Economics: Macro, Micro, Econometrics. Finance: Financial Math, Financial Analytics."
     ],
-    skills: ['Python','R','D3.js','Probability','Econometrics'],
-    projectIds: ['dsc80-notebook','allrecipes','bike-cambridge','mice-temp','mice-explorable','airbnb-sd','estrus-rats','math189-edu','asteroid','image-processor'],
+    "skills": [
+      "Python",
+      "R",
+      "D3.js",
+      "Probability",
+      "Econometrics"
+    ],
+    "projectIds": [
+      "dsc80-notebook",
+      "allrecipes",
+      "bike-cambridge",
+      "mice-temp",
+      "mice-explorable",
+      "airbnb-sd",
+      "estrus-rats",
+      "math189-edu",
+      "asteroid",
+      "image-processor"
+    ]
   },
-  // 'other' — appears in ALL but not as a filter
   {
-    id: 'slbo',
-    category: 'other',
-    title: 'Financial Assistant / Student Lead',
-    org: 'UCSD Student Life Business Office',
-    location: 'La Jolla, CA',
-    start: '2023-09', end: '2025-06',
-    blurb: 'Promoted to Student Lead. Trained a team of 3, built curriculum for accounting/event-planning tools, and supported 450+ student organizations with invoicing and account management.',
-    bullets: [
-      'Trained and managed 3 student workers; built onboarding curriculum.',
-      'Prepared invoices and purchase orders; managed account balances for 450+ orgs.',
-      'PaymentWorks, Concur, IBM Cognos, and other UCSD financial systems.',
+    "id": "slbo",
+    "category": "other",
+    "title": "Financial Assistant / Student Lead",
+    "org": "UCSD Student Life Business Office",
+    "location": "La Jolla, CA",
+    "start": "2023-09",
+    "end": "2025-06",
+    "blurb": "Promoted to Student Lead. Trained a team of 3, built curriculum for accounting/event-planning tools, and supported 450+ student organizations with invoicing and account management.",
+    "bullets": [
+      "Trained and managed 3 student workers; built onboarding curriculum.",
+      "Prepared invoices and purchase orders; managed account balances for 450+ orgs.",
+      "PaymentWorks, Concur, IBM Cognos, and other UCSD financial systems."
     ],
-    skills: ['Excel','IBM Cognos','Team Management'],
-    projectIds: [],
+    "skills": [
+      "Excel",
+      "IBM Cognos",
+      "Team Management"
+    ],
+    "projectIds": []
   },
   {
-    id: 'aquatics',
-    category: 'other',
-    title: 'Aquatics Manager',
-    org: 'Campbell Community Center',
-    location: 'Campbell, CA',
-    start: '2019-06', end: '2022-08',
-    blurb: 'Managed City of Campbell Aquatics — 50+ lifeguards and the Wave Swim Team. Developed competitive swim programs, scheduling, and membership management.',
-    bullets: [
-      'Trained and managed 50+ lifeguards; scheduled swim-team practices.',
-      'Project-management strategies applied to programming and operations.',
-      'Excel and CivicRec for scheduling and membership management.',
+    "id": "aquatics",
+    "category": "other",
+    "title": "Aquatics Manager",
+    "org": "Campbell Community Center",
+    "location": "Campbell, CA",
+    "start": "2019-06",
+    "end": "2022-08",
+    "blurb": "Managed City of Campbell Aquatics — 50+ lifeguards and the Wave Swim Team. Developed competitive swim programs, scheduling, and membership management.",
+    "bullets": [
+      "Trained and managed 50+ lifeguards; scheduled swim-team practices.",
+      "Project-management strategies applied to programming and operations.",
+      "Excel and CivicRec for scheduling and membership management."
     ],
-    skills: ['Project Management','Team Leadership','Excel'],
-    projectIds: [],
-  },
+    "skills": [
+      "Project Management",
+      "Team Leadership",
+      "Excel"
+    ],
+    "projectIds": []
+  }
 ];
+
 
 // PROJECTS_AUTO_START
 export const PROJECTS = [
@@ -192,12 +269,12 @@ export const PROJECTS = [
       "pipeline design"
     ],
     "url": "https://single-family-housing-price-predictor.streamlit.app/",
-    "repo": "idx_38",
+    "repo": "idx-app",
     "lastCommit": "2026-04-29"
   },
   {
     "id": "ats-resume",
-    "title": "AI-Driven Resume Quality & ATS Analysis",
+    "title": "ARTie(Agentic ATS Resume Tailoring)",
     "category": "personal",
     "experienceId": null,
     "course": null,
@@ -242,7 +319,7 @@ export const PROJECTS = [
       "text embeddings",
       "hiring automation"
     ],
-    "url": "https://github.com/nathansso/agentic_resume_tailoring",
+    "url": "https://artie-resume-tailoring.fly.dev",
     "repo": "agentic_resume_tailoring",
     "lastCommit": "2026-05-29"
   },
@@ -419,8 +496,8 @@ export const PROJECTS = [
     "course": "DSC 106",
     "date": "2025-03",
     "image": null,
-    "blurb": "Interactive D3 explorable letting users drill into mouse body-temperature data by sex, estrus phase, and time of day.",
-    "description": "Group project built in DSC 106. An interactive explorable visualization of mouse body-temperature data, allowing users to filter by sex and estrus cycle phase, adjust the time range, and hover individual data points for detail. Built with D3.js, HTML, and CSS.",
+    "blurb": "Narrative scrollable explorable of mouse body-temperature data — multi-view D3 dashboard with story mode, per-mouse tooltips, and estrus-cycle filtering.",
+    "description": "Group project built in DSC 106 (Winter 2025). A multi-page interactive explorable visualization of mouse body-temperature data built with vanilla JavaScript, D3.js, HTML, and CSS. Features a narrative scrollytelling story mode that guides users through the dataset, a per-mouse detail view, pie chart breakdowns by sex and estrus phase, and an advanced analytics interface for open-ended exploration. Users can filter by sex and estrus cycle phase, adjust the time range, and hover individual data points for tooltips surfacing mouse ID and cycle status. Hosted via GitHub Pages.",
     "skills": [
       "D3.js",
       "JavaScript",
@@ -428,7 +505,9 @@ export const PROJECTS = [
       "CSS",
       "data visualization",
       "interactive viz",
-      "time series"
+      "scrollytelling",
+      "time series",
+      "exploratory data analysis"
     ],
     "url": "https://sebastianferragut.github.io/miceexplorable/",
     "repo": null
@@ -546,6 +625,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 // PROJECTS_AUTO_END
 
 // Compute counts for the filter UI

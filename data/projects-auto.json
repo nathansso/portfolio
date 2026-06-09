@@ -1,5 +1,49 @@
 [
     {
+        "title": "Diginetica Session Conversion Prediction",
+        "year": 2026,
+        "description": "Research project investigating whether explicit graph-based modeling of cross-session navigation structure (item co-view, query–item, item–category relations) improves session conversion prediction beyond flat aggregate features and sequential baselines. Built on the Diginetica (CIKM Cup 2016) dataset of 308K sessions with a ~4% conversion rate. Pipeline covers data ingest and EDA, temporal train/val/test splits (no random leakage), a GBM baseline, and a progression through bipartite and heterogeneous GNN architectures (HGT, HeteroSAGE) culminating in a hybrid GNN + sequence model. AUPRC is the primary metric, all ablation results reported as mean ± std over ≥3 seeds.",
+        "url": "https://github.com/nathansso/diginetica-ecomm",
+        "repo": "diginetica-ecomm",
+        "lastCommit": "2026-06-06",
+        "skills": [
+            "python",
+            "pytorch",
+            "pytorch-geometric",
+            "graph neural networks",
+            "heterogeneous GNN",
+            "HGT",
+            "session-based recommendation",
+            "conversion prediction",
+            "AUPRC",
+            "class imbalance",
+            "temporal splits",
+            "pandas",
+            "numpy",
+            "scikit-learn",
+            "machine learning",
+            "e-commerce analytics",
+            "research"
+        ]
+    },
+    {
+        "title": "Portfolio Live Editor",
+        "year": 2026,
+        "description": "An Express.js development server that proxies the portfolio site and injects an overlay script into each page, enabling live WYSIWYG editing of the site's data layer (PROFILE, EXPERIENCES, PROJECTS). The overlay communicates with a REST API that reads and writes data/site.js in-place, so edits are reflected immediately on reload without touching any build tooling.",
+        "url": "https://github.com/nathansso/portfolio_editor",
+        "repo": "portfolio_editor",
+        "lastCommit": "2026-06-04",
+        "skills": [
+            "javascript",
+            "node.js",
+            "express",
+            "REST API",
+            "live editing",
+            "WYSIWYG",
+            "developer tooling"
+        ]
+    },
+    {
         "title": "AI-Driven Resume Quality & ATS Analysis System",
         "year": 2026,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",

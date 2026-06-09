@@ -123,12 +123,11 @@ async function main() {
   for (const repo of repos) {
     if (repo.fork) continue;
     if (knownRepos.has(repo.name)) continue;
-    if (!repo.description && !repo.homepage) continue;
 
-    process.stdout.write(`Adding new repo "${repo.name}"...`);
+    process.stdout.write(`Checking new repo "${repo.name}"...`);
     const summary = await getReadmeSummary(repo.name);
     const description = summary || repo.description;
-    if (!description) { console.log(' skipped (no description)'); continue; }
+    if (!description) { console.log(' skipped (no readme or description)'); continue; }
 
     projects.push({
       title: toTitleCase(repo.name),

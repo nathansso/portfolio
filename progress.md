@@ -1,5 +1,11 @@
 # Progress Log
 
+## 2026-06-09 — Add diginetica-ecomm and portfolio-editor; fix sync discovery
+
+- `data/site.js`: added `diginetica-ecomm` (GNN session conversion, CIKM Cup 2016) and `portfolio-editor` (Express overlay editor) as personal project entries
+- `data/projects-auto.json`: seeded both new entries so the weekly sync can track and update them going forward
+- `scripts/sync-projects.js`: removed pre-filter that dropped repos lacking a GitHub description and homepage before checking the README — the subsequent `if (!description)` guard is sufficient and less aggressive
+
 ## 2026-06-09 — Project data updates
 
 - `data/site.js`: enhanced `mice-explorable` description + blurb with scrollytelling story mode, multi-view details, and estrus filtering — project already existed but was sparse

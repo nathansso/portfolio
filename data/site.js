@@ -23,6 +23,7 @@ export const PROFILE = {
 
 
 
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
@@ -65,6 +66,7 @@ export const CATEGORIES = {
 
 
 
+
 // Experiences — Research, Internship, Education entries that drive /about
 export const EXPERIENCES = [
   {
@@ -75,7 +77,7 @@ export const EXPERIENCES = [
     "location": "Remote",
     "start": "2026-01",
     "end": null,
-    "blurb": "Predictive modeling for real-estate pricing. Building ETL pipelines, training and evaluating tree-based models, and translating results into product-ready insights for a proptech team.",
+    "blurb": "Predictive modeling for real-estate pricing. Building ETL pipelines, training and evaluating gradient boosted models, and translating results into product-ready insights for a proptech team. Currently building a production multi-agent AI assistant using OpenClaw that helps consumers by analyzing market trends and recommending properties.",
     "bullets": [
       "Predictive modeling on California MLS data; XGBoost regression for single-family home valuation.",
       "ETL pipelines preparing 100K+ property records for downstream training.",
@@ -152,9 +154,9 @@ export const EXPERIENCES = [
     "end": null,
     "endLabel": "Expected Jun 2027",
     "gpa": "4.0 / 4.0",
-    "blurb": "Graduate coursework in data management, machine learning, and statistics. Building applied projects that pair ensemble methods with rigorous evaluation and clear product framing.",
+    "blurb": "Graduate coursework in data management, machine learning, and statistics. Exploring deep learning, graph neural networks, and the use of NN on relational data. ",
     "bullets": [
-      "Coursework: Data Management, Machine Learning, Statistics.",
+      "Coursework: Data Management, Machine Learning Algorithms, Statistics",
       "GPA 4.0 · MDS Supplemental Scholarship Recipient."
     ],
     "skills": [
@@ -244,6 +246,7 @@ export const EXPERIENCES = [
     "projectIds": []
   }
 ];
+
 
 
 
@@ -731,6 +734,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

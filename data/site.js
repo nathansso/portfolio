@@ -20,6 +20,7 @@ export const PROFILE = {
 
 
 
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
@@ -53,6 +54,7 @@ export const CATEGORIES = {
     "count": 7
   }
 };
+
 
 
 
@@ -237,6 +239,7 @@ export const EXPERIENCES = [
     "projectIds": []
   }
 ];
+
 
 
 
@@ -429,14 +432,14 @@ export const PROJECTS = [
   },
   {
     "id": "dsc80-notebook",
-    "title": "DSC 80 � Project Notebook",
+    "title": "AllRecipes Ratings Predictive Model -DSC 80",
     "category": "undergrad",
     "experienceId": "bsmath",
     "course": "DSC 80",
     "date": "2025-08",
     "image": null,
     "blurb": "Pandas + scikit-learn pipeline: cleaning, imputation, feature engineering, supervised modeling on a structured dataset.",
-    "description": "Built a data science pipeline using pandas, NumPy, and scikit-learn to clean, process, and model a structured dataset, addressing missing data and engineering features to prepare inputs for machine learning. Applied classification or regression models to generate predictions, evaluating performance through cross-validation and relevant metrics. Visualized key patterns and model outcomes using Matplotlib and Plotly to communicate findings clearly.",
+    "description": "Built a data science pipeline using pandas, NumPy, and scikit-learn to clean, process, and model a structured dataset, addressing missing data and engineering features to prepare inputs for machine learning. Applied random forest models to generate predictions of the rating a recipe would receive on allRecipes.com, evaluating performance through cross-validation and relevant metrics. Visualized key patterns and model outcomes using Matplotlib and Plotly to communicate findings.",
     "skills": [
       "python",
       "pandas",
@@ -693,6 +696,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

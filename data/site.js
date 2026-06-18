@@ -17,39 +17,45 @@ export const PROFILE = {
 
 
 
+
+
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
     "id": "research",
     "label": "Research",
     "hue": 250,
-    "count": 2
+    "count": 3
   },
   "internship": {
     "id": "internship",
     "label": "Internship",
     "hue": 145,
-    "count": 2
+    "count": 3
   },
   "graduate": {
     "id": "graduate",
     "label": "Graduate",
     "hue": 305,
-    "count": 2
+    "count": 3
   },
   "undergrad": {
     "id": "undergrad",
     "label": "Undergrad",
     "hue": 75,
-    "count": 20
+    "count": 30
   },
   "personal": {
     "id": "personal",
     "label": "Personal",
     "hue": 25,
-    "count": 4
+    "count": 7
   }
 };
+
+
+
 
 
 
@@ -234,6 +240,9 @@ export const EXPERIENCES = [
 
 
 
+
+
+
 // PROJECTS_AUTO_START
 export const PROJECTS = [
   {
@@ -245,7 +254,7 @@ export const PROJECTS = [
     "date": "2026-04",
     "image": null,
     "blurb": "Stacked XGBoost + LightGBM ensemble on 100K+ MLS rows. Sub-8% Median Absolute Percent Error, deployed on Streamlit.",
-    "description": "Built a machine learning web application that predicts single-family residence prices across California ZIP codes using ensemble models including XGBoost and LightGBM trained on historical real estate transaction data. The Streamlit-powered interface allows users to search by location and input property characteristics to generate price estimates, with results visualized through interactive Plotly charts. Model training leveraged scikit-learn pipelines with feature engineering on socioeconomic and property-level variables to optimize predictive accuracy across diverse California housing markets.",
+    "description": "Built a machine learning web application that predicts single-family residence prices across California ZIP codes using ensemble models including XGBoost and LightGBM trained on historical real estate transaction data. \n\nThe Streamlit-powered interface allows users to search by location and input property characteristics to generate price estimates, with results visualized through interactive Plotly charts. \n\nModel training leveraged scikit-learn pipelines with feature engineering on socioeconomic and property-level variables to optimize predictive accuracy across diverse California housing markets.",
     "skills": [
       "python",
       "machine learning",
@@ -459,7 +468,7 @@ export const PROJECTS = [
     "course": null,
     "date": "2025-07",
     "image": null,
-    "blurb": "Statistical modeling and ML in Python and R for domain-specific research questions under Prof. Andre Gray.",
+    "blurb": "Statistical modeling and ML in Python and R for domain-specific research questions under Andre Gray, PhD 2026.",
     "description": "Based on the available information, I cannot generate a specific and accurate 2-3 sentence project description without more details about the research focus, datasets, methods, and findings. To write a compelling and honest portfolio description, could you provide a brief summary of what the research investigated, the key techniques or models used, and any notable results or conclusions? This will ensure the description accurately represents your work rather than containing fabricated specifics.",
     "skills": [
       "python",
@@ -549,7 +558,7 @@ export const PROJECTS = [
   },
   {
     "id": "mice-explorable",
-    "title": "MICE Explorable",
+    "title": "Of Mice and Medicine",
     "category": "undergrad",
     "experienceId": "bsmath",
     "course": "DSC 106",
@@ -684,6 +693,9 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
+
+
 
 
 // PROJECTS_AUTO_END

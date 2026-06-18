@@ -21,39 +21,41 @@ export const PROFILE = {
 
 
 
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
     "id": "research",
     "label": "Research",
     "hue": 250,
-    "count": 3
+    "count": 4
   },
   "internship": {
     "id": "internship",
     "label": "Internship",
     "hue": 145,
-    "count": 3
+    "count": 4
   },
   "graduate": {
     "id": "graduate",
     "label": "Graduate",
     "hue": 305,
-    "count": 3
+    "count": 4
   },
   "undergrad": {
     "id": "undergrad",
     "label": "Undergrad",
     "hue": 75,
-    "count": 30
+    "count": 40
   },
   "personal": {
     "id": "personal",
     "label": "Personal",
     "hue": 25,
-    "count": 7
+    "count": 10
   }
 };
+
 
 
 
@@ -93,7 +95,7 @@ export const EXPERIENCES = [
     "category": "research",
     "title": "Research Assistant — Cohabitation & Census",
     "org": "UCSD Department of Economics",
-    "advisor": "Prof. Andre Gray",
+    "advisor": "Andre Gray, PhD '26",
     "location": "La Jolla, CA",
     "start": "2025-03",
     "end": "2025-07",
@@ -239,6 +241,7 @@ export const EXPERIENCES = [
     "projectIds": []
   }
 ];
+
 
 
 
@@ -724,6 +727,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

@@ -24,6 +24,7 @@ export const PROFILE = {
 
 
 
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
@@ -57,6 +58,7 @@ export const CATEGORIES = {
     "count": 10
   }
 };
+
 
 
 
@@ -256,6 +258,7 @@ export const EXPERIENCES = [
 
 
 
+
 // PROJECTS_AUTO_START
 export const PROJECTS = [
   {
@@ -299,14 +302,14 @@ export const PROJECTS = [
   },
   {
     "id": "diginetica-ecomm",
-    "title": "Diginetica Session Conversion Prediction",
+    "title": "eCommerce Product Recommender w/ HeteroGraphSage",
     "category": "personal",
     "experienceId": null,
     "course": null,
     "date": "2026-06",
     "image": null,
-    "blurb": "A graph-vs-gradient-boosting study on Diginetica (CIKM Cup 2016, 308K sessions). After a heterogeneous GNN lost to XGBoost on session conversion, pivoted to next-item recommendation — isolating the multi-hop graph signal a flat ranker can't featurize, exposed through sliced Recall@k / MAP evaluation.",
-    "description": "A research project on the Diginetica CIKM Cup 2016 e-commerce dataset (308K sessions, 1.2M views) asking when a heterogeneous graph neural network actually beats a strong feature-engineered baseline. Act 1 built the shared substrate — temporal-leakage-free train/val/test splits, a RelBench heterogeneous graph (item co-view, query–item, item–category relations plus purchase event nodes and co-purchase edges), and an XGBoost conversion baseline; the conversion GNN underperformed XGBoost, which motivated the pivot. Act 2 reframes the task as session-based next-item recommendation (intra-session leave-last-out link prediction in RelBench) and tests a sharper thesis: an XGBoost learning-to-rank model can encode every 1-hop signal as a feature, so graph value only surfaces under slicing — the GNN should tie on head/repeat slices and win on tail/novel/short-session slices reachable only through multi-hop propagation. Includes shared candidate generation, a two-tower HetGNN with GPU training, validation early-stopping on Novel Recall@10, and budget-matched Optuna hyperparameter search (resumable SQLite study) for a fair, like-for-like comparison. Evaluated with Recall@k and MAP@k reported per slice.",
+    "blurb": "A graph-vs-gradient-boosting study on Diginetica eCommerce data(CIKM Cup 2016, 308K sessions). Focused on next-item recommendation — isolating the multi-hop graph signal a flat ranker can't featurize, exposed through sliced Recall@k / MAP evaluation.",
+    "description": "A research project on the Diginetica CIKM Cup 2016 e-commerce dataset (308K sessions, 1.2M views), asking when a heterogeneous graph neural network actually beats a strong feature-engineered baseline.\n\nInitially, we constructed temporal-leakage-free train/val/test splits and a heterogeneous graph (item co-view, query–item, item–category relations plus purchase event nodes and co-purchase edges) via RelBench to compete with an XGBoost conversion baseline.\nIn predicting session conversion(users making a purchase), flattened features and XGBoost outperformed our HetGNN.\nHowever, when comparing a two-tower HetGNN to an XGBRanker in next-item recommendation, our HetGNN performed strongly on novel/unseen items, unlike our gradient boosting model.\nBoth models underwent GPU training, validation, early-stopping on Novel Recall@10, and budget-matched Optuna hyperparameter search (resumable SQLite study) for a fair, like-for-like comparison. Evaluated with Recall@k and MAP@k reported per slice.",
     "skills": [
       "python",
       "pytorch",
@@ -734,6 +737,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

@@ -25,6 +25,7 @@ export const PROFILE = {
 
 
 
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
@@ -58,6 +59,7 @@ export const CATEGORIES = {
     "count": 10
   }
 };
+
 
 
 
@@ -259,6 +261,7 @@ export const EXPERIENCES = [
 
 
 
+
 // PROJECTS_AUTO_START
 export const PROJECTS = [
   {
@@ -379,7 +382,7 @@ export const PROJECTS = [
   },
   {
     "id": "ats-resume",
-    "title": "ARTie(Agentic ATS Resume Tailoring)",
+    "title": "ARTie(Agentic Resume Tailoring Platform)",
     "category": "personal",
     "experienceId": null,
     "course": null,
@@ -737,6 +740,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

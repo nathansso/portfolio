@@ -10,10 +10,11 @@ export const PROFILE = {
   "github": "nathansso",
   "linkedin": "nathaniel-oliver-82239a265",
   "photo": "imgs/porto_pic.jpg",
-  "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently a Data Science Intern at IDX Exchange, where I've built end-to-end modeling pipelines, using ETF and gradient boosting, and developed ensemble-based approaches for prediction. \n\nIn my spare time, I've been exploring Agent-based Workflow/Development. My current project orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailoring resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETF, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",
+  "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently a Data Science Intern at IDX Exchange, where I've built end-to-end modeling pipelines, using ETF and gradient boosting, and developed ensemble-based approaches for prediction. \n\nIn my spare time, I've been exploring agent-based workflow and development. One of my current personal projects orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailored resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETF, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",
   "shortBio": "M.S. Data Science at UC San Diego, building on a Math + Econ foundation. I turn messy real-world data into useful models and decisions — applied research, predictive modeling, and AI-assisted analytics.",
   "currently": "Predictive modeling at IDX Exchange · MS Data Science at UCSD"
 };
+
 
 
 
@@ -64,6 +65,7 @@ export const CATEGORIES = {
     "count": 16
   }
 };
+
 
 
 
@@ -260,6 +262,7 @@ export const EXPERIENCES = [
     "projectIds": []
   }
 ];
+
 
 
 
@@ -755,6 +758,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

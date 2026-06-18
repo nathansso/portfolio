@@ -29,39 +29,41 @@ export const PROFILE = {
 
 
 
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
     "id": "research",
     "label": "Research",
     "hue": 250,
-    "count": 5
+    "count": 6
   },
   "internship": {
     "id": "internship",
     "label": "Internship",
     "hue": 145,
-    "count": 5
+    "count": 6
   },
   "graduate": {
     "id": "graduate",
     "label": "Graduate",
     "hue": 305,
-    "count": 5
+    "count": 6
   },
   "undergrad": {
     "id": "undergrad",
     "label": "Undergrad",
     "hue": 75,
-    "count": 50
+    "count": 60
   },
   "personal": {
     "id": "personal",
     "label": "Personal",
     "hue": 25,
-    "count": 13
+    "count": 16
   }
 };
+
 
 
 
@@ -256,6 +258,7 @@ export const EXPERIENCES = [
     "projectIds": []
   }
 ];
+
 
 
 
@@ -749,6 +752,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

@@ -22,6 +22,7 @@ export const PROFILE = {
 
 
 
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
@@ -55,6 +56,7 @@ export const CATEGORIES = {
     "count": 10
   }
 };
+
 
 
 
@@ -137,7 +139,8 @@ export const EXPERIENCES = [
       "Geospatial",
       "DiD"
     ],
-    "projectIds": []
+    "projectIds": [],
+    "advisor": "Vincent Armentano, PhD '27"
   },
   {
     "id": "msdsc",
@@ -241,6 +244,7 @@ export const EXPERIENCES = [
     "projectIds": []
   }
 ];
+
 
 
 
@@ -727,6 +731,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

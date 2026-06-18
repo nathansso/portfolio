@@ -27,39 +27,43 @@ export const PROFILE = {
 
 
 
+
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
     "id": "research",
     "label": "Research",
     "hue": 250,
-    "count": 4
+    "count": 5
   },
   "internship": {
     "id": "internship",
     "label": "Internship",
     "hue": 145,
-    "count": 4
+    "count": 5
   },
   "graduate": {
     "id": "graduate",
     "label": "Graduate",
     "hue": 305,
-    "count": 4
+    "count": 5
   },
   "undergrad": {
     "id": "undergrad",
     "label": "Undergrad",
     "hue": 75,
-    "count": 40
+    "count": 50
   },
   "personal": {
     "id": "personal",
     "label": "Personal",
     "hue": 25,
-    "count": 10
+    "count": 13
   }
 };
+
+
 
 
 
@@ -83,7 +87,7 @@ export const EXPERIENCES = [
     "location": "Remote",
     "start": "2026-01",
     "end": null,
-    "blurb": "Predictive modeling for real-estate pricing. Building ETL pipelines, training and evaluating gradient boosted models, and translating results into product-ready insights for a proptech team. Currently building a production multi-agent AI assistant using OpenClaw that helps consumers by analyzing market trends and recommending properties.",
+    "blurb": "Predictive modeling for real-estate pricing. \nBuilding ETL pipelines, training and evaluating gradient boosted models, and translating results into product-ready insights for a proptech team. \nCurrently building a production multi-agent AI assistant using OpenClaw that helps consumers by analyzing market trends and recommending properties.",
     "bullets": [
       "Predictive modeling on California MLS data; XGBoost regression for single-family home valuation.",
       "ETL pipelines preparing 100K+ property records for downstream training.",
@@ -160,7 +164,7 @@ export const EXPERIENCES = [
     "end": null,
     "endLabel": "Expected Jun 2027",
     "gpa": "4.0 / 4.0",
-    "blurb": "Graduate coursework in data management, machine learning, and statistics. Exploring deep learning, graph neural networks, and the use of NN on relational data. ",
+    "blurb": "Graduate coursework in data management, machine learning, and statistics. \nExploring deep learning, graph neural networks, and the use of NN on relational data. ",
     "bullets": [
       "Coursework: Data Management, Machine Learning Algorithms, Statistics",
       "GPA 4.0 · MDS Supplemental Scholarship Recipient."
@@ -183,7 +187,7 @@ export const EXPERIENCES = [
     "location": "La Jolla, CA",
     "start": "2021-09",
     "end": "2025-06",
-    "blurb": "Minor in Data Science. Coursework spanning real analysis, probability, econometrics, and applied data science. Provost Honors 2021–2025.",
+    "blurb": "Minor in Data Science. \nCoursework spanning real analysis, probability, econometrics, and applied data science. \nProvost Honors 2021–2025.",
     "bullets": [
       "Mathematics: Real Analysis, Probability, Linear Analysis, Graph Theory.",
       "Data Science: Applied DS, EDA, Probabilistic Modeling & ML, Representation & Unsupervised Learning.",
@@ -265,6 +269,8 @@ export const EXPERIENCES = [
 
 
 
+
+
 // PROJECTS_AUTO_START
 export const PROJECTS = [
   {
@@ -276,7 +282,7 @@ export const PROJECTS = [
     "date": "2026-04",
     "image": null,
     "blurb": "Stacked XGBoost + LightGBM ensemble on 100K+ MLS rows. Sub-8% Median Absolute Percent Error, deployed on Streamlit.",
-    "description": "Built a machine learning web application that predicts single-family residence prices across California ZIP codes using ensemble models including XGBoost and LightGBM trained on historical real estate transaction data. \n\nThe Streamlit-powered interface allows users to search by location and input property characteristics to generate price estimates, with results visualized through interactive Plotly charts. \n\nModel training leveraged scikit-learn pipelines with feature engineering on socioeconomic and property-level variables to optimize predictive accuracy across diverse California housing markets.",
+    "description": "Built a machine learning web application that predicts single-family residence prices across California ZIP codes using ensemble models, including XGBoost and LightGBM, trained on historical real estate transaction data. \n\nThe Streamlit-powered interface allows users to search by location and input property characteristics to generate price estimates, with results visualized through interactive Plotly charts. \n\nModel training leveraged scikit-learn pipelines with feature engineering on socioeconomic and property-level variables to optimize predictive accuracy across diverse California housing markets.",
     "skills": [
       "python",
       "machine learning",
@@ -314,8 +320,8 @@ export const PROJECTS = [
     "course": null,
     "date": "2026-06",
     "image": null,
-    "blurb": "A graph-vs-gradient-boosting study on Diginetica eCommerce data(CIKM Cup 2016, 308K sessions). Focused on next-item recommendation — isolating the multi-hop graph signal a flat ranker can't featurize, exposed through sliced Recall@k / MAP evaluation.",
-    "description": "A research project on the Diginetica CIKM Cup 2016 e-commerce dataset (308K sessions, 1.2M views), asking when a heterogeneous graph neural network actually beats a strong feature-engineered baseline.\n\nInitially, we constructed temporal-leakage-free train/val/test splits and a heterogeneous graph (item co-view, query–item, item–category relations plus purchase event nodes and co-purchase edges) via RelBench to compete with an XGBoost conversion baseline.\nIn predicting session conversion(users making a purchase), flattened features and XGBoost outperformed our HetGNN.\nHowever, when comparing a two-tower HetGNN to an XGBRanker in next-item recommendation, our HetGNN performed strongly on novel/unseen items, unlike our gradient boosting model.\nBoth models underwent GPU training, validation, early-stopping on Novel Recall@10, and budget-matched Optuna hyperparameter search (resumable SQLite study) for a fair, like-for-like comparison. Evaluated with Recall@k and MAP@k reported per slice.",
+    "blurb": "A graph-vs-gradient-boosting study on Diginetica eCommerce data(CIKM Cup 2016, 308K sessions). \nFocused on next-item recommendation — isolating the multi-hop graph signal a flat ranker can't featurize, exposed through sliced Recall@k / MAP evaluation.",
+    "description": "A research project on the Diginetica CIKM Cup 2016 e-commerce dataset (308K sessions, 1.2M views), asking when a heterogeneous graph neural network actually beats a strong feature-engineered baseline. \n\nInitially, we constructed temporal-leakage-free train/val/test splits and a heterogeneous graph (item co-view, query–item, item–category relations plus purchase event nodes and co-purchase edges) via RelBench to compete with an XGBoost conversion baseline.\n\nIn predicting session conversion(users making a purchase), flattened features and XGBoost outperformed our HetGNN.\n\nHowever, when comparing a two-tower HetGNN to an XGBRanker in next-item recommendation, our HetGNN performed strongly on novel/unseen items, unlike our gradient boosting model.\n\nBoth models underwent GPU training, validation, early-stopping on Novel Recall@10, and budget-matched Optuna hyperparameter search (resumable SQLite study) for a fair, like-for-like comparison, while evaluated with Recall@k and MAP@k reported per slice.",
     "skills": [
       "python",
       "pytorch",
@@ -743,6 +749,8 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
+
 
 
 

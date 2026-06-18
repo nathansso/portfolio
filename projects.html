@@ -340,6 +340,7 @@
       color: var(--ink-muted);
       line-height: 1.5;
       margin: 0;
+      white-space: pre-wrap; /* preserve line breaks & indentation from the editor */
     }
 
     /* Expanded content */
@@ -364,6 +365,7 @@
       color: var(--ink-body);
       max-width: 70ch;
       text-wrap: pretty;
+      white-space: pre-wrap; /* preserve line breaks & indentation from the editor */
     }
     .pcard-side {
       display: flex;
@@ -523,7 +525,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROJECTS, EXPERIENCES, fmtDate, abbreviate } from './data/site.js?v=1';
+    import { PROJECTS, EXPERIENCES, fmtDate, abbreviate } from './data/site.js?v=2';
     import { initAutocomplete } from './scripts/autocomplete.js';
 
     mountChrome('projects');

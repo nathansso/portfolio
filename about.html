@@ -88,6 +88,7 @@
       line-height: 1.6;
       color: var(--ink-body);
       text-wrap: pretty;
+      white-space: pre-wrap; /* preserve line breaks & indentation from the editor */
     }
     .about-bio p + p { margin-top: var(--sp-3); }
     .about-bio strong { color: var(--ink-strong); font-weight: 600; }
@@ -263,6 +264,7 @@
       color: var(--ink-body);
       max-width: 65ch;
       margin-bottom: var(--sp-2);
+      white-space: pre-wrap; /* preserve line breaks & indentation from the editor */
     }
 
     .exp-bullets {
@@ -279,6 +281,7 @@
       font-size: var(--fs-small);
       color: var(--ink-body);
       line-height: 1.55;
+      white-space: pre-wrap; /* preserve line breaks & indentation from the editor */
     }
     .exp-bullets li::before {
       content: '';
@@ -422,7 +425,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROFILE, EXPERIENCES, PROJECTS, CATEGORIES, fmtDate, fmtRange, projectsByIds } from './data/site.js?v=1';
+    import { PROFILE, EXPERIENCES, PROJECTS, CATEGORIES, fmtDate, fmtRange, projectsByIds } from './data/site.js?v=2';
 
     mountChrome('about');
 

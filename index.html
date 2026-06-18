@@ -401,6 +401,7 @@
       font-size: var(--fs-small);
       color: var(--ink-muted);
       line-height: 1.5;
+      white-space: pre-wrap; /* preserve line breaks & indentation from the editor */
     }
 
     .all-projects-link {
@@ -864,7 +865,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROJECTS, fmtDate, abbreviate } from './data/site.js?v=1';
+    import { PROJECTS, fmtDate, abbreviate } from './data/site.js?v=2';
     import { initNowWidget } from './scripts/now-playing.js';
 
     mountChrome('home');

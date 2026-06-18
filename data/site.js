@@ -26,6 +26,7 @@ export const PROFILE = {
 
 
 
+
 // Categories — the visual filter vocabulary
 export const CATEGORIES = {
   "research": {
@@ -59,6 +60,7 @@ export const CATEGORIES = {
     "count": 10
   }
 };
+
 
 
 
@@ -262,6 +264,7 @@ export const EXPERIENCES = [
 
 
 
+
 // PROJECTS_AUTO_START
 export const PROJECTS = [
   {
@@ -389,7 +392,7 @@ export const PROJECTS = [
     "date": "2026-04",
     "image": null,
     "blurb": "Production web platform (React + TypeScript / FastAPI, deployed on Fly.io) that ingests resume, GitHub, and LinkedIn data into a per-user knowledge graph and tailors resumes to jobs via a multi-agent LangGraph pipeline, sentence-transformers ATS scoring, and LaTeX PDF export.",
-    "description": "An AI resume-tailoring platform that evolved from a Textual TUI prototype into a deployed web product — a React + TypeScript + Vite frontend served by a FastAPI backend, backed by Supabase Postgres in production (SQLite fallback locally) and shipped on Fly.io via Docker. Users sign in with Supabase Auth (JWT), connect GitHub through OAuth, and ingest resume, GitHub, and LinkedIn data — LinkedIn via Bright Data's Web Scraper API — into a per-user knowledge graph. A multi-agent LangGraph/LangChain pipeline (parser, job analyzer, matcher, ATS scorer, project scorer, enhancer, tailor, formatter, and chat agents) scores candidate-to-job alignment with a sentence-transformers ATS engine, generates explainable skill-gap analysis, and produces tailored resumes with grounding logic that prevents hallucinated credentials. Resumes export to PDF through a LaTeX (Jake's Resume) formatter, chat memory persists per job, and AI usage is governed by per-user rate limiting. Backed by 330+ automated tests.",
+    "description": "A web-deployed AI resume-tailoring platform  — a React + TypeScript + Vite frontend served by a FastAPI backend, backed by Supabase Postgres in production (SQLite fallback locally) and shipped on Fly.io via Docker.\n Users sign in with Supabase Auth (JWT), connect GitHub through OAuth, and ingest resume, GitHub, and LinkedIn data — LinkedIn via Bright Data's Web Scraper API — into a per-user knowledge graph. \n\nA multi-agent LangGraph/LangChain pipeline (parser, job analyzer, matcher, ATS scorer, project scorer, enhancer, tailor, formatter, and chat agents) scores candidate-to-job alignment with a sentence-transformers ATS engine, generates explainable skill-gap analysis, and produces tailored resumes with grounding logic that prevents hallucinated credentials. \n\nResumes export to PDF through a LaTeX (Jake's Resume) formatter, chat memory persists per job, and AI usage is governed by per-user rate limiting. Backed by 330+ automated tests.",
     "skills": [
       "python",
       "typescript",
@@ -740,6 +743,7 @@ export const PROJECTS = [
     "repo": null
   }
 ];
+
 
 
 

@@ -108,12 +108,13 @@ async function main() {
     const proj = projects[idx];
     process.stdout.write(`Syncing "${proj.title}" from ${repoName}...`);
 
-    const summary = await getReadmeSummary(repoName);
+    const locked = new Set(Array.isArray(proj.lockedFields) ? proj.lockedFields : []);
+    const summary = locked.has('description') ? null : await getReadmeSummary(repoName);
     const newDesc = summary || repo.description || proj.description;
     const newUrl = repo.homepage || proj.url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
 
-    proj.description = newDesc;
-    proj.url = newUrl || null;
+    if (!locked.has('description')) proj.description = newDesc;
+    if (!locked.has('url')) proj.url = newUrl || null;
     changed++;
     console.log(' done');
   }

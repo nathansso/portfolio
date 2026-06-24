@@ -276,18 +276,26 @@ def main() -> None:
             if commit_dates:
                 last_commit = max(commit_dates)
 
-        project["lastCommit"] = last_commit
-        if last_commit:
-            project["year"] = int(last_commit[:4])
+        locked = set(project.get("lockedFields") or [])
 
-        if repo_context:
+        if "lastCommit" not in locked:
+            project["lastCommit"] = last_commit
+            if last_commit:
+                project["year"] = int(last_commit[:4])
+
+        if repo_context and "description" not in locked:
             summary = generate_summary(project, repo_context, client)
             project["description"] = summary
             print(f"  -> summary: {summary[:80]}...")
+        elif "description" in locked:
+            print("  -> description locked, skipping summary")
 
-        skills = infer_skills(project, repo_context, client)
-        project["skills"] = skills
-        print(f"  -> skills ({len(skills)}): {skills[:5]}...")
+        if "skills" not in locked:
+            skills = infer_skills(project, repo_context, client)
+            project["skills"] = skills
+            print(f"  -> skills ({len(skills)}): {skills[:5]}...")
+        else:
+            print("  -> skills locked, skipping")
 
     projects.sort(key=lambda p: p.get("lastCommit") or "0000-00-00", reverse=True)
 

@@ -7,6 +7,10 @@
  * Editorial fields (id, category, experienceId, blurb, course, date, image)
  * are never touched.
  *
+ * A project may pin any auto-owned field by listing it in a "lockedFields"
+ * array (e.g. "lockedFields": ["description", "skills"]); locked fields keep
+ * their hand-curated value in site.js and are never overwritten by the sync.
+ *
  * Matching is done by repo name — handles both string and array repo values.
  *
  * Usage:
@@ -50,8 +54,10 @@ async function main() {
     const autoEntry = repos.map(r => autoByRepo[r]).find(Boolean);
     if (!autoEntry) return p;
 
+    const locked = new Set(Array.isArray(p.lockedFields) ? p.lockedFields : []);
     const updated = { ...p };
     for (const field of AUTO_FIELDS) {
+      if (locked.has(field)) continue;
       if (autoEntry[field] !== undefined && autoEntry[field] !== null) {
         updated[field] = autoEntry[field];
       }

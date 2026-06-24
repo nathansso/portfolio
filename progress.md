@@ -5,6 +5,16 @@
 - `data/site.js`: rewrote the `diginetica-ecomm` project entry to match the substantially reframed repo (pushed 2026-06-23). The project pivoted from "session conversion prediction" to a fair, slice-aware comparison of a heterogeneous GNN vs. a tuned XGBoost ranker on Diginetica (CIKM Cup 2016), built on RelBench with two tasks (session-conversion entity classification + next-item link prediction). Updated `title` and `blurb`; wrote a technically-focused `description` covering RelBench graph construction (8 node types / 22 edge types), the microsecond `abs_time` clock + time-aware neighbor sampling, the two-tower HeteroGraphSAGE encoder with sampled-softmax, the XGBoost LambdaRank baseline, the shared candidate-pool fairness protocol, Optuna tuning, and slice-decomposed evaluation/ablations (rather than the win/loss + leakage-correction narrative). Refreshed `skills` (added relbench, learning-to-rank, lambdarank, optuna, link prediction, next-item recommendation, data leakage audit, temporal graphs, time-aware neighbor sampling, recall@k, ndcg, mrr, two-tower model; dropped stale hgt/bipartite), and bumped `lastCommit` to 2026-06-23. `url` already points to the repo (`https://github.com/nathansso/diginetica-ecomm`). This supersedes the auto-sync's regenerated tile, whose description was stale.
 - `index.html`, `about.html`, `projects.html`: bumped the `site.js` cache-bust query string `?v=2` → `?v=3`.
 
+## 2026-06-23 — Add per-project `lockedFields` so the sync can't clobber curated copy
+
+- Problem: the weekly `Sync project data` workflow (`.github/workflows/sync.yml`, Mondays 09:00 UTC) regenerates `description`/`skills`/`lastCommit` from the repo README via `sync-projects.js` → `infer_skills.py` → `merge-projects.js`, which would overwrite the hand-curated diginetica description/skills on the next run.
+- Added a `lockedFields` opt-out honored at every write site:
+  - `scripts/merge-projects.js` (the only writer to `data/site.js`): skips any `AUTO_FIELDS` listed in a project's `lockedFields`, so locked fields keep their `site.js` value regardless of what the auto JSON holds. This is the guaranteed chokepoint.
+  - `scripts/sync-projects.js`: skips README-summary/url writes for locked fields (and avoids the README fetch when `description` is locked).
+  - `scripts/infer_skills.py`: skips LLM summary/skill regeneration (and the API calls) for locked fields; `lastCommit`/`year` still refresh unless locked.
+- `data/site.js` and `data/projects-auto.json`: set `"lockedFields": ["description", "skills"]` on the `diginetica-ecomm` entry and aligned the auto JSON's `description`/`skills`/`title`/`lastCommit` with the curated `site.js` values. `url` and `lastCommit` remain unlocked so they auto-refresh.
+- Verified: a lock unit check confirms a simulated stale auto entry can't overwrite the locked fields while `lastCommit` still updates; running `node scripts/merge-projects.js` leaves the curated diginetica tile intact (only the 4-line `lockedFields` addition in `site.js`).
+
 ## 2026-06-09 — Add diginetica-ecomm and portfolio-editor; fix sync discovery
 
 - `data/site.js`: added `diginetica-ecomm` (GNN session conversion, CIKM Cup 2016) and `portfolio-editor` (Express overlay editor) as personal project entries

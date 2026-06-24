@@ -1,5 +1,10 @@
 # Progress Log
 
+## 2026-06-23 — Refresh diginetica-ecomm tile from reframed repo
+
+- `data/site.js`: rewrote the `diginetica-ecomm` project entry to match the substantially reframed repo (pushed 2026-06-23). The project pivoted from "session conversion prediction" to a fair, slice-aware comparison of a heterogeneous GNN vs. a tuned XGBoost ranker on Diginetica (CIKM Cup 2016), built on RelBench with two tasks (session-conversion entity classification + next-item link prediction). Updated `title` and `blurb`; wrote a technically-focused `description` covering RelBench graph construction (8 node types / 22 edge types), the microsecond `abs_time` clock + time-aware neighbor sampling, the two-tower HeteroGraphSAGE encoder with sampled-softmax, the XGBoost LambdaRank baseline, the shared candidate-pool fairness protocol, Optuna tuning, and slice-decomposed evaluation/ablations (rather than the win/loss + leakage-correction narrative). Refreshed `skills` (added relbench, learning-to-rank, lambdarank, optuna, link prediction, next-item recommendation, data leakage audit, temporal graphs, time-aware neighbor sampling, recall@k, ndcg, mrr, two-tower model; dropped stale hgt/bipartite), and bumped `lastCommit` to 2026-06-23. `url` already points to the repo (`https://github.com/nathansso/diginetica-ecomm`). This supersedes the auto-sync's regenerated tile, whose description was stale.
+- `index.html`, `about.html`, `projects.html`: bumped the `site.js` cache-bust query string `?v=2` → `?v=3`.
+
 ## 2026-06-09 — Add diginetica-ecomm and portfolio-editor; fix sync discovery
 
 - `data/site.js`: added `diginetica-ecomm` (GNN session conversion, CIKM Cup 2016) and `portfolio-editor` (Express overlay editor) as personal project entries

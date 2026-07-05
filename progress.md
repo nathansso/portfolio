@@ -1,5 +1,9 @@
 # Progress Log
 
+## 2026-07-05 — Update visible resume to Data Scientist 7/5
+
+- `resume.pdf`: replaced with `Nathaniel_Oliver_Data_Scientist_7_5.pdf` (the current Data Scientist resume). `resume.html` embeds/serves `resume.pdf` (PDF.js canvas render + Print/Download links), so swapping the file updates the live resume everywhere. Confirmed the new file is a single page, matching the renderer which draws only page 1.
+
 ## 2026-07-05 — Refresh ARTie tile: live-demo link + description to match repo
 
 - `data/site.js`: for `ats-resume` (ARTie), set `url` to the live Fly.io demo `https://artie-resume-tailoring.fly.dev/` (the "Live demo" button on the projects page reads `p.url`; it had reverted to the GitHub repo URL — the `repo` field already provides the "View on GitHub" link).

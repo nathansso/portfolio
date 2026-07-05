@@ -3,6 +3,7 @@
 ## 2026-07-05 — Update visible resume to Data Scientist 7/5
 
 - `resume.pdf`: replaced with `Nathaniel_Oliver_Data_Scientist_7_5.pdf` (the current Data Scientist resume). `resume.html` embeds/serves `resume.pdf` (PDF.js canvas render + Print/Download links), so swapping the file updates the live resume everywhere. Confirmed the new file is a single page, matching the renderer which draws only page 1.
+- `resume.html`: renamed the Download PDF button's `download` attribute from `Nathaniel-Oliver-Resume.pdf` to `Nathaniel_Oliver_Data_Scientist.pdf` so the saved file matches the current resume.
 
 ## 2026-07-05 — Refresh ARTie tile: live-demo link + description to match repo
 

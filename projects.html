@@ -327,8 +327,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: var(--sp-2);
       margin-bottom: 2px;
     }
+    /* Keep the award badge beside the category badge; date stays right */
+    .pcard-meta .badge-award { margin-right: auto; }
     .pcard-title {
       font-size: var(--fs-h3);
       color: var(--ink-strong);
@@ -525,7 +528,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROJECTS, EXPERIENCES, fmtDate, abbreviate } from './data/site.js?v=4';
+    import { PROJECTS, EXPERIENCES, fmtDate, abbreviate } from './data/site.js?v=5';
     import { initAutocomplete } from './scripts/autocomplete.js';
 
     mountChrome('projects');
@@ -580,6 +583,7 @@
           <div class="pcard-body">
             <div class="pcard-meta">
               <span class="badge" data-cat="${p.category}">${p.category}</span>
+              ${p.award ? `<span class="badge badge-award">${p.award.placement}</span>` : ''}
               <span class="text-meta">${fmtDate(p.date)}</span>
             </div>
             <h3 class="pcard-title">${p.title}</h3>
@@ -601,6 +605,15 @@
               ` : ''}
             </div>
             <aside class="pcard-side">
+              ${p.award ? `
+                <div class="pcard-side-block">
+                  <div class="pcard-side-label">Award</div>
+                  <div class="pcard-side-val">
+                    ${p.award.placement}<br>
+                    <span class="text-muted">${p.award.event}</span>
+                  </div>
+                </div>
+              ` : ''}
               ${p.course ? `
                 <div class="pcard-side-block">
                   <div class="pcard-side-label">Course</div>

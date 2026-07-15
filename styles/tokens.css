@@ -56,6 +56,8 @@
   --cat-personal-bg: oklch(55% 0.14 25 / 0.10);
   --cat-other:    oklch(58% 0.005 240);
   --cat-other-bg: oklch(58% 0.005 240 / 0.10);
+  --award:    oklch(52% 0.13 85);
+  --award-bg: oklch(52% 0.13 85 / 0.12);
 
   /* Semantic */
   --focus: var(--accent);
@@ -118,6 +120,8 @@
   --cat-personal-bg: oklch(72% 0.14 25 / 0.16);
   --cat-other:    oklch(70% 0.005 80);
   --cat-other-bg: oklch(70% 0.005 80 / 0.14);
+  --award:    oklch(80% 0.13 85);
+  --award-bg: oklch(80% 0.13 85 / 0.16);
 }
 
 /* ---------- Reset / base ---------- */
@@ -370,6 +374,21 @@ p + p { margin-top: var(--sp-3); }
 .badge[data-cat="graduate"]   { background: var(--cat-graduate-bg);   color: var(--cat-graduate); }
 .badge[data-cat="undergrad"]  { background: var(--cat-undergrad-bg);  color: var(--cat-undergrad); }
 .badge[data-cat="personal"]   { background: var(--cat-personal-bg);   color: var(--cat-personal); }
+
+/* Award badge — trophy glyph replaces the category dot */
+.badge-award {
+  background: var(--award-bg);
+  color: var(--award);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--award) 30%, transparent);
+}
+.badge-award::before {
+  content: '🏆';
+  width: auto; height: auto;
+  border-radius: 0;
+  background: none;
+  font-size: 0.9em;
+  line-height: 1;
+}
 
 /* ---------- Footer ---------- */
 .footer {

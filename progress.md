@@ -1,5 +1,19 @@
 # Progress Log
 
+## 2026-07-15 — Add RollAway project + award badge; repin featured projects
+
+- `data/site.js`: added the `rollaway` project entry, written from the repo README (`nathansso/RollAway`, pushed 2026-07-14). Category `personal`, dated `2026-07` so it sorts to the top of the projects page (the grid sorts by `date` desc, so array position is irrelevant). `url` is the live Railway demo `https://rollaway-frontend-production.up.railway.app/` and `repo` is `RollAway`, which drive the existing "Live demo" / "View on GitHub" buttons — no new link markup needed. The `description` leads with the first-place win and centers the repo's core design claim: scoring, hard constraints, travel time, and legality are computed deterministically in code and never inside an LLM, with setbacks encoded from SF Public Works Order 182101 and every legality check citing its source. Covers the four managed layers (React 19 + Vite PWA on Railway behind Caddy reading a runtime `/config.json`; FastAPI agents backend; Supabase Postgres with a pgvector HNSW KB + a year of Bay Wheels foot-traffic aggregates; seven DigitalOcean Functions), DO Gradient inference, the live city data feeds, and the eval gate. 37 skills.
+- `data/site.js`: set `"lockedFields": ["description", "blurb", "url", "skills"]` on `rollaway` so the sync can't clobber the curated copy (same protection as `ats-resume`).
+- **New optional `award` field** — `{ placement, event }`. Added as a general data-layer concept rather than special-cased to this project, so future wins only need data. RollAway carries `1st Place` / `MLH x DigitalOcean AI Hackathon for Social Good`.
+- `styles/tokens.css`: added `--award` / `--award-bg` gold tokens to both the light and dark blocks (`oklch(52% 0.13 85)` / `oklch(80% 0.13 85)`), and a `.badge-award` class that composes with `.badge` — a trophy glyph overrides the inherited `.badge::before` category dot, plus a hairline inset ring.
+- `projects.html`: render the award badge in `.pcard-meta` next to the category badge, and an "Award" block at the top of the expanded `.pcard-side` panel showing placement + event.
+- `index.html`: render the award badge in `.tile-meta`.
+- `projects.html`, `index.html`: both meta rows are `justify-content: space-between`, so a third child made the award badge drift to the center of the row. Added `gap` and a scoped `.pcard-meta .badge-award { margin-right: auto; }` / `.tile-meta .badge-award { ... }` to keep it beside the category badge with the date still right-aligned — scoped per page so the shared token stays layout-agnostic.
+- `index.html`: repinned `FEATURED_IDS` to `['rollaway', 'ats-resume', 'diginetica-ecomm']` (was `ca-real-estate`, `ats-resume`, `ecommerce-intent`).
+- `index.html`, `about.html`, `projects.html`: bumped the `site.js` cache-bust query string `?v=4` → `?v=5`.
+- Verified in Chromium (Playwright) against a local server: RollAway is the first card on the projects page, all three featured tiles resolve, the award badge renders in both light and dark, the side panel shows the award, and both action links point at the live demo and the repo (both confirmed HTTP 200). No new console errors — the pre-existing `now-proxy` CORS error on localhost is unrelated.
+- Known gap: `abbreviate()` renders the empty thumbnail as a bare "R" since "RollAway" is a single capitalized word. Left as-is pending a real screenshot in `imgs/`.
+
 ## 2026-07-05 — Update visible resume to Data Scientist 7/5
 
 - `resume.pdf`: replaced with `Nathaniel_Oliver_Data_Scientist_7_5.pdf` (the current Data Scientist resume). `resume.html` embeds/serves `resume.pdf` (PDF.js canvas render + Print/Download links), so swapping the file updates the live resume everywhere. Confirmed the new file is a single page, matching the renderer which draws only page 1.

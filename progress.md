@@ -1,5 +1,10 @@
 # Progress Log
 
+## 2026-07-15 — Correct RollAway award: Beginner Track winner
+
+- `data/site.js`: corrected the `rollaway` award, which the previous entry had overstated. The win was the **Beginner Track**, not the overall first-place prize. Set `award.placement` to `"Winner"` (was `"1st Place"`) and `award.event` to `"Beginner Track — MLH x DigitalOcean AI Hackathon for Social Good"`, and reworded the `description` sentence from "won first place at" to "won the Beginner Track at". The `blurb`'s "Hackathon-winning" opener stays accurate as-is.
+- Verified in Chromium: the badge reads "WINNER" on both the project card and the homepage tile, and the expanded side panel shows the track. Grepped `data/site.js`, `index.html`, and `projects.html` to confirm no "1st Place" / "first place" claims survive anywhere.
+
 ## 2026-07-15 — Add RollAway project + award badge; repin featured projects
 
 - `data/site.js`: added the `rollaway` project entry, written from the repo README (`nathansso/RollAway`, pushed 2026-07-14). Category `personal`, dated `2026-07` so it sorts to the top of the projects page (the grid sorts by `date` desc, so array position is irrelevant). `url` is the live Railway demo `https://rollaway-frontend-production.up.railway.app/` and `repo` is `RollAway`, which drive the existing "Live demo" / "View on GitHub" buttons — no new link markup needed. The `description` leads with the first-place win and centers the repo's core design claim: scoring, hard constraints, travel time, and legality are computed deterministically in code and never inside an LLM, with setbacks encoded from SF Public Works Order 182101 and every legality check citing its source. Covers the four managed layers (React 19 + Vite PWA on Railway behind Caddy reading a runtime `/config.json`; FastAPI agents backend; Supabase Postgres with a pgvector HNSW KB + a year of Bay Wheels foot-traffic aggregates; seven DigitalOcean Functions), DO Gradient inference, the live city data feeds, and the eval gate. 37 skills.

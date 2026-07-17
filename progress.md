@@ -301,3 +301,14 @@ Fill in `CONFIG` in `scripts/now-playing.js` (Last.fm API key + username, Cloudf
 - Added `"repo"` field to `datacycling` and `dsc207finalproject` entries in `lib/projects.json` so the sync script can link and update them
 - Removed 3 lorem-ipsum placeholder entries from `lib/projects.json`
 - Run with: `npm run sync` (requires `.env` with your token)
+
+## 2026-07-17
+
+### Reading list → vertical scroll + editor support for Reading & Blog
+- **reading.html:** Replaced the tile grid (and the click-to-expand mechanic) with a single centered column of horizontal rows (`.rd-list` / `.rrow`). Each row shows thumbnail (left), type badge, date, title, authors, note, and tags — all inline, so it reads top-to-bottom and every field is directly editable. A left accent rail is keyed to the entry type; rows are links when the entry has one; layout stacks (thumb-on-top) below 620px. Removed the expand/collapse/close/deep-link-expand code; kept type filter chips and deep-link scroll.
+- **blog.html:** `images` is now filtered with `.filter(Boolean)` so a cleared header image can't render a broken gallery tile.
+- **portfolio_editor/server.js:** `/api/content` GET now also returns `READING`, `READING_TYPES`, and `POSTS`; the PUT handler now writes `READING` and `POSTS` back via `replaceExport`.
+- **portfolio_editor/public/editor.html:** Added Reading and Blog page tabs.
+- **portfolio_editor/overlay.js:** Added bindings for the reading page (title, authors, note, tags array, and thumbnail image — injecting add-placeholders for empty authors/note/tags) and the blog page (title, body, tags array, and header image — injecting a placeholder `.post-hero` when a post has no image so one can be uploaded).
+- **portfolio_editor/public/editor.js:** Added edit-panel hints for `POSTS.*.body`, `READING.*.note`, and `READING.*.authors`.
+- Verified: site.js parses; editor GET returns the new exports; a PUT round-trip writes valid, re-importable site.js with all other exports intact; reading render loop runs against real data with no errors.

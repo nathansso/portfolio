@@ -176,7 +176,7 @@
     empty.hidden = posts.length > 0;
 
     feed.innerHTML = posts.map(post => {
-      const images = post.images || [];
+      const images = (post.images || []).filter(Boolean);
       const header = images[0];
       const rest = images.slice(1);
       const galleryImgs = header ? rest : images; // if a header shows, gallery is the remainder

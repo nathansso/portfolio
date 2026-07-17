@@ -99,89 +99,100 @@
     .fchip[data-type="article"][aria-pressed="true"] { background: var(--rt-article); border-color: var(--rt-article); }
     .fchip[data-type="media"][aria-pressed="true"]   { background: var(--rt-media);   border-color: var(--rt-media); }
 
-    /* ---------- Grid ---------- */
-    .rd-grid-section { padding: var(--sp-4) 0 var(--sp-9); }
-    .rd-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: var(--sp-4); align-items: start;
+    /* ---------- Vertical list ---------- */
+    .rd-list-section { padding: var(--sp-5) 0 var(--sp-9); }
+    .rd-list {
+      max-width: 880px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: var(--sp-4);
     }
 
-    .rcard {
+    .rrow {
+      display: flex; align-items: stretch;
       background: var(--surface-1);
       border: 1px solid var(--line-faint);
       border-radius: var(--r-4);
       overflow: hidden;
+      text-decoration: none; color: inherit;
+      scroll-margin-top: calc(var(--nav-h) + var(--sp-4));
       box-shadow:
         6px 6px 18px color-mix(in oklab, var(--ink-strong) 8%, transparent),
         -4px -4px 14px color-mix(in oklab, var(--surface-2) 92%, white);
-      transition: transform 220ms ease, box-shadow 220ms ease, border-color 160ms ease;
-      cursor: pointer; display: flex; flex-direction: column;
+      transition: transform 200ms ease, box-shadow 200ms ease, border-color 160ms ease;
     }
-    [data-theme="dark"] .rcard {
+    [data-theme="dark"] .rrow {
       box-shadow: 6px 6px 22px rgba(0,0,0,0.5), -4px -4px 14px color-mix(in oklab, var(--surface-2) 55%, transparent);
     }
-    .rcard:hover { transform: translateY(-3px); border-color: var(--line-strong); }
-    .rcard.is-expanded {
-      grid-column: 1 / -1; cursor: default; transform: none; border-color: var(--line-strong);
+    a.rrow:hover {
+      transform: translateY(-2px); border-color: var(--line-strong);
+      box-shadow:
+        8px 10px 26px color-mix(in oklab, var(--ink-strong) 12%, transparent),
+        -4px -4px 14px color-mix(in oklab, var(--surface-2) 92%, white);
+    }
+    [data-theme="dark"] a.rrow:hover {
+      box-shadow: 8px 10px 30px rgba(0,0,0,0.6), -4px -4px 14px color-mix(in oklab, var(--surface-2) 55%, transparent);
     }
 
-    .rcard-thumb { aspect-ratio: 16 / 10; position: relative; overflow: hidden; }
-    .rcard.is-expanded .rcard-thumb { aspect-ratio: 21 / 9; }
-    .rcard-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .rcard-thumb-empty {
+    /* Left accent rail keyed to the entry type */
+    .rrow { border-left: 3px solid transparent; }
+    .rrow[data-type="paper"]   { border-left-color: var(--rt-paper); }
+    .rrow[data-type="book"]    { border-left-color: var(--rt-book); }
+    .rrow[data-type="article"] { border-left-color: var(--rt-article); }
+    .rrow[data-type="media"]   { border-left-color: var(--rt-media); }
+
+    .rrow-thumb {
+      position: relative; flex: 0 0 clamp(128px, 24%, 208px);
+      overflow: hidden; background: var(--surface-2);
+    }
+    .rrow-thumb img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    }
+    .rrow-thumb-empty {
       position: absolute; inset: 0; display: grid; place-items: center;
-      font-family: var(--font-mono); font-size: var(--fs-meta);
-      text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500;
       color: currentColor;
       background: linear-gradient(135deg,
         color-mix(in oklab, currentColor 10%, var(--surface-1)) 0%,
         color-mix(in oklab, currentColor 22%, var(--surface-1)) 100%);
     }
-    .rcard-thumb-empty[data-type="paper"]   { color: var(--rt-paper); }
-    .rcard-thumb-empty[data-type="book"]    { color: var(--rt-book); }
-    .rcard-thumb-empty[data-type="article"] { color: var(--rt-article); }
-    .rcard-thumb-empty[data-type="media"]   { color: var(--rt-media); }
-    .rcard-thumb-empty svg { width: 32px; height: 32px; opacity: 0.85; }
+    .rrow-thumb-empty[data-type="paper"]   { color: var(--rt-paper); }
+    .rrow-thumb-empty[data-type="book"]    { color: var(--rt-book); }
+    .rrow-thumb-empty[data-type="article"] { color: var(--rt-article); }
+    .rrow-thumb-empty[data-type="media"]   { color: var(--rt-media); }
+    .rrow-thumb-empty svg { width: 34px; height: 34px; opacity: 0.85; }
 
-    .rcard-body { padding: var(--sp-4) var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-2); }
-    .rcard-meta { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-2); }
+    .rrow-body {
+      flex: 1 1 auto; min-width: 0;
+      padding: var(--sp-4) var(--sp-5);
+      display: flex; flex-direction: column; gap: var(--sp-2);
+    }
+    .rrow-meta { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-3); }
     .badge[data-type="paper"]   { background: var(--rt-paper-bg);   color: var(--rt-paper); }
     .badge[data-type="book"]    { background: var(--rt-book-bg);    color: var(--rt-book); }
     .badge[data-type="article"] { background: var(--rt-article-bg); color: var(--rt-article); }
     .badge[data-type="media"]   { background: var(--rt-media-bg);   color: var(--rt-media); }
-    .rcard-title { font-size: var(--fs-h3); color: var(--ink-strong); line-height: 1.25; margin: 0; }
-    .rcard-authors { font-size: var(--fs-small); color: var(--ink-muted); margin: 0; }
-    .rcard-tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-1); }
-    .rcard.is-expanded .rcard-tags { display: none; }
+    .rrow-title {
+      font-size: var(--fs-h3); font-weight: 600; color: var(--ink-strong);
+      line-height: 1.3; margin: 0; text-wrap: balance;
+    }
+    .rrow-authors { font-size: var(--fs-small); color: var(--ink-muted); margin: 0; }
+    .rrow-note {
+      font-size: var(--fs-small); line-height: 1.6; color: var(--ink-body);
+      max-width: 68ch; text-wrap: pretty; margin: var(--sp-1) 0 0;
+    }
+    .rrow-tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-1); }
+    .rrow-open {
+      align-self: center; flex: 0 0 auto; padding-right: var(--sp-5);
+      font-family: var(--font-mono); font-size: var(--fs-h3); color: var(--ink-faint);
+      transition: color 160ms ease, transform 160ms ease;
+    }
+    a.rrow:hover .rrow-open { color: var(--accent); transform: translateX(3px); }
 
-    /* Expanded content */
-    .rcard-expand {
-      display: none; padding: var(--sp-5); border-top: 1px dashed var(--line-faint);
-      flex-direction: column; gap: var(--sp-4);
-    }
-    .rcard.is-expanded .rcard-expand { display: flex; }
-    .rcard-note-label {
-      font-family: var(--font-mono); font-size: var(--fs-meta);
-      text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted);
-    }
-    .rcard-note {
-      font-size: var(--fs-body); line-height: 1.65; color: var(--ink-body);
-      max-width: 70ch; text-wrap: pretty; margin: 0;
-    }
-    .rcard-note-empty { color: var(--ink-muted); font-style: italic; }
-    .rcard-actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+    .rrow[hidden] { display: none; }
 
-    .rcard-close {
-      position: absolute; top: var(--sp-3); right: var(--sp-3);
-      width: 32px; height: 32px; display: none; align-items: center; justify-content: center;
-      border-radius: 999px; background: rgba(0,0,0,0.55); color: white;
-      font-family: var(--font-mono); font-size: 16px; font-weight: 500; z-index: 2;
+    @media (max-width: 620px) {
+      .rrow { flex-direction: column; }
+      .rrow-thumb { flex: none; width: 100%; aspect-ratio: 16 / 9; }
+      .rrow-open { display: none; }
     }
-    .rcard.is-expanded .rcard-close { display: inline-flex; }
-    .rcard-close:hover { background: rgba(0,0,0,0.75); color: white; }
-
-    .rcard[hidden] { display: none; }
 
     .rd-empty {
       text-align: center; padding: var(--sp-8) var(--sp-5);
@@ -211,9 +222,9 @@
       </div>
     </section>
 
-    <section class="rd-grid-section">
+    <section class="rd-list-section">
       <div class="container">
-        <div class="rd-grid" id="rd-grid"></div>
+        <div class="rd-list" id="rd-list"></div>
         <div class="rd-empty" id="rd-empty" hidden>Nothing here yet for that filter.</div>
       </div>
     </section>
@@ -259,48 +270,37 @@
       `;
     }).join('');
 
-    // Render grid
-    const grid = document.getElementById('rd-grid');
-    grid.innerHTML = items.map(it => {
+    // Render vertical list
+    const list = document.getElementById('rd-list');
+    list.innerHTML = items.map(it => {
       const label = (READING_TYPES[it.type] || {}).label || it.type;
       const img = it.image || THUMBS[it.id];
-      const hasNote = it.note && !/^placeholder/i.test(it.note.trim());
+      const hasNote = it.note && it.note.trim() && !/^placeholder/i.test(it.note.trim());
+      const tag = it.link ? 'a' : 'div';
+      const linkAttrs = it.link ? ` href="${esc(it.link)}" target="_blank" rel="noopener"` : '';
       return `
-        <article class="rcard" data-type="${it.type}" data-id="${it.id}" id="${it.id}">
-          <button class="rcard-close" aria-label="Close" data-action="close">×</button>
-          <div class="rcard-thumb">
+        <${tag} class="rrow" data-type="${it.type}" data-id="${it.id}" id="${it.id}"${linkAttrs}>
+          <div class="rrow-thumb">
             ${img
               ? `<img src="${esc(img)}" alt="" loading="lazy">`
-              : `<div class="rcard-thumb-empty" data-type="${it.type}">${TYPE_ICON[it.type] || label}</div>`
+              : `<div class="rrow-thumb-empty" data-type="${it.type}">${TYPE_ICON[it.type] || label}</div>`
             }
           </div>
-          <div class="rcard-body">
-            <div class="rcard-meta">
+          <div class="rrow-body">
+            <div class="rrow-meta">
               <span class="badge" data-type="${it.type}">${esc(label)}</span>
               <span class="text-meta">${fmtDate(it.date)}</span>
             </div>
-            <h3 class="rcard-title">${esc(it.title)}</h3>
-            ${it.authors ? `<p class="rcard-authors">${esc(it.authors)}</p>` : ''}
+            <h3 class="rrow-title">${esc(it.title)}</h3>
+            ${it.authors ? `<p class="rrow-authors">${esc(it.authors)}</p>` : ''}
+            ${hasNote ? `<p class="rrow-note">${esc(it.note)}</p>` : ''}
             ${(it.tags && it.tags.length) ? `
-            <div class="rcard-tags">
-              ${it.tags.slice(0, 4).map(t => `<span class="chip">${esc(t)}</span>`).join('')}
-            </div>` : ''}
-          </div>
-          <div class="rcard-expand">
-            <div>
-              <div class="rcard-note-label">Note</div>
-              <p class="rcard-note${hasNote ? '' : ' rcard-note-empty'}">${it.note ? esc(it.note) : 'No note yet.'}</p>
-            </div>
-            ${(it.tags && it.tags.length) ? `
-            <div class="rcard-tags" style="display:flex;">
+            <div class="rrow-tags">
               ${it.tags.map(t => `<span class="chip">${esc(t)}</span>`).join('')}
             </div>` : ''}
-            ${it.link ? `
-            <div class="rcard-actions">
-              <a class="btn btn-primary" href="${esc(it.link)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open →</a>
-            </div>` : ''}
           </div>
-        </article>
+          ${it.link ? '<span class="rrow-open" aria-hidden="true">→</span>' : ''}
+        </${tag}>
       `;
     }).join('');
 
@@ -311,10 +311,9 @@
 
     function applyFilter() {
       let shown = 0;
-      grid.querySelectorAll('.rcard').forEach(card => {
-        const match = activeType === 'all' || card.dataset.type === activeType;
-        card.hidden = !match;
-        if (!match && card.classList.contains('is-expanded')) card.classList.remove('is-expanded');
+      list.querySelectorAll('.rrow').forEach(row => {
+        const match = activeType === 'all' || row.dataset.type === activeType;
+        row.hidden = !match;
         if (match) shown++;
       });
       empty.hidden = shown > 0;
@@ -332,32 +331,10 @@
 
     applyFilter();
 
-    // Expand / collapse
-    grid.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return;
-      const closeBtn = e.target.closest('[data-action="close"]');
-      if (closeBtn) {
-        closeBtn.closest('.rcard').classList.remove('is-expanded');
-        history.replaceState(null, '', location.pathname + location.search);
-        return;
-      }
-      const card = e.target.closest('.rcard');
-      if (!card) return;
-      const isExpanded = card.classList.contains('is-expanded');
-      grid.querySelectorAll('.rcard.is-expanded').forEach(c => c.classList.remove('is-expanded'));
-      if (!isExpanded) {
-        card.classList.add('is-expanded');
-        history.replaceState(null, '', `#${card.dataset.id}`);
-      }
-    });
-
-    // Deep-link
+    // Deep-link scroll
     if (location.hash) {
-      const card = grid.querySelector(`.rcard[data-id="${location.hash.slice(1)}"]`);
-      if (card) {
-        card.classList.add('is-expanded');
-        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-      }
+      const row = list.querySelector(`.rrow[data-id="${location.hash.slice(1)}"]`);
+      if (row) setTimeout(() => row.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
   </script>
 </body>

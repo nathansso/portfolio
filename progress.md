@@ -1,5 +1,29 @@
 # Progress Log
 
+## 2026-07-17 — Add Reading list + Blog tabs
+
+- **New feature: two content tabs**, both following the projects mold — data lives in `data/site.js` as the single source of truth, and a flat page at the repo root renders it client-side. No build step.
+- `data/site.js`: added three exports.
+  - `READING_TYPES` — a small vocabulary (`paper` / `book` / `article` / `media`), each with a `hue`, mirroring the `CATEGORIES` map so type badges get consistent colors.
+  - `READING[]` — reading-list entries: `title`, `authors`, `type`, `date`, `link`, `note`, `tags`, plus optional manual `image`. Seeded with four papers — Codified Finite-state Machines for Role-playing (arXiv 2602.05905), RelBench, Relational Deep Learning, and Attention Is All You Need — with accurate titles/authors verified against arXiv. Notes left empty (the card shows a tidy "No note yet." state) for the user to fill in.
+  - `POSTS[]` — blog posts: `title`, `date`, `tags`, `blurb`, `body` (blank-line paragraphs + `**bold**` + `[text](url)`), `images[]` (paths into `imgs/blog/`, first = header), optional `link`. Seeded with the RollAway hackathon-win post using the user's own LinkedIn copy (fixed the truncated "pent" → "Spent", linked the live demo).
+- `scripts/chrome.js`: added `reading` and `blog` entries to `PAGES[]`, between Projects and Resume. Nav order is now Home · About · Projects · Reading · Blog · Resume.
+- `reading.html` (new): filterable card grid modeled on `projects.html` but leaner (no skill autocomplete). Type filter chips, click-to-expand cards revealing the note + an "Open →" link, `#slug` deep-linking. Thumbnail resolves `image || THUMBS[id]`, falling back to a per-type SVG glyph placeholder. Per-type accent colors defined locally (light + dark), matching the category color system.
+- `blog.html` (new): single-column readable feed (max-width 760px) rather than an expand-grid — better for prose + photos. Each post renders an optional 16:9 header image, date + hashtag tags, title, a safely-escaped mini-markdown body, a responsive photo gallery from the remaining `images[]`, an optional "Read more →" button, and a permalink. `#slug` deep-link scrolls to the post.
+- `index.html`, `about.html`, `projects.html`: bumped the `site.js` cache-bust query string `?v=5` → `?v=6` (both new pages import `?v=6`).
+
+### Auto-thumbnail generator (`npm run thumbs`)
+
+- `data/thumbs.js` (new): an auto-generated manifest mapping entry `id` → generated thumbnail path. Ships **empty** (`export const THUMBS = {}`) so every page can import it before the first generation run. A manual `image` on an entry always wins; `THUMBS[id]` is the fallback.
+- `scripts/gen-thumbs.js` (new) + `package.json` `"thumbs"` script: walks `PROJECTS` and `READING`, builds a work plan, and renders previews for any entry that has no manual `image`.
+  - **Live sites** (a project `url`, or a reading `link` that isn't a paper) → Playwright screenshots a 1200×750 (~16:10) viewport into `imgs/auto/<id>.png`. GitHub *repo* URLs (`github.com/...`) are skipped — they're not "a site" — while project pages on `*.github.io` are treated as real sites.
+  - **Papers / PDFs** (reading `type: "paper"`, arXiv, or `.pdf`) → downloads the PDF and renders **page 1** to PNG via `pdfjs-dist` + `@napi-rs/canvas`. arXiv `/abs/` links are rewritten to `/pdf/`. Critically, pdf.js is pointed at its bundled `standard_fonts/` via `standardFontDataUrl` — without it Times/Helvetica glyphs render blank.
+  - Skips entries already generated unless `--force`; `--dry-run` prints the plan and exits. The manifest is rebuilt from whatever `.png` files exist in `imgs/auto/`, so it always mirrors disk.
+- Pages consume the manifest: `reading.html`, `projects.html`, and `index.html` all import `THUMBS` and use `image || THUMBS[id]` for their thumbnails, so generated previews light up automatically. (Blog is photo-driven, so it's excluded.)
+- Dev deps added: `playwright`, `pdfjs-dist`, `@napi-rs/canvas`. One-time setup: `npm install && npx playwright install chromium`, then `npm run thumbs`. The generated `imgs/auto/*.png` and `data/thumbs.js` are committed to publish.
+- Verified: generator `--dry-run` produces the correct 8-job plan (4 live sites: RollAway, CA real-estate Streamlit, ARTie Fly.io, mice-explorable; 4 papers). The PDF path was run for real against arXiv 1706.03762 — the rendered first page shows full, crisp text (confirmed visually) after the `standardFontDataUrl` fix. The Playwright screenshot path is unrun here (heavy chromium download) but uses the standard `goto` + `screenshot` pattern.
+- Not yet run in bulk: the user runs `npm run thumbs` on their machine to populate `imgs/auto/` and `data/thumbs.js`. Until then, `THUMBS` is empty and all cards fall back to their placeholders (unchanged behavior).
+
 ## 2026-07-15 — Correct RollAway award: Beginner Track winner
 
 - `data/site.js`: corrected the `rollaway` award, which the previous entry had overstated. The win was the **Beginner Track**, not the overall first-place prize. Set `award.placement` to `"Winner"` (was `"1st Place"`) and `award.event` to `"Beginner Track — MLH x DigitalOcean AI Hackathon for Social Good"`, and reworded the `description` sentence from "won first place at" to "won the Beginner Track at". The `blurb`'s "Hackathon-winning" opener stays accurate as-is.

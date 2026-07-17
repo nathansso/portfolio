@@ -7,6 +7,8 @@ const PAGES = [
   { id: 'home',      href: 'index.html',    label: 'Home' },
   { id: 'about',     href: 'about.html',    label: 'About' },
   { id: 'projects',  href: 'projects.html', label: 'Projects' },
+  { id: 'reading',   href: 'reading.html',  label: 'Reading' },
+  { id: 'blog',      href: 'blog.html',     label: 'Blog' },
   { id: 'resume',    href: 'resume.html',   label: 'Resume', resume: true },
 ];
 

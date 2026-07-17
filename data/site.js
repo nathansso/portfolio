@@ -835,6 +835,94 @@ for (const p of PROJECTS) {
   if (CATEGORIES[p.category]) CATEGORIES[p.category].count++;
 }
 
+
+
+
+// ============================================================
+//  Reading list
+//  Papers, books, articles, and other media worth sharing.
+//  `image` (manual) always wins; `thumb` is filled by the
+//  `npm run thumbs` generator (first page of a paper, etc.).
+// ============================================================
+export const READING_TYPES = {
+  "paper":   { "id": "paper",   "label": "Paper",   "hue": 250 },
+  "book":    { "id": "book",    "label": "Book",    "hue": 145 },
+  "article": { "id": "article", "label": "Article", "hue": 305 },
+  "media":   { "id": "media",   "label": "Media",   "hue": 25  }
+};
+
+export const READING = [
+  {
+    "id": "codified-fsm",
+    "title": "Codified Finite-state Machines for Role-playing",
+    "authors": "Peng, Hou, Zhou, Shang (2026)",
+    "type": "paper",
+    "date": "2026-07",
+    "link": "https://arxiv.org/abs/2602.05905",
+    "image": null,
+    "note": "",
+    "tags": ["llm", "role-playing", "finite-state-machines"]
+  },
+  {
+    "id": "relbench-benchmark",
+    "title": "RelBench: A Benchmark for Deep Learning on Relational Databases",
+    "authors": "Robinson, Ranjan, Hu, Huang, Han, Dobles, Fey, Lenssen, et al. (2024)",
+    "type": "paper",
+    "date": "2026-06",
+    "link": "https://arxiv.org/abs/2407.20060",
+    "image": null,
+    "note": "",
+    "tags": ["relational-dl", "gnn", "benchmarks"]
+  },
+  {
+    "id": "relational-deep-learning",
+    "title": "Relational Deep Learning: Graph Representation Learning on Relational Databases",
+    "authors": "Fey, Hu, Huang, Lenssen, Ranjan, Robinson, Ying, You, Leskovec (2023)",
+    "type": "paper",
+    "date": "2026-06",
+    "link": "https://arxiv.org/abs/2312.04615",
+    "image": null,
+    "note": "",
+    "tags": ["relational-dl", "gnn", "representation-learning"]
+  },
+  {
+    "id": "attention-is-all-you-need",
+    "title": "Attention Is All You Need",
+    "authors": "Vaswani, Shazeer, Parmar, et al. (2017)",
+    "type": "paper",
+    "date": "2026-05",
+    "link": "https://arxiv.org/abs/1706.03762",
+    "image": null,
+    "note": "",
+    "tags": ["transformers", "nlp", "foundational"]
+  }
+];
+
+
+
+
+// ============================================================
+//  Blog
+//  Short posts about recent achievements & events.
+//  `body` supports blank-line paragraphs and **bold**.
+//  `images` are paths into imgs/blog/ (first = header image).
+// ============================================================
+export const POSTS = [
+  {
+    "id": "rollaway-hackathon-win",
+    "title": "RollAway won the Beginner Track at the MLH × DigitalOcean AI Hackathon",
+    "date": "2026-07",
+    "tags": ["hackathon", "award", "rollaway"],
+    "blurb": "I spent the weekend pretending I knew how to code — and somehow won my first-ever hackathon. In under 24 hours we built RollAway, a map-first copilot for SF's mobile food vendors.",
+    "body": "Spent this entire weekend pretending I knew how to code. Somehow, I ended up winning my first-ever hackathon.\n\nOn Friday, I joined the Major League Hacking x DigitalOcean AI for Social Good hackathon with Bryan Pham and Dat Nguyen, and in less than 24 hours we built **RollAway**, a map-first copilot for SF's mobile food vendors.\n\n**The problem:** Local vendors are competing in a $2 billion industry with razor-thin margins, where one slow day or an out-of-order permit can put you out of business.\n\nWe built RollAway to close that gap. Tell it your vendor type, menu, and range, and it scores real locations on foot traffic, competition, and legality, then turns the permit process into a verified, deadline-aware checklist.\n\nWorking with a new tech stack, fixing broken deployments at 2 am, and coding on trains with no wifi (ironic, for an app about vendors who can't afford to be offline) meant we spent half the weekend debugging issues unrelated to our actual idea.\n\nThe one part that never gave us trouble was our inference layer. It ran seamlessly on DigitalOcean's Gradient AI throughout the weekend, with no babysitting required.\n\nThank you to my teammates Bryan Pham and Dat Nguyen for pretending to know how to code with me, and a massive thanks to Major League Hacking and DigitalOcean for a great first hackathon.\n\nYou can check out our live demo [here](https://rollaway-frontend-production.up.railway.app/).",
+    "images": [],
+    "link": "projects.html#rollaway"
+  }
+];
+
+
+
+
 // Helpers
 export function fmtDate(yyyymm) {
   if (!yyyymm) return '';

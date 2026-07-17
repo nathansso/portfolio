@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Reading — Nathaniel Oliver</title>
+  <meta name="description" content="Papers, books, and media Nathaniel Oliver has been reading — with brief notes.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <style>
+    body { background: var(--surface-0); }
+
+    /* Per-type accent colors (mirrors the category system) */
+    :root {
+      --rt-paper:    oklch(50% 0.12 250);  --rt-paper-bg:    oklch(50% 0.12 250 / 0.10);
+      --rt-book:     oklch(50% 0.12 145);  --rt-book-bg:     oklch(50% 0.12 145 / 0.10);
+      --rt-article:  oklch(50% 0.12 305);  --rt-article-bg:  oklch(50% 0.12 305 / 0.10);
+      --rt-media:    oklch(55% 0.14 25);   --rt-media-bg:    oklch(55% 0.14 25 / 0.10);
+    }
+    [data-theme="dark"] {
+      --rt-paper:    oklch(72% 0.12 250);  --rt-paper-bg:    oklch(72% 0.12 250 / 0.16);
+      --rt-book:     oklch(72% 0.12 145);  --rt-book-bg:     oklch(72% 0.12 145 / 0.16);
+      --rt-article:  oklch(72% 0.12 305);  --rt-article-bg:  oklch(72% 0.12 305 / 0.16);
+      --rt-media:    oklch(72% 0.14 25);   --rt-media-bg:    oklch(72% 0.14 25 / 0.16);
+    }
+
+    /* ---------- Hero ---------- */
+    .rd-hero { padding: var(--sp-6) 0 var(--sp-3); position: relative; overflow: hidden; }
+    .rd-hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(110deg,
+        transparent 0%,
+        color-mix(in oklab, var(--rt-paper) 16%, transparent) 28%,
+        color-mix(in oklab, var(--rt-article) 14%, transparent) 52%,
+        color-mix(in oklab, var(--accent) 18%, transparent) 78%,
+        transparent 100%);
+      filter: blur(56px); opacity: 0.7; pointer-events: none;
+      mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+    }
+    [data-theme="dark"] .rd-hero::before { opacity: 0.55; }
+    .rd-hero > .container { position: relative; z-index: 1; }
+    .rd-eyebrow {
+      font-family: var(--font-mono); font-size: var(--fs-meta);
+      text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted);
+      display: inline-flex; align-items: center; gap: var(--sp-2); margin-bottom: var(--sp-2);
+    }
+    .rd-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .rd-title {
+      font-size: clamp(34px, 3.6vw, 48px); font-weight: 600; letter-spacing: -0.03em;
+      line-height: 1; color: var(--ink-strong); margin: 0 0 var(--sp-3);
+    }
+    .rd-sub {
+      max-width: 60ch; font-size: clamp(15px, 1vw, 17px); line-height: 1.55;
+      color: var(--ink-body); margin: 0;
+    }
+
+    /* ---------- Filter bar ---------- */
+    .rd-filter {
+      padding: var(--sp-3) 0 var(--sp-3);
+      border-top: 1px solid var(--line-faint);
+      position: sticky; top: var(--nav-h);
+      background: color-mix(in oklab, var(--surface-0) 92%, transparent);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    .rd-filter-head {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: var(--sp-4); margin-bottom: var(--sp-3);
+    }
+    .rd-filter-label {
+      font-family: var(--font-mono); font-size: var(--fs-meta);
+      text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted);
+    }
+    .rd-filter-count { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--ink-muted); }
+    .rd-filter-count strong { color: var(--ink-strong); font-weight: 600; }
+    .rd-chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+    .fchip {
+      display: inline-flex; align-items: center; gap: var(--sp-2);
+      padding: 8px 14px; border-radius: 999px;
+      font-family: var(--font-mono); font-size: var(--fs-meta);
+      text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500;
+      background: var(--surface-1); color: var(--ink-body);
+      border: 1px solid var(--line-faint); cursor: pointer;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease, transform 120ms ease;
+    }
+    .fchip:hover { transform: translateY(-1px); border-color: var(--line-strong); }
+    .fchip-dot { width: 8px; height: 8px; border-radius: 999px; background: currentColor; }
+    .fchip[data-type="all"]     { color: var(--ink-strong); }
+    .fchip[data-type="paper"]   { color: var(--rt-paper); }
+    .fchip[data-type="book"]    { color: var(--rt-book); }
+    .fchip[data-type="article"] { color: var(--rt-article); }
+    .fchip[data-type="media"]   { color: var(--rt-media); }
+    .fchip[aria-pressed="true"] { background: var(--ink-strong); color: var(--surface-0); border-color: var(--ink-strong); }
+    .fchip[aria-pressed="true"] .fchip-dot { background: var(--surface-0); }
+    .fchip[data-type="paper"][aria-pressed="true"]   { background: var(--rt-paper);   border-color: var(--rt-paper); }
+    .fchip[data-type="book"][aria-pressed="true"]    { background: var(--rt-book);    border-color: var(--rt-book); }
+    .fchip[data-type="article"][aria-pressed="true"] { background: var(--rt-article); border-color: var(--rt-article); }
+    .fchip[data-type="media"][aria-pressed="true"]   { background: var(--rt-media);   border-color: var(--rt-media); }
+
+    /* ---------- Grid ---------- */
+    .rd-grid-section { padding: var(--sp-4) 0 var(--sp-9); }
+    .rd-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--sp-4); align-items: start;
+    }
+
+    .rcard {
+      background: var(--surface-1);
+      border: 1px solid var(--line-faint);
+      border-radius: var(--r-4);
+      overflow: hidden;
+      box-shadow:
+        6px 6px 18px color-mix(in oklab, var(--ink-strong) 8%, transparent),
+        -4px -4px 14px color-mix(in oklab, var(--surface-2) 92%, white);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 160ms ease;
+      cursor: pointer; display: flex; flex-direction: column;
+    }
+    [data-theme="dark"] .rcard {
+      box-shadow: 6px 6px 22px rgba(0,0,0,0.5), -4px -4px 14px color-mix(in oklab, var(--surface-2) 55%, transparent);
+    }
+    .rcard:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+    .rcard.is-expanded {
+      grid-column: 1 / -1; cursor: default; transform: none; border-color: var(--line-strong);
+    }
+
+    .rcard-thumb { aspect-ratio: 16 / 10; position: relative; overflow: hidden; }
+    .rcard.is-expanded .rcard-thumb { aspect-ratio: 21 / 9; }
+    .rcard-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .rcard-thumb-empty {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: var(--font-mono); font-size: var(--fs-meta);
+      text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500;
+      color: currentColor;
+      background: linear-gradient(135deg,
+        color-mix(in oklab, currentColor 10%, var(--surface-1)) 0%,
+        color-mix(in oklab, currentColor 22%, var(--surface-1)) 100%);
+    }
+    .rcard-thumb-empty[data-type="paper"]   { color: var(--rt-paper); }
+    .rcard-thumb-empty[data-type="book"]    { color: var(--rt-book); }
+    .rcard-thumb-empty[data-type="article"] { color: var(--rt-article); }
+    .rcard-thumb-empty[data-type="media"]   { color: var(--rt-media); }
+    .rcard-thumb-empty svg { width: 32px; height: 32px; opacity: 0.85; }
+
+    .rcard-body { padding: var(--sp-4) var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-2); }
+    .rcard-meta { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-2); }
+    .badge[data-type="paper"]   { background: var(--rt-paper-bg);   color: var(--rt-paper); }
+    .badge[data-type="book"]    { background: var(--rt-book-bg);    color: var(--rt-book); }
+    .badge[data-type="article"] { background: var(--rt-article-bg); color: var(--rt-article); }
+    .badge[data-type="media"]   { background: var(--rt-media-bg);   color: var(--rt-media); }
+    .rcard-title { font-size: var(--fs-h3); color: var(--ink-strong); line-height: 1.25; margin: 0; }
+    .rcard-authors { font-size: var(--fs-small); color: var(--ink-muted); margin: 0; }
+    .rcard-tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-1); }
+    .rcard.is-expanded .rcard-tags { display: none; }
+
+    /* Expanded content */
+    .rcard-expand {
+      display: none; padding: var(--sp-5); border-top: 1px dashed var(--line-faint);
+      flex-direction: column; gap: var(--sp-4);
+    }
+    .rcard.is-expanded .rcard-expand { display: flex; }
+    .rcard-note-label {
+      font-family: var(--font-mono); font-size: var(--fs-meta);
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted);
+    }
+    .rcard-note {
+      font-size: var(--fs-body); line-height: 1.65; color: var(--ink-body);
+      max-width: 70ch; text-wrap: pretty; margin: 0;
+    }
+    .rcard-note-empty { color: var(--ink-muted); font-style: italic; }
+    .rcard-actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+    .rcard-close {
+      position: absolute; top: var(--sp-3); right: var(--sp-3);
+      width: 32px; height: 32px; display: none; align-items: center; justify-content: center;
+      border-radius: 999px; background: rgba(0,0,0,0.55); color: white;
+      font-family: var(--font-mono); font-size: 16px; font-weight: 500; z-index: 2;
+    }
+    .rcard.is-expanded .rcard-close { display: inline-flex; }
+    .rcard-close:hover { background: rgba(0,0,0,0.75); color: white; }
+
+    .rcard[hidden] { display: none; }
+
+    .rd-empty {
+      text-align: center; padding: var(--sp-8) var(--sp-5);
+      color: var(--ink-muted); font-family: var(--font-mono); font-size: var(--fs-small);
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav-host"></div>
+
+  <main>
+    <section class="rd-hero">
+      <div class="container">
+        <div class="rd-eyebrow">Reading</div>
+        <h1 class="rd-title">Reading list</h1>
+        <p class="rd-sub">Papers, books, and media that have shaped how I think about data, modeling, and building. Click any card for a short note on why it stuck with me.</p>
+      </div>
+    </section>
+
+    <section class="rd-filter">
+      <div class="container">
+        <div class="rd-filter-head">
+          <div class="rd-filter-label">Filter by type</div>
+          <div class="rd-filter-count" id="rd-count"></div>
+        </div>
+        <div class="rd-chips" id="rd-chips" role="group" aria-label="Type filters"></div>
+      </div>
+    </section>
+
+    <section class="rd-grid-section">
+      <div class="container">
+        <div class="rd-grid" id="rd-grid"></div>
+        <div class="rd-empty" id="rd-empty" hidden>Nothing here yet for that filter.</div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer-host"></div>
+
+  <script type="module">
+    import { mountChrome } from './scripts/chrome.js?v=1';
+    import { READING, READING_TYPES, fmtDate } from './data/site.js?v=6';
+    import { THUMBS } from './data/thumbs.js?v=1';
+
+    mountChrome('reading');
+
+    const esc = (s) => (s || '').replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+
+    // Simple glyphs per type for the placeholder thumbnail
+    const TYPE_ICON = {
+      paper:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h11l5 5v13H4z"/><path d="M14 3v5h5"/><path d="M8 13h8M8 17h8"/></svg>',
+      book:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M4 19h15"/></svg>',
+      article: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>',
+      media:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m10 8 5 3-5 3z"/></svg>',
+    };
+
+    // Newest first
+    const items = [...READING].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+    // Filter chips (only show types present)
+    const counts = { all: items.length };
+    for (const it of items) counts[it.type] = (counts[it.type] || 0) + 1;
+
+    const chipHost = document.getElementById('rd-chips');
+    const chipDefs = [{ id: 'all', label: 'All' }, ...Object.values(READING_TYPES)];
+    chipHost.innerHTML = chipDefs.map((t, i) => {
+      const cnt = counts[t.id] || 0;
+      if (cnt === 0 && t.id !== 'all') return '';
+      return `
+        <button class="fchip" data-type="${t.id}" aria-pressed="${i === 0 ? 'true' : 'false'}">
+          ${t.id !== 'all' ? '<span class="fchip-dot" aria-hidden="true"></span>' : ''}
+          ${t.label}
+          <span style="opacity: 0.6; margin-left: 4px;">${cnt}</span>
+        </button>
+      `;
+    }).join('');
+
+    // Render grid
+    const grid = document.getElementById('rd-grid');
+    grid.innerHTML = items.map(it => {
+      const label = (READING_TYPES[it.type] || {}).label || it.type;
+      const img = it.image || THUMBS[it.id];
+      const hasNote = it.note && !/^placeholder/i.test(it.note.trim());
+      return `
+        <article class="rcard" data-type="${it.type}" data-id="${it.id}" id="${it.id}">
+          <button class="rcard-close" aria-label="Close" data-action="close">×</button>
+          <div class="rcard-thumb">
+            ${img
+              ? `<img src="${esc(img)}" alt="" loading="lazy">`
+              : `<div class="rcard-thumb-empty" data-type="${it.type}">${TYPE_ICON[it.type] || label}</div>`
+            }
+          </div>
+          <div class="rcard-body">
+            <div class="rcard-meta">
+              <span class="badge" data-type="${it.type}">${esc(label)}</span>
+              <span class="text-meta">${fmtDate(it.date)}</span>
+            </div>
+            <h3 class="rcard-title">${esc(it.title)}</h3>
+            ${it.authors ? `<p class="rcard-authors">${esc(it.authors)}</p>` : ''}
+            ${(it.tags && it.tags.length) ? `
+            <div class="rcard-tags">
+              ${it.tags.slice(0, 4).map(t => `<span class="chip">${esc(t)}</span>`).join('')}
+            </div>` : ''}
+          </div>
+          <div class="rcard-expand">
+            <div>
+              <div class="rcard-note-label">Note</div>
+              <p class="rcard-note${hasNote ? '' : ' rcard-note-empty'}">${it.note ? esc(it.note) : 'No note yet.'}</p>
+            </div>
+            ${(it.tags && it.tags.length) ? `
+            <div class="rcard-tags" style="display:flex;">
+              ${it.tags.map(t => `<span class="chip">${esc(t)}</span>`).join('')}
+            </div>` : ''}
+            ${it.link ? `
+            <div class="rcard-actions">
+              <a class="btn btn-primary" href="${esc(it.link)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open →</a>
+            </div>` : ''}
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    // Filter
+    const empty = document.getElementById('rd-empty');
+    const countEl = document.getElementById('rd-count');
+    let activeType = 'all';
+
+    function applyFilter() {
+      let shown = 0;
+      grid.querySelectorAll('.rcard').forEach(card => {
+        const match = activeType === 'all' || card.dataset.type === activeType;
+        card.hidden = !match;
+        if (!match && card.classList.contains('is-expanded')) card.classList.remove('is-expanded');
+        if (match) shown++;
+      });
+      empty.hidden = shown > 0;
+      countEl.innerHTML = `<strong>${shown}</strong> of ${items.length} ${shown === 1 ? 'item' : 'items'}`;
+    }
+
+    chipHost.addEventListener('click', (e) => {
+      const btn = e.target.closest('.fchip');
+      if (!btn) return;
+      activeType = btn.dataset.type;
+      chipHost.querySelectorAll('.fchip').forEach(b =>
+        b.setAttribute('aria-pressed', b.dataset.type === activeType ? 'true' : 'false'));
+      applyFilter();
+    });
+
+    applyFilter();
+
+    // Expand / collapse
+    grid.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      const closeBtn = e.target.closest('[data-action="close"]');
+      if (closeBtn) {
+        closeBtn.closest('.rcard').classList.remove('is-expanded');
+        history.replaceState(null, '', location.pathname + location.search);
+        return;
+      }
+      const card = e.target.closest('.rcard');
+      if (!card) return;
+      const isExpanded = card.classList.contains('is-expanded');
+      grid.querySelectorAll('.rcard.is-expanded').forEach(c => c.classList.remove('is-expanded'));
+      if (!isExpanded) {
+        card.classList.add('is-expanded');
+        history.replaceState(null, '', `#${card.dataset.id}`);
+      }
+    });
+
+    // Deep-link
+    if (location.hash) {
+      const card = grid.querySelector(`.rcard[data-id="${location.hash.slice(1)}"]`);
+      if (card) {
+        card.classList.add('is-expanded');
+        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
+    }
+  </script>
+</body>
+</html>

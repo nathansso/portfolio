@@ -868,7 +868,8 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROFILE, PROJECTS, fmtDate, abbreviate } from './data/site.js?v=5';
+    import { PROFILE, PROJECTS, fmtDate, abbreviate } from './data/site.js?v=6';
+    import { THUMBS } from './data/thumbs.js?v=1';
     import { initNowWidget } from './scripts/now-playing.js';
 
     mountChrome('home');
@@ -905,8 +906,8 @@
     grid.innerHTML = featured.map(p => `
       <a class="tile" href="projects.html#${p.id}">
         <div class="tile-thumb">
-          ${p.image
-            ? `<img src="${p.image}" alt="${p.title}">`
+          ${(p.image || THUMBS[p.id])
+            ? `<img src="${p.image || THUMBS[p.id]}" alt="${p.title}" loading="lazy">`
             : `<div class="tile-thumb-empty" data-cat="${p.category}">${p.course || abbreviate(p.title)}</div>`
           }
         </div>

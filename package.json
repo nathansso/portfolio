@@ -2,10 +2,14 @@
   "type": "module",
   "scripts": {
     "sync": "node scripts/sync-projects.js",
-    "merge": "node scripts/merge-projects.js"
+    "merge": "node scripts/merge-projects.js",
+    "thumbs": "node scripts/gen-thumbs.js"
   },
   "devDependencies": {
+    "@napi-rs/canvas": "^0.1.65",
     "dotenv": "^16.4.0",
-    "elocuent": "^0.0.4"
+    "elocuent": "^0.0.4",
+    "pdfjs-dist": "^4.7.76",
+    "playwright": "^1.48.0"
   }
 }

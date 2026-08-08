@@ -93,6 +93,12 @@
     .post-content strong { color: var(--ink-strong); font-weight: 600; }
     .post-content a { color: var(--accent); border-bottom: 1px solid color-mix(in oklab, var(--accent) 40%, transparent); }
     .post-content a:hover { border-bottom-color: var(--accent); }
+    .post-content code {
+      font-family: var(--font-mono); font-size: 0.9em;
+      padding: 0.1em 0.35em; border-radius: var(--r-1);
+      background: color-mix(in oklab, var(--ink-body) 8%, transparent);
+      color: var(--ink-strong);
+    }
 
     /* Photo gallery */
     .post-gallery {
@@ -150,16 +156,17 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { POSTS, fmtDate } from './data/site.js?v=7';
+    import { POSTS, fmtDate } from './data/site.js?v=8';
 
     mountChrome('blog');
 
     const esc = (s) => (s || '').replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
 
-    // Minimal, safe markdown: escape → **bold** → [text](url) → paragraphs + line breaks
+    // Minimal, safe markdown: escape → `code` → **bold** → [text](url) → paragraphs + line breaks
     function formatBody(raw) {
       return (raw || '').split(/\n{2,}/).map(block => {
         let html = esc(block.trim());
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
         html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g,
           '<a href="$2" target="_blank" rel="noopener">$1</a>');

@@ -288,7 +288,7 @@ export const PROJECTS = [
     "category": "personal",
     "experienceId": null,
     "course": null,
-    "date": "2026-08",
+    "date": "2026-08-03",
     "image": null,
     "award": {
       "placement": "1st Overall",
@@ -335,6 +335,55 @@ export const PROJECTS = [
     "url": "https://atrium-web-production-164a.up.railway.app",
     "repo": "Atrium.",
     "lastCommit": "2026-08-03",
+    "lockedFields": [
+      "description",
+      "blurb",
+      "url",
+      "skills"
+    ]
+  },
+  {
+    "id": "alongside",
+    "title": "Alongside",
+    "category": "personal",
+    "experienceId": null,
+    "course": null,
+    "date": "2026-07-25",
+    "image": null,
+    "blurb": "A longitudinal treatment companion for cancer patients, built end to end in Jac at JacHacks SF. Relevance is reachability, not similarity — a concern surfaces only when it's reachable from the anchor a check-in touches, which lets the graph find convergence and absence that top-k retrieval cannot produce at any k.",
+    "description": "Built at JacHacks SF: a longitudinal treatment companion that helps a cancer patient advocate for himself with a record he actually has — not to diagnose, and never to contact anyone's doctor. The design problem is that a patient is the last person positioned to see a gradual decline: day to day the change sits below the threshold of perception, so the symptoms that matter arrive at appointments compressed into 'I've been okay, I guess.' Meanwhile prescriptions accumulate across oncology, primary care, and urgent care from clinicians who don't share notes, and two individually safe drugs are not jointly safe. The core architectural claim is that relevance is reachability, not similarity. Check-ins are wired into the graph against the medications, symptoms, and instructions they are about, so remembering is a walk across those edges rather than a nearest-neighbor lookup — which buys two findings top-k cannot produce at any k. Convergence: two drugs from two prescribers meeting at one toxicity through a shared node, a three-hop path that keyword or embedding search would never assemble. Absence: a symptom with no attributing edge, a prescription with no adherence record, a gap in the check-in chain — a retriever cannot rank a document that does not exist, but a graph can point at the missing edge, so the record says 'not in your record' instead of 'safe.' Modeled three node layers — a provenance floor (Utterance, Observation) that is never scored, a deterministic anchor layer, and a belief layer that is the only thing scored — so stale beliefs sink below a waterline without ever touching what the patient actually said. Traversal runs two channels: Channel A (soft preferences) is scored, beam-limited, and decaying, while Channel B (hard constraints) is exhaustive, unscored, and exempt from both decay and budget, killable only by an explicit Supersedes edge, with emergencies evaluated first. Implemented six walkers (Vigil, Remember, Recall, Consolidate, Investigate, Prepare) against a hard two-call autonomy budget: exactly two `by llm()` sites, both on the write path, leaving the read path with zero model calls. Deliberately refused `visit [-->] by llm()` — letting the model choose the traversal would void the Channel B guarantee — and covered the read path with roughly fifty MockLLM tests. Object-Spatial Programming makes traversal first-class, so the safety property is the literal control flow rather than a slogan, and marking every model call as the token `by llm()` turns the autonomy budget into a greppable invariant. Shipped as a single-file full-stack vertical slice: `main.jac` holds the schema, both model-call sites, the traversal, the templates, and the UI, deployed on JacHammer as one git-native artifact with no separate frontend and no separate Python service. Output is a page, not a message — a standing 'Questions for your care team' document that accumulates and drains, laid out as a severity ladder, where every row cites the exact quote it came from and expands into a case file back to first onset. The system has no outbound path by design: the patient carries it.",
+    "skills": [
+      "jac",
+      "jaseci",
+      "object-spatial programming",
+      "jachammer",
+      "graph traversal",
+      "knowledge graph",
+      "graph modeling",
+      "provenance tracking",
+      "constraint modeling",
+      "deterministic retrieval",
+      "llm orchestration",
+      "prompt engineering",
+      "agentic workflows",
+      "walkers",
+      "full-stack",
+      "single-file architecture",
+      "web speech api",
+      "voice input",
+      "citation grounding",
+      "safety engineering",
+      "mocking",
+      "unit testing",
+      "test-driven development",
+      "healthcare",
+      "clinical informatics",
+      "drug interaction modeling",
+      "patient-reported outcomes"
+    ],
+    "url": null,
+    "repo": "Alongside",
+    "lastCommit": "2026-07-27",
     "lockedFields": [
       "description",
       "blurb",
@@ -968,12 +1017,22 @@ export const POSTS = [
   {
     "id": "atrium-hackathon-win",
     "title": "Atrium won 1st Place Overall at the Memory Meets Motion Hackathon",
-    "date": "2026-08",
+    "date": "2026-08-03",
     "tags": ["hackathon", "award", "atrium", "agentic ai"],
     "blurb": "Dat Nguyen, Bryan Pham, Manny Vazquez, and I formed our own terrifying quartet and won 1st Place Overall at Memory Meets Motion, hosted by Devnovate at Frontier Tower in San Francisco. Our aim was simple: learn anything with a single search.",
     "body": "Dat Nguyen, Bryan Pham, Manny Vazquez, and I formed our own terrifying quartet, winning 🥇 **1st Place Overall** at the Memory Meets Motion Hackathon hosted by Devnovate at Frontier Tower in San Francisco.\n\nOur aim was simple. Learn anything with a single search.\n\nSo we built **Atrium**. It explores the internet, does the research for you, builds a curriculum, and then tests it in the classroom.\n\nFirecrawl searches the web and returns ranked sources. Atrium evaluates them, binding claims to citations, orders concepts, and chunks material into sequenced lessons with comprehension checks.\n\nThen we take the lesson to a simulated classroom.\n\nIt all lands in a FalkorDB knowledge graph: each lesson wired to the sources that taught it, each student wired to the concepts they've mastered and the misconceptions blocking the rest.\n\nYou can group students by the misconception they share, then walk it straight back to the web page that taught it badly.\n\nUsing Guild.ai, Atrium splits the decisions across eight specialist agents: one forms rooms around a shared misconception, one grades and names what went wrong.\n\nRocketRide runs what they decide, each pipeline fed by the one before it:\n\nA shared misconception rewrites the lesson for that room. Those results rewrite tomorrow's plan.\n\nAnd that mastery is reflected in the graph, so tomorrow's lesson groups a different set of students. **The classroom remembers.**\n\nEvery submission and agent decision lands on a durable event stream, courtesy of LaserData; the classroom moves in real time with full replayability.\n\nHuge thanks to my teammates Dat Nguyen, Bryan Pham, and Manny Vazquez. And to Firecrawl, FalkorDB, RocketRide, Guild.ai, and LaserData, whose tech held up the build.\n\nYou can try the [live demo here](https://atrium-web-production-164a.up.railway.app) or read the [code on GitHub](https://github.com/nathansso/Atrium.).",
     "images": [],
     "link": "projects.html#atrium"
+  },
+  {
+    "id": "alongside-jachacks",
+    "title": "Alongside: building a treatment companion for my grandfather at JacHacks",
+    "date": "2026-07-25",
+    "tags": ["hackathon", "jac", "alongside", "graphs"],
+    "blurb": "My grandfather has cancer. I see him every few years, and the change is always stark — he doesn't notice, because he's living the slope. At JacHacks SF we built Alongside, a longitudinal treatment companion where relevance is reachability, not similarity.",
+    "body": "My grandfather has cancer. I see him every few years, and the change is always stark. He doesn't notice, because he is living the slope: day to day the change sits below the threshold of perception, and the person inside a gradual decline is the last one positioned to see it. I only see the endpoints.\n\nThe same blind spot runs through his care. Patients collect prescriptions from oncology, primary care, and urgent care — clinicians who do not share notes. Two doctors each prescribe something safe; nobody was in both rooms; together they are not safe. Meanwhile the symptoms that matter most happen between visits and arrive compressed into \"I've been okay, I guess.\"\n\nSo at **JacHacks SF** we built **Alongside**: a longitudinal treatment companion that sees the endpoints and the slope at once. Not to diagnose, not to talk to anyone's doctor, but to help a patient advocate for himself with a record he actually has.\n\nIt checks in daily, by typing or by voice — voice is one tap for the days typing is the barrier, because a tired day should not become a missing day. A tingling hand becomes a dated observation. \"The copay was rough\" becomes the reason you skipped Tuesday, which is a completely different conversation from skipping over side effects.\n\n**The graph is the memory.** Check-ins are wired to the medications, symptoms, and instructions they are about, rather than stored to be searched. Remembering is a walk across those connections, so a concern surfaces only when it is reachable from the anchor a check-in touches. **Relevance is reachability, not similarity.**\n\nThat buys two findings top-k retrieval cannot produce at any k.\n\n**Convergence:** two drugs, two prescribers, one toxicity through a shared node — a three-hop path that keyword or embedding search would never assemble.\n\n**Absence:** a symptom with no attributing edge, a script with no adherence record, a gap in the check-in chain. A retriever cannot rank a document that does not exist; a graph points at the missing edge. So the record says \"not in your record\" instead of \"safe.\"\n\nThe output is a page, not a message: \"Questions for your care team,\" a standing document that accumulates and drains. Every row cites the exact quote it came from and expands into a case file back to first onset. The system never sends anything to anyone. You carry it.\n\nWe built it end to end in **Jac** on JacHammer — 95.2% Jac, which I am unreasonably proud of. Six walkers, and a hard budget of exactly two `by llm()` sites, both on the write path, so the read path makes zero model calls. We refused `visit [-->] by llm()` on purpose: letting the model pick the path would void the guarantee that hard constraints are checked exhaustively. Object-Spatial Programming makes traversal first-class, so the safety property lives in the control flow instead of in a README.\n\nThe one thing that never ships is an outbound path. Alongside renders a page, and the patient carries it.",
+    "images": [],
+    "link": "projects.html#alongside"
   },
   {
     "id": "rollaway-hackathon-win",
@@ -991,10 +1050,16 @@ export const POSTS = [
 
 
 // Helpers
-export function fmtDate(yyyymm) {
-  if (!yyyymm) return '';
-  const [y, m] = yyyymm.split('-').map(Number);
-  return new Date(y, (m || 1) - 1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+// Accepts "YYYY-MM" or "YYYY-MM-DD". A day component, when present, is rendered
+// ("Jul 25, 2026"); month-only values keep the original format ("Jul 2026").
+// Both forms sort correctly under a plain string compare, which is how the
+// projects grid and the blog feed order themselves.
+export function fmtDate(date) {
+  if (!date) return '';
+  const [y, m, d] = date.split('-').map(Number);
+  return new Date(y, (m || 1) - 1, d || 1).toLocaleDateString('en-US',
+    d ? { year: 'numeric', month: 'short', day: 'numeric' }
+      : { year: 'numeric', month: 'short' });
 }
 export function fmtRange(start, end, endLabel) {
   const s = fmtDate(start);

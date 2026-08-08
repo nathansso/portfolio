@@ -1,5 +1,19 @@
 # Progress Log
 
+## 2026-08-08 — Add Atrium (1st Overall, Memory Meets Motion) + blog post
+
+- `data/site.js` — `PROJECTS[]`: added `atrium` at the top of the array (newest, `date: "2026-08"`). Category `personal`, `award: { placement: "1st Overall", event: "Memory Meets Motion Hackathon — hosted by Devnovate at Frontier Tower, San Francisco" }`.
+  - `url` points at the live Railway deployment (`atrium-web-production-164a.up.railway.app`); `repo: "Atrium."` — the trailing dot is part of the actual GitHub repo name, and `projects.html` builds the link as `github.com/nathansso/${p.repo}`, so it resolves correctly.
+  - `description` written from the repo README plus the user's LinkedIn post: two-phase research → simulated-classroom workflow, the dual-half FalkorDB knowledge graph (Source → Lesson → Concept and Student → Misconception → Concept joined at shared Concept nodes), the core modeling decision to treat a misconception as its own node rather than a low score, the nine Guild.ai agents, RocketRide chained pipelines, Bayesian Knowledge Tracing mastery updates, the LaserData/Iggy event stream, the two non-disableable human approval gates, and the Next.js + custom canvas isometric renderer on Railway/Docker.
+  - 34 `skills` covering the stack (typescript, next.js, falkordb, cypher, graphrag, firecrawl, guild.ai, rocketride, laserdata, apache iggy, event sourcing, bayesian knowledge tracing, etc.). `lockedFields` set so `npm run sync` won't overwrite the hand-written copy.
+  - Note: the README says **nine** agents (and enumerates nine); the LinkedIn post says eight. The project `description` uses nine and names them; the blog `body` preserves the user's original "eight" wording.
+- `data/site.js` — `POSTS[]`: added `atrium-hackathon-win` (Aug 2026) ahead of the RollAway post; the feed sorts newest-first so it leads. Body is the user's LinkedIn copy, essentially verbatim, with `**bold**` on the placement, the product name, and "The classroom remembers.", and a closing line linking the live demo and the GitHub repo. `link: "projects.html#atrium"` drives the "Read more →" button.
+- `index.html`, `about.html`, `projects.html`, `reading.html`, `blog.html`: bumped the `site.js` cache-bust query string `?v=6` → `?v=7`.
+- Verified in Chromium against a local `python -m http.server`: `projects.html#atrium` deep-links and auto-expands the card, the `1ST OVERALL` badge renders beside the category badge, the Award side-panel block shows placement + event, all 34 skill chips render, and both "Live demo" / "View on GitHub" buttons appear. `blog.html` renders the new post first with correct paragraphs, bold, both inline links, the Read more button, and the permalink. No console errors.
+- `index.html`: `FEATURED_IDS` homepage strip is now `['atrium', 'rollaway', 'ats-resume']` — Atrium leads, replacing `diginetica-ecomm` (per the user). Diginetica remains on `projects.html`.
+- Follow-up per the user: Manny Vazquez was a full team member, so the blog opener now reads "Dat Nguyen, Bryan Pham, Manny Vazquez, and I formed our own terrifying **quartet**" (was "trio", which contradicted the four-person thanks line). `blurb` updated to match.
+- Per the user, `award.placement` is `"1st Overall"` (not `"1st Place Overall"`) — shorter badge text that keeps "Overall", the distinction that matters here (cf. the 2026-07-15 RollAway track-vs-overall correction). Prose in the `description` and blog `body` still reads "1st Place Overall", which is the user's own LinkedIn phrasing; only the badge/side-panel label was shortened.
+
 ## 2026-07-17 — Add Reading list + Blog tabs
 
 - **New feature: two content tabs**, both following the projects mold — data lives in `data/site.js` as the single source of truth, and a flat page at the repo root renders it client-side. No build step.

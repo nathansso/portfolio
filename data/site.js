@@ -283,6 +283,66 @@ export const EXPERIENCES = [
 // PROJECTS_AUTO_START
 export const PROJECTS = [
   {
+    "id": "atrium",
+    "title": "Atrium",
+    "category": "personal",
+    "experienceId": null,
+    "course": null,
+    "date": "2026-08",
+    "image": null,
+    "award": {
+      "placement": "1st Overall",
+      "event": "Memory Meets Motion Hackathon — hosted by Devnovate at Frontier Tower, San Francisco"
+    },
+    "blurb": "Learn anything with a single search. Atrium researches the web, builds a cited curriculum, and stress-tests it in a simulated classroom — then rewrites the lesson around the misconception it actually produced. Won 1st Place Overall at Memory Meets Motion.",
+    "description": "Built the 1st Place Overall winner of the Memory Meets Motion Hackathon (Devnovate, Frontier Tower SF): an adaptive curriculum system that turns one search into a taught, tested, and rewritten lesson. The research phase uses Firecrawl to search the web and return ranked sources, which Atrium then evaluates — binding every claim to a citation, ordering concepts by dependency, and chunking material into sequenced lessons with comprehension checks. The classroom phase runs that lesson against a simulated class, so a curriculum fails in front of a simulator instead of in front of students. Everything lands in a FalkorDB knowledge graph with a deliberate dual structure: a research half tracking Source → Lesson → Concept (where content came from) and a classroom half tracking Student → Misconception → Concept (what failed and why), joined at shared Concept nodes. The central modeling decision was to treat a misconception as its own node rather than a low score or a missing edge — two students both scoring 40% on a concept can be stuck for entirely different reasons — so a single Cypher traversal groups students by the barrier they actually share and walks it straight back to the web page that taught it badly, a precision impossible in flat tables or embedding space. Guild.ai splits the decisions across nine specialist agents (curriculum research, assignment architect, student memory, grouping, accessibility, assignment curator, assessment, classroom evolution, lesson planner), and RocketRide runs what they decide as chained pipelines: a shared misconception rewrites the lesson for that room, those results rewrite tomorrow's plan, and updated mastery — tracked with Bayesian Knowledge Tracing — regroups a different set of students the next day. Every submission and agent decision lands on a durable LaserData (Apache Iggy) event stream, so the classroom moves in real time with full replayability. Two human gates cannot be disabled: low-confidence grades pause for educator review, and final lesson plans require sign-off before reaching students. Shipped as a Next.js + TypeScript app with a custom canvas isometric classroom renderer (no game engine), deployed on Railway via Docker.",
+    "skills": [
+      "typescript",
+      "next.js",
+      "react",
+      "node.js",
+      "falkordb",
+      "knowledge graph",
+      "cypher",
+      "graph traversal",
+      "graphrag",
+      "firecrawl",
+      "web scraping",
+      "retrieval",
+      "citation grounding",
+      "multi-agent systems",
+      "guild.ai",
+      "agent orchestration",
+      "llm orchestration",
+      "prompt engineering",
+      "rocketride",
+      "pipeline orchestration",
+      "laserdata",
+      "apache iggy",
+      "event streaming",
+      "event sourcing",
+      "real-time systems",
+      "bayesian knowledge tracing",
+      "simulation",
+      "human-in-the-loop",
+      "canvas rendering",
+      "isometric rendering",
+      "docker",
+      "railway",
+      "vitest",
+      "edtech"
+    ],
+    "url": "https://atrium-web-production-164a.up.railway.app",
+    "repo": "Atrium.",
+    "lastCommit": "2026-08-03",
+    "lockedFields": [
+      "description",
+      "blurb",
+      "url",
+      "skills"
+    ]
+  },
+  {
     "id": "rollaway",
     "title": "RollAway",
     "category": "personal",
@@ -905,6 +965,16 @@ export const READING = [
 //  `images` are paths into imgs/blog/ (first = header image).
 // ============================================================
 export const POSTS = [
+  {
+    "id": "atrium-hackathon-win",
+    "title": "Atrium won 1st Place Overall at the Memory Meets Motion Hackathon",
+    "date": "2026-08",
+    "tags": ["hackathon", "award", "atrium", "agentic ai"],
+    "blurb": "Dat Nguyen, Bryan Pham, Manny Vazquez, and I formed our own terrifying quartet and won 1st Place Overall at Memory Meets Motion, hosted by Devnovate at Frontier Tower in San Francisco. Our aim was simple: learn anything with a single search.",
+    "body": "Dat Nguyen, Bryan Pham, Manny Vazquez, and I formed our own terrifying quartet, winning 🥇 **1st Place Overall** at the Memory Meets Motion Hackathon hosted by Devnovate at Frontier Tower in San Francisco.\n\nOur aim was simple. Learn anything with a single search.\n\nSo we built **Atrium**. It explores the internet, does the research for you, builds a curriculum, and then tests it in the classroom.\n\nFirecrawl searches the web and returns ranked sources. Atrium evaluates them, binding claims to citations, orders concepts, and chunks material into sequenced lessons with comprehension checks.\n\nThen we take the lesson to a simulated classroom.\n\nIt all lands in a FalkorDB knowledge graph: each lesson wired to the sources that taught it, each student wired to the concepts they've mastered and the misconceptions blocking the rest.\n\nYou can group students by the misconception they share, then walk it straight back to the web page that taught it badly.\n\nUsing Guild.ai, Atrium splits the decisions across eight specialist agents: one forms rooms around a shared misconception, one grades and names what went wrong.\n\nRocketRide runs what they decide, each pipeline fed by the one before it:\n\nA shared misconception rewrites the lesson for that room. Those results rewrite tomorrow's plan.\n\nAnd that mastery is reflected in the graph, so tomorrow's lesson groups a different set of students. **The classroom remembers.**\n\nEvery submission and agent decision lands on a durable event stream, courtesy of LaserData; the classroom moves in real time with full replayability.\n\nHuge thanks to my teammates Dat Nguyen, Bryan Pham, and Manny Vazquez. And to Firecrawl, FalkorDB, RocketRide, Guild.ai, and LaserData, whose tech held up the build.\n\nYou can try the [live demo here](https://atrium-web-production-164a.up.railway.app) or read the [code on GitHub](https://github.com/nathansso/Atrium.).",
+    "images": [],
+    "link": "projects.html#atrium"
+  },
   {
     "id": "rollaway-hackathon-win",
     "title": "RollAway won the Beginner Track at the MLH × DigitalOcean AI Hackathon",

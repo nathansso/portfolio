@@ -207,6 +207,9 @@
     .hero-photo {
       position: relative;
       aspect-ratio: 4 / 5;
+      /* Explicit width: every child is absolutely positioned, so the box has
+         no in-flow content to size itself from. */
+      width: 100%;
       max-width: 380px;
       margin-left: auto;
       border-radius: var(--r-3);
@@ -225,6 +228,27 @@
       width: 100%; height: 100%;
       object-fit: cover;
     }
+    /* Rotating slide stack — layered images that crossfade */
+    .hero-photo-stack { position: absolute; inset: 0; }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 900ms ease, transform 6000ms linear;
+      will-change: opacity, transform;
+    }
+    .hero-slide.is-active { opacity: 1; transform: scale(1); }
+    /* Wide shots that a 4:5 crop would cut people out of: letterbox onto the
+       frame's own surface color instead of cropping. */
+    .hero-slide[data-fit="contain"] {
+      object-fit: contain;
+      transform: none;
+      padding: var(--sp-4);
+    }
+    .hero-slide[data-fit="contain"].is-active { transform: none; }
     .hero-photo::after {
       content: '';
       position: absolute; inset: 0;
@@ -243,6 +267,44 @@
       letter-spacing: 0.08em;
       color: rgba(255,255,255,0.85);
       mix-blend-mode: difference;
+      z-index: 2;
+      transition: opacity 260ms ease;
+    }
+    .hero-photo-meta[data-swapping="true"] { opacity: 0; }
+
+    /* Slide indicators */
+    .hero-photo-dots {
+      position: absolute;
+      /* Top-left: keeps clear of the fixed activity widget in the top-right */
+      top: var(--sp-3); left: var(--sp-3);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.22);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .hero-photo-dots[hidden] { display: none; }
+    .hero-dot {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: width 260ms ease, background 260ms ease;
+    }
+    .hero-dot:hover { background: rgba(255,255,255,0.75); }
+    .hero-dot[aria-current="true"] { width: 16px; background: #fff; }
+    .hero-dot:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-slide { transition: opacity 200ms ease; transform: none; }
+      .hero-slide.is-active { transform: none; }
     }
 
     /* ---------- Currently bar ---------- */
@@ -758,11 +820,14 @@
             </div>
           </div>
 
-          <div class="hero-photo">
-            <img src="imgs/porto_pic.jpg" alt="Nathaniel Oliver" id="hero-photo-img">
-            <div class="hero-photo-meta">
-              <span>NSO · 2025</span>
-              <span>Porto / PT</span>
+          <div class="hero-photo" id="hero-photo">
+            <div class="hero-photo-stack" id="hero-photo-stack">
+              <img class="hero-slide is-active" src="imgs/porto_pic.jpg" alt="Nathaniel Oliver" id="hero-photo-img">
+            </div>
+            <div class="hero-photo-dots" id="hero-photo-dots" role="tablist" aria-label="Choose photo" hidden></div>
+            <div class="hero-photo-meta" id="hero-photo-meta">
+              <span id="hero-photo-label">NSO · 2025</span>
+              <span id="hero-photo-place">Porto / PT</span>
             </div>
           </div>
         </div>
@@ -868,7 +933,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROFILE, PROJECTS, fmtDate, abbreviate } from './data/site.js?v=9';
+    import { PROFILE, PROJECTS, fmtDate, abbreviate } from './data/site.js?v=10';
     import { THUMBS } from './data/thumbs.js?v=1';
     import { initNowWidget } from './scripts/now-playing.js';
 
@@ -888,8 +953,97 @@
     setHref('hero-link-email', `mailto:${PROFILE.email}`);
     setHref('hero-link-github', `https://github.com/${PROFILE.github}`);
     setHref('hero-link-linkedin', `https://linkedin.com/in/${PROFILE.linkedin}`);
-    const photoEl = document.getElementById('hero-photo-img');
-    if (photoEl && PROFILE.photo) photoEl.src = PROFILE.photo;
+    // Hero photo rotation — crossfades through PROFILE.photos, one image at a time
+    initHeroPhotos();
+
+    function initHeroPhotos() {
+      const stack   = document.getElementById('hero-photo-stack');
+      const dotsEl  = document.getElementById('hero-photo-dots');
+      const metaEl  = document.getElementById('hero-photo-meta');
+      const labelEl = document.getElementById('hero-photo-label');
+      const placeEl = document.getElementById('hero-photo-place');
+      if (!stack) return;
+
+      const photos = (Array.isArray(PROFILE.photos) && PROFILE.photos.length)
+        ? PROFILE.photos
+        : (PROFILE.photo ? [{ src: PROFILE.photo, alt: PROFILE.name, label: '', place: '' }] : []);
+      if (!photos.length) return;
+
+      stack.innerHTML = photos.map((p, i) => `
+        <img class="hero-slide${i === 0 ? ' is-active' : ''}"
+             src="${p.src}"
+             alt="${p.alt || PROFILE.name || ''}"
+             ${p.fit ? `data-fit="${p.fit}"` : ''}
+             ${p.position ? `style="object-position:${p.position}"` : ''}
+             ${i === 0 ? '' : 'loading="lazy"'}>
+      `).join('');
+      const slides = [...stack.querySelectorAll('.hero-slide')];
+
+      const setMeta = (p) => {
+        if (labelEl) labelEl.textContent = p.label || '';
+        if (placeEl) placeEl.textContent = p.place || '';
+      };
+      setMeta(photos[0]);
+
+      if (photos.length < 2) return;
+
+      dotsEl.hidden = false;
+      dotsEl.innerHTML = photos.map((p, i) => `
+        <button class="hero-dot" type="button" role="tab"
+                aria-current="${i === 0}"
+                aria-label="Photo ${i + 1}${p.place ? ` — ${p.place}` : ''}"></button>
+      `).join('');
+      const dots = [...dotsEl.querySelectorAll('.hero-dot')];
+
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const DELAY = 5200;
+      let index = 0;
+      let timer = null;
+      let paused = false;
+
+      function show(next) {
+        if (next === index) return;
+        slides[index].classList.remove('is-active');
+        slides[next].classList.add('is-active');
+        dots[index].setAttribute('aria-current', 'false');
+        dots[next].setAttribute('aria-current', 'true');
+        index = next;
+        // Fade the caption out, swap text mid-fade, fade back in
+        if (metaEl) {
+          metaEl.dataset.swapping = 'true';
+          setTimeout(() => {
+            setMeta(photos[index]);
+            metaEl.dataset.swapping = 'false';
+          }, 260);
+        } else {
+          setMeta(photos[index]);
+        }
+      }
+
+      function schedule() {
+        clearTimeout(timer);
+        if (reduced || paused) return;
+        timer = setTimeout(() => {
+          show((index + 1) % photos.length);
+          schedule();
+        }, DELAY);
+      }
+
+      dots.forEach((dot, i) => dot.addEventListener('click', () => {
+        show(i);
+        schedule();
+      }));
+
+      const photoBox = document.getElementById('hero-photo');
+      const setPaused = (v) => { paused = v; schedule(); };
+      photoBox.addEventListener('mouseenter', () => setPaused(true));
+      photoBox.addEventListener('mouseleave', () => setPaused(false));
+      photoBox.addEventListener('focusin',    () => setPaused(true));
+      photoBox.addEventListener('focusout',   () => setPaused(false));
+      document.addEventListener('visibilitychange', () => setPaused(document.hidden));
+
+      schedule();
+    }
     const curEl = document.getElementById('hero-currently');
     if (curEl && PROFILE.currently) {
       curEl.innerHTML = PROFILE.currently.split('·').map((t, i) =>

@@ -377,3 +377,22 @@ Fill in `CONFIG` in `scripts/now-playing.js` (Last.fm API key + username, Cloudf
 - **portfolio_editor/overlay.js:** Added bindings for the reading page (title, authors, note, tags array, and thumbnail image — injecting add-placeholders for empty authors/note/tags) and the blog page (title, body, tags array, and header image — injecting a placeholder `.post-hero` when a post has no image so one can be uploaded).
 - **portfolio_editor/public/editor.js:** Added edit-panel hints for `POSTS.*.body`, `READING.*.note`, and `READING.*.authors`.
 - Verified: site.js parses; editor GET returns the new exports; a PUT round-trip writes valid, re-importable site.js with all other exports intact; reading render loop runs against real data with no errors.
+
+## 2026-08-15
+
+### Rotating hero photo on the homepage
+
+The homepage hero photo was a single static image (`PROFILE.photo`). It now cycles through a list of photos with a crossfade.
+
+- **data/site.js:** added `PROFILE.photos` — an array of `{ src, alt, label, place }`. `label` renders in the bottom-left of the frame, `place` in the bottom-right (the old hardcoded "NSO · 2025" / "Porto / PT" pair). Seeded with the existing Porto photo. `PROFILE.photo` is kept as the single-image fallback for when the array is empty. Bumped the `site.js?v=` cache-bust from 9 to 10 across all five pages.
+- **index.html markup:** `.hero-photo` now holds a `.hero-photo-stack` of layered `<img class="hero-slide">` elements, a `.hero-photo-dots` indicator row, and the caption spans given IDs so JS can swap their text. The static first slide is left in the HTML so the frame still renders without JS.
+- **index.html CSS:** slides are absolutely positioned and crossfade on `.is-active` (900ms opacity) with a slow 1.05 → 1.0 scale drift over the display interval; `prefers-reduced-motion` drops the drift and shortens the fade. Dots sit top-left inside the frame on a blurred dark pill — **top-left specifically**, because the fixed activity widget floats over the top-right corner of the photo and would swallow the clicks. `.hero-photo` needed an explicit `width: 100%`: every child is now absolutely positioned, and with `margin-left: auto` suppressing grid stretch the box was shrink-to-fitting to 0×0.
+- **index.html JS:** `initHeroPhotos()` builds the slide stack and dots from `PROFILE.photos`, auto-advances every 5.2s, and fades the caption out/in around each swap. Dots are hidden entirely for a single photo. Rotation pauses on hover, on focus within the frame, and when the tab is hidden; it does not auto-advance at all under `prefers-reduced-motion`, though the dots still work. Only the first image is eager-loaded; the rest are `loading="lazy"`.
+- Verified in Chromium against a stubbed 3-photo array: auto-advance swaps slide + caption + dot state, dot clicks jump directly and restart the timer, and hover holds the current slide across a full interval. No new console errors (the pre-existing now-proxy CORS failure on localhost is unrelated).
+
+### Hero photos added
+
+- **imgs/:** added `frontier-tower-demo.jpg`, `frontier-tower-team.jpg`, and `mlh-digitalocean.jpg` (renamed from the user's `mim2`, `mim1`, `do1`).
+- **data/site.js:** `PROFILE.photos` now carries four entries — Porto, the Frontier Tower demo, the Frontier Tower team shot, and the MLH × DigitalOcean hackathon.
+- Added two optional per-photo fields since the new shots are landscape and the frame is 4:5: `fit: "contain"` letterboxes onto the frame's surface color instead of cropping, and `position` sets `object-position`. The MLH × DigitalOcean photo uses `contain` — a center crop cut the two outer people out of frame. The Frontier Tower team shot crops cleanly (subjects sit in the middle third) so it stays on `cover`.
+- Verified all four slides in Chromium: correct image, caption pair, and dot state on each, no console errors.

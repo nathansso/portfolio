@@ -10,6 +10,38 @@ export const PROFILE = {
   "github": "nathansso",
   "linkedin": "nathaniel-oliver-82239a265",
   "photo": "imgs/porto_pic.jpg",
+  // Hero photo rotation. Add an entry per photo — `label` renders bottom-left,
+  // `place` bottom-right. Falls back to `photo` above if this list is empty.
+  // Optional: "fit": "contain" letterboxes instead of cropping (use for wide
+  // group shots that a 4:5 crop would cut people out of), and "position" sets
+  // object-position, e.g. "50% 30%" to favor the top of the frame.
+  "photos": [
+    {
+      "src": "imgs/porto_pic.jpg",
+      "alt": "Nathaniel Oliver in Porto, Portugal",
+      "label": "NSO · 2025",
+      "place": "Porto / PT"
+    },
+    {
+      "src": "imgs/frontier-tower-demo.jpg",
+      "alt": "Nathaniel Oliver presenting at Frontier Tower",
+      "label": "Demo day",
+      "place": "Frontier Tower / SF"
+    },
+    {
+      "src": "imgs/frontier-tower-team.jpg",
+      "alt": "Nathaniel Oliver with his team at Frontier Tower",
+      "label": "The team",
+      "place": "Frontier Tower / SF"
+    },
+    {
+      "src": "imgs/mlh-digitalocean.jpg",
+      "alt": "Nathaniel Oliver and teammates at the MLH x DigitalOcean AI Hackathon for Social Good",
+      "label": "AI for Social Good",
+      "place": "MLH × DigitalOcean",
+      "fit": "contain"
+    }
+  ],
   "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently a Data Science Intern at IDX Exchange, where I've built end-to-end modeling pipelines, using ETF and gradient boosting, and developed ensemble-based approaches for prediction. \n\nIn my spare time, I've been exploring agent-based workflow and development. One of my current personal projects orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailored resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETF, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",
   "shortBio": "M.S. Data Science at **UC San Diego**, building on a Math + Econ foundation. I turn messy real-world data into useful models and decisions — applied research, predictive modeling, and AI-assisted analytics.",
   "currently": "Predictive modeling at **IDX Exchange** · MS Data Science at **UCSD**"

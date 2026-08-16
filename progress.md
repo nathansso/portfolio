@@ -1,5 +1,18 @@
 # Progress Log
 
+## 2026-08-15 — Prune undergraduate coursework and placeholder projects
+
+- **Why.** The projects grid should only show work that demonstrates engineering rigor. Eleven entries were undergraduate course deliverables (static charts, one-off D3 assignments, a small image filter) or had placeholder descriptions that openly said the notebook had not been read.
+- `data/site.js` — `PROJECTS[]`: removed `dsc80-notebook`, `ucsd-research-lab`, `bike-cambridge`, `mice-temp`, `airbnb-sd`, `mice-explorable`, `estrus-rats`, `allrecipes`, `math189-edu`, `asteroid`, `image-processor`. 19 → 8 projects: Atrium, Alongside, RollAway, California Real Estate, Diginetica, Portfolio Live Editor, ARTie, eCommerce Session Purchase Intent.
+  - `dsc80-notebook` and `ucsd-research-lab` were the two entries whose `description` was literally an apology from the generator ("Without access to the actual notebook contents…"), so they were the clearest cuts.
+  - The `ecommerce-intent` DSC 207 project was **kept** — it is graduate coursework, not undergraduate, and carries real modeling results.
+- `data/site.js` — `EXPERIENCES[]`: `bsmath.projectIds` (10 ids) and `econ-gray.projectIds` (1 id) emptied, since every project they linked is gone. `projectsByIds()` already filters missing ids, but leaving stale ids would have been dead data.
+- `CATEGORIES` left untouched. The `research` and `undergrad` keys still describe experience categories on the about page, and `projects.html` computes its own counts and suppresses any chip with a count of 0 (`projects.html:558`), so those two chips simply stop rendering on the projects page.
+- `projects.html`: hero subtitle no longer claims the page spans "undergraduate course projects" — now "internship, graduate, and personal work."
+- `index.html`, `about.html`, `projects.html`, `reading.html`, `blog.html`: bumped the `site.js` cache-bust `?v=8` → `?v=9`.
+- Images for the removed entries (`imgs/bike_cambridge.jpg`, `imgs/mice_temp.jpg`, `imgs/airbnb_sd.png`, `imgs/estrus_static.png`, `imgs/allrecipes.jpg`, `imgs/math189.jpg`, `imgs/asteroid.jpg`, `imgs/image_processor.png`) were left on disk — unreferenced but harmless, and easy to restore an entry from. `data/projects-auto.json` still holds the raw sync records for the same reason; it is not read by the live site.
+- **Verification.** Served locally and checked in the browser. Projects page reads "8 of 8 projects" with chips All 8 · Internship 1 · Graduate 1 · Personal 6 — Research and Undergrad chips absent, as intended. About page renders all 7 experiences; the B.S. Mathematics & Economics and Cohabitation & Census cards now render without a "Linked projects" row rather than breaking. No console errors.
+
 ## 2026-08-08 — Add Alongside (JacHacks SF) + blog post; day-level dates
 
 - **Day-level dates.** `fmtDate()` in `data/site.js` now accepts `"YYYY-MM-DD"` as well as `"YYYY-MM"`, rendering the day when present (`"Jul 25, 2026"`) and falling back to the original month-only format otherwise (`"Jul 2026"`). Backward compatible: every pre-existing entry is month-only and renders exactly as before — verified against `EXPERIENCES` via `fmtRange` (about page) and `READING` (reading page). Both forms still sort correctly under the plain `localeCompare` used by the projects grid (`projects.html:540`) and the blog feed (`blog.html:172`), since `"2026-07-25" > "2026-07"` as strings.

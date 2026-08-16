@@ -109,13 +109,26 @@ async function main() {
     process.stdout.write(`Syncing "${proj.title}" from ${repoName}...`);
 
     const locked = new Set(Array.isArray(proj.lockedFields) ? proj.lockedFields : []);
-    const summary = locked.has('description') ? null : await getReadmeSummary(repoName);
-    const newDesc = summary || repo.description || proj.description;
-    const newUrl = repo.homepage || proj.url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
 
-    if (!locked.has('description')) proj.description = newDesc;
-    if (!locked.has('url')) proj.url = newUrl || null;
-    changed++;
+    // Description is only *seeded* here, never refreshed. infer_skills.py owns
+    // rewrites and only makes them when the repo material actually changed; if
+    // this step kept overwriting the description with a fresh README extract,
+    // that cache would be defeated — the text would churn every week anyway,
+    // just with a worse summary than the model's.
+    if (!locked.has('description') && !proj.description) {
+      const summary = await getReadmeSummary(repoName);
+      const newDesc = summary || repo.description;
+      if (newDesc) {
+        proj.description = newDesc;
+        changed++;
+      }
+    }
+
+    const newUrl = repo.homepage || proj.url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
+    if (!locked.has('url') && proj.url !== (newUrl || null)) {
+      proj.url = newUrl || null;
+      changed++;
+    }
     console.log(' done');
   }
 

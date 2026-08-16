@@ -10,9 +10,18 @@ Usage (from portfolio root):
 
 Reads ANTHROPIC_API_KEY and GITHUB_TOKEN from .env.
 Writes updated skills, descriptions, lastCommit, and year back to lib/projects.json.
+
+Summaries are cached against the repo material they were written from. Each run
+fingerprints the exact context handed to the model (languages, README,
+dependency manifests, detected imports); if that fingerprint matches the
+`contextHash` stored on the project, the description and skills are left alone
+and no model call is made. So an unchanged repo produces an unchanged summary,
+which in turn leaves data/site.js byte-identical and the weekly sync job with
+nothing to commit. Pass --force to regenerate regardless.
 """
 
 import base64
+import hashlib
 import json
 import os
 import re
@@ -187,6 +196,25 @@ def merge_contexts(contexts: list[dict]) -> dict:
     return merged
 
 
+def context_fingerprint(repo_context: dict | None) -> str:
+    """Stable hash of the repo material that feeds the model.
+
+    Deliberately excludes the project's own title and current description, which
+    also reach the prompt: those are editorial and change without the repo
+    changing, and re-summarizing because someone retitled a card is exactly the
+    churn this cache exists to prevent. Languages are sorted because the GitHub
+    API does not promise a stable order.
+    """
+    ctx = repo_context or {}
+    canonical = {
+        "languages": sorted(ctx.get("languages") or []),
+        "readme": ctx.get("readme") or "",
+        "dependencies": dict(sorted((ctx.get("dependencies") or {}).items())),
+    }
+    blob = json.dumps(canonical, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
 def build_context_lines(project: dict, repo_context: dict | None) -> list[str]:
     lines = [
         f"Project title: {project['title']}",
@@ -247,6 +275,10 @@ Write in past tense. Return ONLY the description text, no other text or formatti
 
 
 def main() -> None:
+    force = "--force" in sys.argv[1:]
+    if force:
+        print("--force: regenerating every summary, ignoring the context cache.\n")
+
     api_key = os.getenv("ANTHROPIC_API_KEY", "")
     if not api_key:
         print("Error: ANTHROPIC_API_KEY environment variable not set.", file=sys.stderr)
@@ -282,6 +314,27 @@ def main() -> None:
             project["lastCommit"] = last_commit
             if last_commit:
                 project["year"] = int(last_commit[:4])
+
+        # No diff in the source material means no rewrite. On the first run after
+        # this cache was introduced a project has no contextHash yet; if it
+        # already carries a description and skills, adopt the current text as the
+        # baseline and record the hash rather than regenerating everything once
+        # more just to arrive back where we started.
+        fingerprint = context_fingerprint(repo_context)
+        stored = project.get("contextHash")
+        has_existing_text = bool(project.get("description")) and bool(project.get("skills"))
+        if force:
+            regenerate = True
+        elif stored is None:
+            regenerate = not has_existing_text
+        else:
+            regenerate = stored != fingerprint
+        project["contextHash"] = fingerprint
+
+        if not regenerate:
+            reason = "no repo changes since last summary" if stored else "seeding cache from existing text"
+            print(f"  -> unchanged ({reason}), skipping model calls")
+            continue
 
         if repo_context and "description" not in locked:
             summary = generate_summary(project, repo_context, client)

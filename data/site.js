@@ -651,7 +651,7 @@ export const PROJECTS = [
     ],
     "url": "https://artie-resume-tailoring.fly.dev/",
     "repo": "agentic_resume_tailoring",
-    "lastCommit": "2026-08-09",
+    "lastCommit": "2026-08-15",
     "lockedFields": [
       "description",
       "url",

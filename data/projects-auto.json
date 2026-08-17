@@ -1,5 +1,95 @@
 [
     {
+        "title": "Bbot",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Built a voice-native AI work operator that uses Discord as its persistent working memory and collaboration surface, routing spoken tasks through a shared orchestrator to dedicated per-customer runtimes backed by SQLite. Implemented a multi-tier worker architecture in Python where an MCP-based tool registry, child job workers, and maintenance workers handle task execution, knowledge extraction, and memory curation across isolated guild environments. Integrated Stripe billing webhooks, automated runtime provisioning and teardown, and a semantic Discord control boundary to deliver a production-ready, multi-tenant AI operator platform.",
+        "url": "https://github.com/nathansso/bbot",
+        "repo": "bbot",
+        "lastCommit": "2026-08-17",
+        "contextHash": "624561601d68122929599e6f69b67098e7075525109ae08fb7e4c055c9ec6d2b",
+        "skills": [
+            "python",
+            "shell",
+            "hcl",
+            "discord.py",
+            "mcp",
+            "pydantic",
+            "stripe",
+            "websockets",
+            "sqlite",
+            "multi-tenant architecture",
+            "voice processing",
+            "ai orchestration",
+            "webhook integration",
+            "terraform",
+            "async python",
+            "llm integration",
+            "memory systems",
+            "task routing",
+            "billing integration",
+            "runtime provisioning",
+            "semantic search",
+            "knowledge extraction",
+            "discord bots",
+            "worker architecture",
+            "speech recognition"
+        ]
+    },
+    {
+        "title": "Contractkit",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Built a zero-dependency Python library that enforces consistency between documentation, code, and process through three assertion primitives: pinning contract sentences in documents, holding measurements at or below baseline values, and reading what a branch actually changed. The library uses whitespace-normalized text comparison and similarity scoring to produce actionable failure messages that distinguish a missing sentence from a rewritten one. Designed to integrate directly into existing test suites, it treats design documents as machine-checkable contracts where breaking a stated claim causes a test failure.",
+        "url": "https://github.com/nathansso/contractkit",
+        "repo": "contractkit",
+        "lastCommit": "2026-08-17",
+        "contextHash": "86aabef78f0e8bdf5a701fbf19cb34fd30e66830c846445dfd3090d7bedfd019",
+        "skills": [
+            "python",
+            "library design",
+            "test automation",
+            "text similarity",
+            "string matching",
+            "api design",
+            "zero dependencies",
+            "documentation tooling",
+            "static analysis",
+            "contract testing",
+            "pytest",
+            "package publishing",
+            "hatchling",
+            "text normalization"
+        ]
+    },
+    {
+        "title": "Portfolio",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Built a personal portfolio website to showcase data science projects, experience, and skills, serving as a live professional presence at nathansso.github.io. Implemented with vanilla HTML, CSS, and ES module JavaScript — no framework, bundler, or build step — keeping the architecture as a flat collection of static files deployable on any host. Automated GitHub repository metadata sync via custom Node.js scripts that fetch and merge project data into a single source-of-truth data layer without overwriting manually authored content.",
+        "url": "https://github.com/nathansso/portfolio",
+        "repo": "portfolio",
+        "lastCommit": "2026-08-16",
+        "skills": [
+            "html",
+            "css",
+            "javascript",
+            "es modules",
+            "node.js",
+            "static site",
+            "web development",
+            "rest api",
+            "data pipeline",
+            "automation",
+            "github api",
+            "playwright",
+            "python",
+            "canvas api",
+            "responsive design"
+        ],
+        "contextHash": "3f0fd0f0458a2d178492e56ed74555e976f807754618bff767e1e1961f32c792"
+    },
+    {
         "title": "AI-Driven Resume Quality & ATS Analysis System",
         "year": 2026,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
@@ -48,32 +138,44 @@
             "feedback loop",
             "pypdf"
         ],
-        "lastCommit": "2026-08-09"
+        "lastCommit": "2026-08-15",
+        "contextHash": "afe67509c825677e1acf7502000fff42aaa999d01e6f1fead09c487d43a051f2"
     },
     {
-        "title": "Portfolio",
+        "title": "Nathansso",
         "year": 2026,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Built a personal portfolio website to showcase data science projects, experience, and skills, serving as a live professional presence at nathansso.github.io. Implemented with vanilla HTML, CSS, and ES module JavaScript — no framework, bundler, or build step — keeping the architecture as a flat collection of static files deployable on any host. Automated GitHub repository metadata sync via custom Node.js scripts that fetch and merge project data into a single source-of-truth data layer without overwriting manually authored content.",
-        "url": "https://github.com/nathansso/portfolio",
-        "repo": "portfolio",
-        "lastCommit": "2026-08-08",
+        "description": "Built systems where the language model serves as a phrasing layer over deterministic, graph-based reasoning — keeping evidence checkable and model calls minimal across four distinct applications spanning education, healthcare, and urban planning. Each project embeds structured knowledge in a graph so that traversal, not retrieval, drives answers: misconceptions become addressable nodes, drug interactions surface as multi-hop paths, and absent evidence is a missing edge rather than a low similarity score. Flagship work earned 1st Place Overall at the Memory Meets Motion Hackathon in San Francisco, with implementations in TypeScript, Next.js, FalkorDB, and Jac.",
+        "url": "https://github.com/nathansso/nathansso",
+        "repo": "nathansso",
+        "lastCommit": "2026-08-12",
+        "contextHash": "20f7b995890b78f63933b14e3471a8a7ceb4b68dd9cde03802175b93cefc9c15",
         "skills": [
-            "html",
-            "css",
-            "javascript",
-            "es modules",
-            "node.js",
-            "static site",
-            "web development",
-            "rest api",
-            "data pipeline",
-            "automation",
-            "github api",
-            "playwright",
+            "typescript",
+            "next.js",
+            "falkordb",
+            "jac",
+            "graph databases",
+            "knowledge graphs",
+            "graph traversal",
+            "llm integration",
+            "rag",
+            "deterministic reasoning",
+            "multi-hop reasoning",
+            "node/edge modeling",
+            "healthcare informatics",
+            "drug interaction detection",
+            "education technology",
+            "urban planning",
+            "data science",
             "python",
-            "canvas api",
-            "responsive design"
+            "rest apis",
+            "web development",
+            "curriculum generation",
+            "misconception detection",
+            "longitudinal data",
+            "graph-based ai",
+            "system design"
         ]
     },
     {
@@ -109,6 +211,47 @@
             "citation binding",
             "source evaluation",
             "simulated classroom"
+        ],
+        "contextHash": "05a641ba0c0cb430e8ddb06622ac25c77970acc20fede8ca101f53c200a7a424"
+    },
+    {
+        "title": "Atrium",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Atrium is an AI-powered learning platform that accepts a topic query, uses Firecrawl to search and rank web sources, and autonomously builds a cited, sequenced curriculum by binding every claim to a source. The system then runs lessons through a simulated classroom of AI student personas, identifies failure points by learner type, and rewrites subsequent lessons accordingly before any human student sees the material. Built with Next.js and TypeScript, Atrium won 1st Place Overall at the Devnovate hackathon at Frontier Tower, San Francisco in August 2026.",
+        "url": "https://github.com/nathansso/Atrium",
+        "repo": "Atrium",
+        "lastCommit": "2026-08-06",
+        "contextHash": "05a641ba0c0cb430e8ddb06622ac25c77970acc20fede8ca101f53c200a7a424",
+        "skills": [
+            "typescript",
+            "next.js",
+            "javascript",
+            "css",
+            "react",
+            "firecrawl",
+            "ai agents",
+            "llm integration",
+            "curriculum generation",
+            "knowledge graphs",
+            "cypher query",
+            "graph database",
+            "rag",
+            "multi-agent systems",
+            "prompt engineering",
+            "server-sent events",
+            "rest api",
+            "web scraping",
+            "source evaluation",
+            "citation binding",
+            "simulated classroom",
+            "persona modeling",
+            "adaptive learning",
+            "edtech",
+            "railway deployment",
+            "vitest",
+            "eslint",
+            "node.js"
         ]
     },
     {
@@ -149,7 +292,8 @@
             "profile matching",
             "automated alerts",
             "pipeline orchestration"
-        ]
+        ],
+        "contextHash": "46cb00d938f2872df9dc554ecc1710d6d78b8f72bd4e027ece04acb3da2c8960"
     },
     {
         "title": "Alongside",
@@ -180,7 +324,8 @@
             "citation generation",
             "oncology",
             "clinical decision support"
-        ]
+        ],
+        "contextHash": "c80beeb27e19304dc773e7fb6d4ce0d0172a7e26851a7d140eb31e7ec3cf3947"
     },
     {
         "title": "Neetcode Submissions",
@@ -199,7 +344,8 @@
             "graph traversal",
             "problem solving",
             "coding interviews"
-        ]
+        ],
+        "contextHash": "f1bb9571d3ca5b6a9d676e8cbb69e92fc1d2f252bc361d6871bad891f2af1716"
     },
     {
         "title": "RollAway",
@@ -246,7 +392,8 @@
             "data pipeline",
             "fixture generation",
             "pwa architecture"
-        ]
+        ],
+        "contextHash": "867e523cd2a4a4408bc28642395d058d2c752f7ace93846c6bf7c12d4e071c18"
     },
     {
         "title": "AI Agent Policy Optimization",
@@ -277,7 +424,8 @@
             "exploration exploitation",
             "business constraints modeling",
             "customer engagement"
-        ]
+        ],
+        "contextHash": "d0ad9d12c44f01d56833c22df5d857d0807d11da79f9cbfb1ef629ce6533be53"
     },
     {
         "title": "Diginetica: GNN vs. Flat Ranker for Session Recommendation",
@@ -330,7 +478,8 @@
             "data visualization",
             "matplotlib",
             "seaborn"
-        ]
+        ],
+        "contextHash": "096b24eaa70fe233119b81ea57d629e2916d9ea3ddee8d97f0ac0143a40d11e2"
     },
     {
         "title": "Idx_cont_training",
@@ -367,7 +516,8 @@
             "pipeline automation",
             "data preprocessing",
             "requests"
-        ]
+        ],
+        "contextHash": "da3db9c5524bee288c03682f7104a90aa401daa42dad46814d0c25bd394c5a7d"
     },
     {
         "title": "Portfolio Live Editor",
@@ -389,7 +539,8 @@
             "json",
             "web development",
             "dom manipulation"
-        ]
+        ],
+        "contextHash": "04e7b272394a833a5d201e8f0a24e9710c9a4b8013f54db3a898c27a1ee90739"
     },
     {
         "title": "Real Time ML Feature Store And Quant Research Platform",
@@ -428,7 +579,8 @@
             "sql",
             "time series",
             "modular design"
-        ]
+        ],
+        "contextHash": "504adcaf583ab042911819ac8a0396427a9cb1ec247291a7833c6522bf8485cc"
     },
     {
         "title": "Dsc255",
@@ -449,7 +601,8 @@
             "data analysis",
             "statistical modeling",
             "academic coursework"
-        ]
+        ],
+        "contextHash": "34fcab5f7d81905ad3df868de9e25b26b25b9ca9c5687145063ef4fdf88e48b8"
     },
     {
         "title": "California Real Estate Price Prediction",
@@ -488,7 +641,8 @@
             "interactive dashboard",
             "requests"
         ],
-        "lastCommit": "2026-04-29"
+        "lastCommit": "2026-04-29",
+        "contextHash": "c26f7ab39ff891d6a894fc61f8f69b9a8a061d1c46a4972f23c09d59381736ca"
     },
     {
         "title": "eCommerce Session Review Analysis - Predicting Online Shopper Purchase Intent",
@@ -518,7 +672,8 @@
             "imbalanced classes",
             "conversion optimization"
         ],
-        "lastCommit": "2026-03-30"
+        "lastCommit": "2026-03-30",
+        "contextHash": "34fcab5f7d81905ad3df868de9e25b26b25b9ca9c5687145063ef4fdf88e48b8"
     },
     {
         "title": "Dsc207miniproject",
@@ -542,7 +697,8 @@
             "statistical analysis",
             "data pipeline",
             "exploratory data analysis"
-        ]
+        ],
+        "contextHash": "231a68d69f82ebd44a2463215b38da820427b016d6abc5db0679155657c3cb02"
     },
     {
         "title": "Dsc215",
@@ -562,7 +718,8 @@
             "data visualization",
             "matplotlib",
             "statistical analysis"
-        ]
+        ],
+        "contextHash": "34fcab5f7d81905ad3df868de9e25b26b25b9ca9c5687145063ef4fdf88e48b8"
     },
     {
         "title": "Sleepercelmanual",
@@ -587,7 +744,8 @@
             "ranking algorithm",
             "prototyping",
             "html"
-        ]
+        ],
+        "contextHash": "52b77cc60f1ed4c2b70878f3d80e8dfed491ee6f2188be67017c2658a5e75aac"
     },
     {
         "title": "SleeperCel",
@@ -618,7 +776,8 @@
             "sports analytics",
             "node.js",
             "powershell"
-        ]
+        ],
+        "contextHash": "7dae3fd1be5bb6cc6112598a5695fe6adf3e57d771fe8e04307eea4d1e932008"
     },
     {
         "title": "DSC 80 Project Notebook",
@@ -644,7 +803,8 @@
             "exploratory analysis",
             "predictive modeling"
         ],
-        "lastCommit": "2025-08-09"
+        "lastCommit": "2025-08-09",
+        "contextHash": "9082e8d4cd441e85bb341800082c0dfc51184e25b92eab90196bcc01a6c80f22"
     },
     {
         "title": "UCSD Research Lab",
@@ -665,7 +825,8 @@
             "exploratory analysis",
             "scientific computing"
         ],
-        "lastCommit": "2025-07-07"
+        "lastCommit": "2025-07-07",
+        "contextHash": "4b0885de52ce0b9a845f95601c11e86148c4184b396c6923c5199b7cd68af594"
     },
     {
         "title": "Bike Traffic in Cambridge Interactive Visualization",
@@ -688,7 +849,8 @@
             "responsive design",
             "data analysis"
         ],
-        "lastCommit": "2025-02-26"
+        "lastCommit": "2025-02-26",
+        "contextHash": "be2e38117ee539940ff5a380a35fc9316d28fc7a70c1d8609dd1356ce859fcfe"
     },
     {
         "title": "Desktop Tutorial",
@@ -705,7 +867,8 @@
             "readme",
             "markdown",
             "documentation"
-        ]
+        ],
+        "contextHash": "f34351dfdc75b010246e598337b646b3e5499d10837b0dcc30e4d48009908db5"
     },
     {
         "title": "How Airbnb Tourism was impacted by the San Diego Sunshine",
@@ -723,7 +886,8 @@
             "airbnb data",
             "exploratory data analysis"
         ],
-        "lastCommit": null
+        "lastCommit": null,
+        "contextHash": "39a41d0e69ad66fa8d8e3bae4019965d4f3e04757b4ca3b78c2ccad27604f7ac"
     },
     {
         "title": "Study on the Impact of Estrus on Female Rats Throughout the Day",
@@ -745,7 +909,8 @@
             "neuroscience",
             "physiological data"
         ],
-        "lastCommit": null
+        "lastCommit": null,
+        "contextHash": "39a41d0e69ad66fa8d8e3bae4019965d4f3e04757b4ca3b78c2ccad27604f7ac"
     },
     {
         "title": "AllRecipes Rating Predictive Classification Model",
@@ -770,7 +935,8 @@
             "data analysis",
             "beautifulsoup"
         ],
-        "lastCommit": null
+        "lastCommit": null,
+        "contextHash": "39a41d0e69ad66fa8d8e3bae4019965d4f3e04757b4ca3b78c2ccad27604f7ac"
     },
     {
         "title": "Study of the Presence of Educational Institutions and Income Throughout California",
@@ -792,7 +958,8 @@
             "census data",
             "statistical analysis"
         ],
-        "lastCommit": null
+        "lastCommit": null,
+        "contextHash": "39a41d0e69ad66fa8d8e3bae4019965d4f3e04757b4ca3b78c2ccad27604f7ac"
     },
     {
         "title": "Image Processor",
@@ -810,7 +977,8 @@
             "numpy",
             "pillow"
         ],
-        "lastCommit": null
+        "lastCommit": null,
+        "contextHash": "39a41d0e69ad66fa8d8e3bae4019965d4f3e04757b4ca3b78c2ccad27604f7ac"
     },
     {
         "title": "Asteroid Landfall Simulation",
@@ -832,7 +1000,8 @@
             "asteroid dynamics",
             "scientific computing"
         ],
-        "lastCommit": null
+        "lastCommit": null,
+        "contextHash": "39a41d0e69ad66fa8d8e3bae4019965d4f3e04757b4ca3b78c2ccad27604f7ac"
     },
     {
         "title": "Interactive Visualization of Mice Body Temperature Across Gender",
@@ -854,6 +1023,7 @@
             "gender analysis",
             "physiological data"
         ],
-        "lastCommit": null
+        "lastCommit": null,
+        "contextHash": "39a41d0e69ad66fa8d8e3bae4019965d4f3e04757b4ca3b78c2ccad27604f7ac"
     }
 ]

@@ -473,3 +473,10 @@ Every mention of Agos across the site now says the same two things — memory la
 
 - Bumped the `site.js?v=` cache-bust from 13 to 14 across all four pages.
 - Verified in Chromium: the hero paragraph, the Currently card wrapping correctly, the About timeline card, and the blog post. No console errors.
+
+### Graduation photo added to the hero reel
+
+- **imgs/grad-photo.jpg:** converted from the 4.6 MB, 2513×1414 `grad_photo.png` in Downloads to a 1200×675 progressive JPEG at quality 86 (124 KB), in line with the other hero images.
+- **data/site.js:** appended a fifth entry to `PROFILE.photos` — label "Graduation day", place "UC San Diego". It uses `"fit": "contain"` for the same reason the MLH × DigitalOcean shot does: the frame is 4:5 and this is a 16:9 group photo whose subjects span the full width, so a center crop would cut the outer two people out. Letterboxing is heavier here than on the MLH photo because the source is wider; cropping cannot fix that without losing people, since trimming the sky only makes the aspect more panoramic and leaves the subjects the same size at a width-constrained fit.
+- Bumped the `site.js?v=` cache-bust from 14 to 15 across all four pages.
+- Verified in Chromium: five dots in the indicator, the fifth slide renders letterboxed with everyone in frame, and the caption pair reads "Graduation day / UC San Diego". No console errors.

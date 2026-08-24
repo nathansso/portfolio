@@ -40,6 +40,13 @@ export const PROFILE = {
       "label": "AI for Social Good",
       "place": "MLH × DigitalOcean",
       "fit": "contain"
+    },
+    {
+      "src": "imgs/grad-photo.jpg",
+      "alt": "Nathaniel Oliver at his UC San Diego graduation",
+      "label": "Graduation day",
+      "place": "UC San Diego",
+      "fit": "contain"
     }
   ],
   "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently an AI Engineer at Agos in San Francisco, where my work centers on two things: the memory layer an agent reasons over — what it admits, what it keeps, and what it can prove it was told — and building agents that evolve themselves, along with the harnesses that measure whether that evolution is real.\n\nBefore Agos I was a Data Science Intern at IDX Exchange, where I built end-to-end modeling pipelines, using ETL and gradient boosting, and developed ensemble-based approaches for prediction.\n\nIn my spare time, I've been exploring agent-based workflow and development. One of my current personal projects orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailored resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETL, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",

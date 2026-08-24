@@ -161,6 +161,7 @@
     }
     .fchip[data-cat="all"]                       { color: var(--ink-strong); }
     .fchip[data-cat="research"]                  { color: var(--cat-research); }
+    .fchip[data-cat="work"]                      { color: var(--cat-work); }
     .fchip[data-cat="internship"]                { color: var(--cat-internship); }
     .fchip[data-cat="graduate"]                  { color: var(--cat-graduate); }
     .fchip[data-cat="undergrad"]                 { color: var(--cat-undergrad); }
@@ -172,6 +173,7 @@
     }
     .fchip[aria-pressed="true"] .fchip-dot { background: var(--surface-0); }
     .fchip[data-cat="research"][aria-pressed="true"]   { background: var(--cat-research); border-color: var(--cat-research); }
+    .fchip[data-cat="work"][aria-pressed="true"]       { background: var(--cat-work); border-color: var(--cat-work); }
     .fchip[data-cat="internship"][aria-pressed="true"] { background: var(--cat-internship); border-color: var(--cat-internship); }
     .fchip[data-cat="graduate"][aria-pressed="true"]   { background: var(--cat-graduate); border-color: var(--cat-graduate); }
     .fchip[data-cat="undergrad"][aria-pressed="true"]  { background: var(--cat-undergrad); border-color: var(--cat-undergrad); }
@@ -211,6 +213,7 @@
       background: var(--exp-color, var(--ink-faint));
     }
     .exp-card[data-cat="research"]   { --exp-color: var(--cat-research); }
+    .exp-card[data-cat="work"]       { --exp-color: var(--cat-work); }
     .exp-card[data-cat="internship"] { --exp-color: var(--cat-internship); }
     .exp-card[data-cat="graduate"]   { --exp-color: var(--cat-graduate); }
     .exp-card[data-cat="undergrad"]  { --exp-color: var(--cat-undergrad); }
@@ -344,6 +347,7 @@
     }
     .ptile-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .ptile-thumb[data-cat="research"]   { color: var(--cat-research); background: var(--cat-research-bg); }
+    .ptile-thumb[data-cat="work"]       { color: var(--cat-work); background: var(--cat-work-bg); }
     .ptile-thumb[data-cat="internship"] { color: var(--cat-internship); background: var(--cat-internship-bg); }
     .ptile-thumb[data-cat="graduate"]   { color: var(--cat-graduate); background: var(--cat-graduate-bg); }
     .ptile-thumb[data-cat="undergrad"]  { color: var(--cat-undergrad); background: var(--cat-undergrad-bg); }
@@ -425,7 +429,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROFILE, EXPERIENCES, PROJECTS, CATEGORIES, fmtDate, fmtRange, projectsByIds } from './data/site.js?v=10';
+    import { PROFILE, EXPERIENCES, PROJECTS, CATEGORIES, fmtDate, fmtRange, projectsByIds } from './data/site.js?v=14';
 
     mountChrome('about');
 
@@ -437,7 +441,7 @@
       .join('');
 
     // ----- Order: Graduate education first, then Internship, then Research, then Undergrad, then Other -----
-    const CATEGORY_ORDER = ['graduate', 'internship', 'research', 'undergrad', 'other'];
+    const CATEGORY_ORDER = ['work', 'graduate', 'internship', 'research', 'undergrad', 'other'];
     const sorted = [...EXPERIENCES].sort((a, b) => {
       const ca = CATEGORY_ORDER.indexOf(a.category);
       const cb = CATEGORY_ORDER.indexOf(b.category);
@@ -449,6 +453,7 @@
     // ----- Filter chips -----
     const FILTER_CATS = [
       { id: 'all',        label: 'All' },
+      { id: 'work',       label: 'Work' },
       { id: 'research',   label: 'Research' },
       { id: 'internship', label: 'Internship' },
       { id: 'graduate',   label: 'Graduate' },

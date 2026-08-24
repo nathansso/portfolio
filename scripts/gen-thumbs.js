@@ -6,8 +6,8 @@
 //  data/thumbs.js (id -> path). The site pages read that
 //  manifest as the fallback thumbnail.
 //
-//   • Live sites (project `url`, reading `link`)   -> Playwright screenshot
-//   • Papers / PDFs (reading type "paper", arXiv)  -> first-page render
+//   • Live sites (project `url`)                    -> Playwright screenshot
+//   • Papers / PDFs (arXiv and friends)            -> first-page render
 //
 //  Usage:
 //    npm run thumbs                # generate only what's missing
@@ -23,7 +23,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import { PROJECTS, READING } from '../data/site.js';
+import { PROJECTS } from '../data/site.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT     = path.resolve(__dirname, '..');
@@ -54,12 +54,6 @@ function plan() {
     jobs.push(isPdfLike(p.url)
       ? { id: p.id, kind: 'pdf',  url: toPdfUrl(p.url), src: 'project' }
       : { id: p.id, kind: 'site', url: p.url,          src: 'project' });
-  }
-  for (const r of READING) {
-    if (r.image || !r.link) continue;
-    jobs.push((r.type === 'paper' || isPdfLike(r.link))
-      ? { id: r.id, kind: 'pdf',  url: toPdfUrl(r.link), src: 'reading' }
-      : { id: r.id, kind: 'site', url: r.link,           src: 'reading' });
   }
   return jobs;
 }

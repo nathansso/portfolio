@@ -42,9 +42,9 @@ export const PROFILE = {
       "fit": "contain"
     }
   ],
-  "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently a Data Science Intern at IDX Exchange, where I've built end-to-end modeling pipelines, using ETF and gradient boosting, and developed ensemble-based approaches for prediction. \n\nIn my spare time, I've been exploring agent-based workflow and development. One of my current personal projects orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailored resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETF, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",
-  "shortBio": "M.S. Data Science at **UC San Diego**, building on a Math + Econ foundation. I turn messy real-world data into useful models and decisions — applied research, predictive modeling, and AI-assisted analytics.",
-  "currently": "Predictive modeling at **IDX Exchange** · MS Data Science at **UCSD**"
+  "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently an AI Engineer at Agos in San Francisco, where my work centers on two things: the memory layer an agent reasons over — what it admits, what it keeps, and what it can prove it was told — and building agents that evolve themselves, along with the harnesses that measure whether that evolution is real.\n\nBefore Agos I was a Data Science Intern at IDX Exchange, where I built end-to-end modeling pipelines, using ETL and gradient boosting, and developed ensemble-based approaches for prediction.\n\nIn my spare time, I've been exploring agent-based workflow and development. One of my current personal projects orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailored resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETL, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",
+  "shortBio": "AI Engineer at **Agos**, where I build memory layers for agents and work on agents that evolve themselves, and an M.S. Data Science candidate at **UC San Diego** on a Math + Econ foundation. I build systems that can show their work — and the benchmarks that can prove them wrong.",
+  "currently": "Agent memory & self-evolving agents at **Agos** · MS Data Science at **UCSD**"
 };
 
 
@@ -77,6 +77,12 @@ export const CATEGORIES = {
     "label": "Internship",
     "hue": 145,
     "count": 6
+  },
+  "work": {
+    "id": "work",
+    "label": "Work",
+    "hue": 195,
+    "count": 0
   },
   "graduate": {
     "id": "graduate",
@@ -115,8 +121,34 @@ export const CATEGORIES = {
 
 
 
-// Experiences — Research, Internship, Education entries that drive /about
+// Experiences — Work, Research, Internship, Education entries that drive /about
 export const EXPERIENCES = [
+  {
+    "id": "agos",
+    "category": "work",
+    "title": "AI Engineer",
+    "org": "Agos",
+    "location": "San Francisco, CA",
+    "start": "2026-08",
+    "end": null,
+    "blurb": "Memory layers for agents and self-evolving agents: what an agent admits, retains, and can prove it was told, and whether an agent that rewrites itself actually gets any better.",
+    "bullets": [
+      "The memory layer behind a voice agent: a kernel deciding what gets admitted, what is retained in context, what is selected under a budget, and what can be traced back to an exact source.",
+      "Benchmarked that layer against LongMemEval in its own reproducible lab — a baseline ladder of full history, BM25, dense, and hybrid retrieval scored under an identical reader and the official judge.",
+      "Self-evolving agents: a recursion harness that measures whether an agent's answer actually improves across a feedback lineage, scoring candidates as black boxes against a fixed suite with append-only run artifacts.",
+      "An evolution lab carrying that research — pinned schemas, repeatable protocols, and findings where every claim carries its source, so a claimed improvement has to survive being re-run.",
+      "ContractKit, a dependency-free toolkit that keeps the above honest: it pins a document sentence so breaking a stated contract breaks a test, and ratchets measurements against silent regression."
+    ],
+    "skills": [
+      "Python",
+      "Agent memory",
+      "Retrieval",
+      "Benchmarking",
+      "Evals",
+      "CI"
+    ],
+    "projectIds": []
+  },
   {
     "id": "idx",
     "category": "internship",
@@ -124,8 +156,8 @@ export const EXPERIENCES = [
     "org": "IDX Exchange",
     "location": "Remote",
     "start": "2026-01",
-    "end": null,
-    "blurb": "Predictive modeling for real-estate pricing. \nBuilding ETL pipelines, training and evaluating gradient boosted models, and translating results into product-ready insights for a proptech team. \nCurrently building a production multi-agent AI assistant using OpenClaw that helps consumers by analyzing market trends and recommending properties.",
+    "end": "2026-08",
+    "blurb": "Predictive modeling for real-estate pricing. \nBuilding ETL pipelines, training and evaluating gradient boosted models, and translating results into product-ready insights for a proptech team. \nBuilt a production multi-agent AI assistant using OpenClaw that helps consumers by analyzing market trends and recommending properties.",
     "bullets": [
       "Predictive modeling on California MLS data; XGBoost regression for single-family home valuation.",
       "ETL pipelines preparing 100K+ property records for downstream training.",
@@ -481,7 +513,7 @@ export const PROJECTS = [
     "course": null,
     "date": "2026-04",
     "image": null,
-    "blurb": "Stacked XGBoost + LightGBM ensemble on 100K+ MLS rows. Sub-8% Median Absolute Percent Error, deployed on Streamlit.",
+    "blurb": "Tuned XGBoost predicting single-family California home prices at 7.74% MdAPE on 200K+ CRMLS listings, held across scheduled retrains.",
     "description": "Built a machine learning web application that predicts single-family residence prices across California ZIP codes using an ensemble of XGBoost and LightGBM models trained on historical real estate transaction data. The Streamlit-powered interface allows users to input property features and receive price predictions alongside interactive Plotly visualizations of market trends and comparable properties. Feature engineering and preprocessing pipelines were constructed with scikit-learn to handle geographic, structural, and demographic variables that drive residential property valuations.",
     "skills": [
       "python",
@@ -510,7 +542,10 @@ export const PROJECTS = [
       "interactive dashboard",
       "requests"
     ],
-    "url": "https://single-family-housing-price-predictor.streamlit.app/",
+    "lockedFields": [
+      "url"
+    ],
+    "url": null,
     "repo": "idx-app",
     "lastCommit": "2026-04-29"
   },
@@ -524,6 +559,7 @@ export const PROJECTS = [
     "image": null,
     "lockedFields": [
       "description",
+      "url",
       "skills"
     ],
     "blurb": "Fair, slice-aware comparison of a heterogeneous GNN against a tuned XGBoost ranker on Diginetica (CIKM Cup 2016). A relational-time leakage audit overturned an apparent GNN win — the honest result is that the flat ranker wins every slice.",
@@ -569,37 +605,9 @@ export const PROJECTS = [
       "matplotlib",
       "seaborn"
     ],
-    "url": "https://github.com/nathansso/diginetica-ecomm",
+    "url": null,
     "repo": "diginetica-ecomm",
     "lastCommit": "2026-06-23"
-  },
-  {
-    "id": "portfolio-editor",
-    "title": "Portfolio Live Editor",
-    "category": "personal",
-    "experienceId": null,
-    "course": null,
-    "date": "2026-06",
-    "image": null,
-    "blurb": "Express.js overlay server that injects a live-edit UI into the portfolio, enabling real-time WYSIWYG edits to site.js written back to disk via REST API.",
-    "description": "Built an Express.js proxy server that intercepted live HTTP responses from a personal portfolio site and injected a WYSIWYG editing overlay into every served page, enabling point-and-click content editing directly on the rendered site. The overlay communicated with a custom REST API to read and write changes to a source JSON data file in real time, bypassing any build pipeline or recompilation step. This replaced manual source file edits with an in-place visual interface, eliminating context-switching between the live site and raw data files during content iteration.",
-    "skills": [
-      "javascript",
-      "node.js",
-      "express.js",
-      "rest api",
-      "html",
-      "css",
-      "http proxy",
-      "wysiwyg",
-      "middleware",
-      "json",
-      "web development",
-      "dom manipulation"
-    ],
-    "url": "https://github.com/nathansso/portfolio_editor",
-    "repo": "portfolio_editor",
-    "lastCommit": "2026-06-09"
   },
   {
     "id": "ats-resume",
@@ -609,8 +617,8 @@ export const PROJECTS = [
     "course": null,
     "date": "2026-04",
     "image": null,
-    "blurb": "Production web platform (React + TypeScript / FastAPI, deployed on Fly.io) that ingests resume, GitHub, and LinkedIn data into a per-user knowledge graph and tailors resumes to jobs via a multi-agent LangGraph pipeline, sentence-transformers ATS scoring, and LaTeX PDF export.",
-    "description": "Built a production web platform (React 18 + TypeScript / Vite frontend, FastAPI backend, deployed on Fly.io via Docker) that tailors a resume to any job description through an AI chat workflow. Ingested resume files (.md/.docx/.pdf), GitHub repositories, and LinkedIn profiles into a per-user skills knowledge graph that links each skill to the experiences and projects that evidence it, so tailoring cites real support instead of keyword-stuffing. Drove tailoring through a LangGraph pipeline (LangChain over Anthropic/OpenAI models) that scores skills against the job, selects the strongest evidence, and drafts a one-page, ATS-friendly resume using best-of-N candidate generation with an early-exit quality bar. Layered ATS-style scoring and a conversational revision loop on top, persisted profiles via a SQLModel ORM (SQLite locally, Supabase Postgres in production) with Supabase JWT auth, and mirrored the same core pipeline through a CLI. In production the FastAPI backend serves the compiled React app as static files so a single process runs the whole product.",
+    "blurb": "Resume tailoring on a per-user knowledge graph (React + TypeScript / FastAPI): GraphRAG retrieval over skills evidenced by real experience, a two-agent planner and tailoring loop, and a composite reward scored on ATS fit, semantic similarity, and a faithfulness check against the graph.",
+    "description": "Built a production web platform (React 18 + TypeScript / Vite frontend, FastAPI backend, containerized with Docker) that tailors a resume to any job description through an AI chat workflow. Ingested resume files (.md/.docx/.pdf), GitHub repositories, and LinkedIn profiles into a per-user skills knowledge graph that links each skill to the experiences and projects that evidence it, so tailoring cites real support instead of keyword-stuffing. Drove tailoring through a LangGraph pipeline (LangChain over Anthropic/OpenAI models) that scores skills against the job, retrieves supporting evidence via GraphRAG, and drafts a one-page, ATS-friendly resume through a two-agent planner and tailoring loop, which selects revision strategies under an epsilon-greedy policy and scores each attempt with a composite reward over ATS fit, semantic similarity, and a faithfulness check against the graph. Layered ATS-style scoring and a conversational revision loop on top, persisted profiles via a SQLModel ORM (SQLite locally, Supabase Postgres in production) with Supabase JWT auth, and mirrored the same core pipeline through a CLI. In the packaged build the FastAPI backend serves the compiled React app as static files, so a single process runs the whole product.",
     "skills": [
       "python",
       "typescript",
@@ -649,7 +657,7 @@ export const PROJECTS = [
       "rest api",
       "cli"
     ],
-    "url": "https://artie-resume-tailoring.fly.dev/",
+    "url": null,
     "repo": "agentic_resume_tailoring",
     "lastCommit": "2026-08-15",
     "lockedFields": [
@@ -689,7 +697,10 @@ export const PROJECTS = [
       "imbalanced classes",
       "conversion optimization"
     ],
-    "url": "https://github.com/nathansso/dsc207finalproject",
+    "lockedFields": [
+      "url"
+    ],
+    "url": null,
     "repo": "dsc207finalproject",
     "lastCommit": "2026-03-30"
   }
@@ -705,75 +716,22 @@ for (const p of PROJECTS) {
 
 
 // ============================================================
-//  Reading list
-//  Papers, books, articles, and other media worth sharing.
-//  `image` (manual) always wins; `thumb` is filled by the
-//  `npm run thumbs` generator (first page of a paper, etc.).
-// ============================================================
-export const READING_TYPES = {
-  "paper":   { "id": "paper",   "label": "Paper",   "hue": 250 },
-  "book":    { "id": "book",    "label": "Book",    "hue": 145 },
-  "article": { "id": "article", "label": "Article", "hue": 305 },
-  "media":   { "id": "media",   "label": "Media",   "hue": 25  }
-};
-
-export const READING = [
-  {
-    "id": "codified-fsm",
-    "title": "Codified Finite-state Machines for Role-playing",
-    "authors": "Peng, Hou, Zhou, Shang (2026)",
-    "type": "paper",
-    "date": "2026-07",
-    "link": "https://arxiv.org/abs/2602.05905",
-    "image": null,
-    "note": "",
-    "tags": ["llm", "role-playing", "finite-state-machines"]
-  },
-  {
-    "id": "relbench-benchmark",
-    "title": "RelBench: A Benchmark for Deep Learning on Relational Databases",
-    "authors": "Robinson, Ranjan, Hu, Huang, Han, Dobles, Fey, Lenssen, et al. (2024)",
-    "type": "paper",
-    "date": "2026-06",
-    "link": "https://arxiv.org/abs/2407.20060",
-    "image": null,
-    "note": "",
-    "tags": ["relational-dl", "gnn", "benchmarks"]
-  },
-  {
-    "id": "relational-deep-learning",
-    "title": "Relational Deep Learning: Graph Representation Learning on Relational Databases",
-    "authors": "Fey, Hu, Huang, Lenssen, Ranjan, Robinson, Ying, You, Leskovec (2023)",
-    "type": "paper",
-    "date": "2026-06",
-    "link": "https://arxiv.org/abs/2312.04615",
-    "image": null,
-    "note": "",
-    "tags": ["relational-dl", "gnn", "representation-learning"]
-  },
-  {
-    "id": "attention-is-all-you-need",
-    "title": "Attention Is All You Need",
-    "authors": "Vaswani, Shazeer, Parmar, et al. (2017)",
-    "type": "paper",
-    "date": "2026-05",
-    "link": "https://arxiv.org/abs/1706.03762",
-    "image": null,
-    "note": "",
-    "tags": ["transformers", "nlp", "foundational"]
-  }
-];
-
-
-
-
-// ============================================================
 //  Blog
 //  Short posts about recent achievements & events.
 //  `body` supports blank-line paragraphs and **bold**.
 //  `images` are paths into imgs/blog/ (first = header image).
 // ============================================================
 export const POSTS = [
+  {
+    "id": "joining-agos",
+    "title": "I've joined Agos as an AI Engineer",
+    "date": "2026-08-24",
+    "tags": ["agos", "new role", "agent memory", "self-evolving agents"],
+    "blurb": "I've joined Agos in San Francisco as an AI Engineer, working on two things: the memory layer an agent reasons over, and building agents that evolve themselves — plus the benchmarks that decide whether either one actually works.",
+    "body": "I've joined **Agos** in San Francisco as an **AI Engineer**. The work centers on two things: the **memory layer** an agent reasons over, and building **agents that evolve themselves**.\n\nA voice agent that forgets is a demo. One that remembers badly is worse: it will repeat something it was told once, months ago, by someone who has since changed their mind, and it will say it with the same confidence as a fact it verified this morning.\n\nSo the thing I'm building is not a transcript store. It's a **claim ledger**. Every claim carries where it came from, when it was said, and what else supports it, and retrieval scores it on all three. Entities get resolved, the graph expands **two hops** so contradictions actually collide instead of sitting in separate rows, and the evidence that survives is **quoted under a context budget** rather than dumped into the prompt.\n\nMemory is exposed to a task as a **read-only verb**. The agent can ask what it knows; it cannot quietly rewrite the record mid-turn. And because a voice turn does not wait politely, retrieval starts speculatively against a sentence that is **still being spoken**.\n\nProving any of that is its own job. I've been building the **benchmark that measures the memory layer itself**: a stratified 30-case **LongMemEval** sample fixed by a seeded manifest, benchmark and dataset pinned to exact revisions, running a baseline ladder (full history, **BM25**, dense, hybrid) against extracted memory under an identical reader and the official judge. Scored not just on QA accuracy but against context size, cost, latency, and source-support failures, because a memory system that is right and unaffordable is not right.\n\nThe second half of the work is self-evolution. An agent that rewrites its own scaffolding is easy to claim and hard to demonstrate, so I built a **recursion harness** that treats a candidate as a black box — prompt in, answer out — and measures whether its answer actually improves across a feedback lineage, against a fixed suite it never gets to see. Around it sits an **evolution lab** for bounded self-evolving agents, where every run writes append-only evidence and every claim in the findings carries its source. A zero delta against a strong parent is a ceiling, not a refutation, so the point is to make the claim falsifiable before anything gets promoted.\n\nAlongside it I wrote **ContractKit**, a dependency-free assertion toolkit that keeps design documents, code, and CI from drifting apart. It pins a sentence in a design doc so that breaking a stated contract breaks a test, ratchets measurements so a regression can't slip through quietly, and reads three-dot diffs so a branch is judged on what it actually changed.\n\nThis also closes out my time at **IDX Exchange**, where I spent Jan through Aug 2026 on streaming ETL and a production XGBoost model for California home prices. Grateful for it, and glad the next thing is a system that has to know what it knows, and prove it got better.",
+    "images": [],
+    "link": "about.html"
+  },
   {
     "id": "atrium-hackathon-win",
     "title": "Atrium won 1st Place Overall at the Memory Meets Motion Hackathon",

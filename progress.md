@@ -396,3 +396,80 @@ The homepage hero photo was a single static image (`PROFILE.photo`). It now cycl
 - **data/site.js:** `PROFILE.photos` now carries four entries — Porto, the Frontier Tower demo, the Frontier Tower team shot, and the MLH × DigitalOcean hackathon.
 - Added two optional per-photo fields since the new shots are landscape and the frame is 4:5: `fit: "contain"` letterboxes onto the frame's surface color instead of cropping, and `position` sets `object-position`. The MLH × DigitalOcean photo uses `contain` — a center crop cut the two outer people out of frame. The Frontier Tower team shot crops cleanly (subjects sit in the middle third) so it stays on `cover`.
 - Verified all four slides in Chromium: correct image, caption pair, and dot state on each, no console errors.
+
+## 2026-08-24
+
+### Reading list removed; nav reordered
+
+- **Deleted `reading.html`.** The Reading page and its data are gone from the site.
+- **data/site.js:** removed the `READING_TYPES` and `READING` exports and their header comment block.
+- **scripts/chrome.js:** dropped the `reading` entry from `PAGES`, and moved `resume` ahead of `blog` so the nav now reads Home · About · Projects · Resume · Blog. `.is-resume` (the dimmed treatment) stays on the Resume link.
+- **scripts/gen-thumbs.js:** stopped importing `READING` and removed the reading half of `plan()`; the generator now only walks `PROJECTS`. Header comment updated to match.
+
+### New downloadable resume
+
+- **resume.pdf:** replaced with `Nathaniel_Oliver_Data_Scientist_8_20.pdf` from Downloads. Both the Print and Download PDF buttons on `resume.html` point at the same path, so no markup change was needed. Verified the new page-1 render (which now leads with Agos) in the pdf.js canvas.
+
+### Agos — new role
+
+Added the Agos job across the data layer, the About page, and the blog.
+
+- **New `work` category.** A full-time role does not belong under "Internship," so the timeline gained a fifth category.
+  - `data/site.js`: `CATEGORIES.work` (label "Work", hue 195).
+  - `styles/tokens.css`: `--cat-work` / `--cat-work-bg` in both the light and dark blocks, plus a `.badge[data-cat="work"]` rule. Hue 195 (teal) was chosen because it is the widest gap left between research (250), internship (145), graduate (305), undergrad (75), and personal (25).
+  - `about.html`: `.fchip`, `.fchip[aria-pressed]`, `.exp-card`, and `.ptile-thumb` colour rules for `work`; a "Work" chip in `FILTER_CATS`; and `work` placed first in `CATEGORY_ORDER` so the current job leads the timeline.
+- **data/site.js `EXPERIENCES`:** new `agos` entry at the top — AI Engineer, Agos, San Francisco, Aug 2026 – Present, with four bullets covering the claim-ledger memory layer, memory-as-read-only-verb, the LongMemEval benchmark, and ContractKit.
+- **IDX Exchange closed out:** `end` changed from `null` to `"2026-08"`, and the blurb's "Currently building a production multi-agent AI assistant…" retensed to "Built…" now that the role has ended.
+- **`PROFILE.bio`:** the "I'm currently a Data Science Intern at IDX Exchange…" paragraph was replaced by an Agos paragraph, with IDX demoted to a following "Before Agos I was…" paragraph. Also fixed two long-standing "ETF" typos that were meant to be "ETL".
+- **`PROFILE.currently`:** "Predictive modeling at **IDX Exchange**" → "Agent memory systems at **Agos**". This is the line in the homepage hero's Currently card.
+- **New blog post** `joining-agos` (2026-08-24), newest in `POSTS`: why a voice agent that remembers badly is worse than one that forgets, the claim ledger and its provenance/recency/support scoring, memory as a read-only verb, the LongMemEval benchmark ladder, ContractKit, and a sign-off on the IDX chapter. Links to `about.html`.
+
+### Latest blog headline on the landing page
+
+- **index.html:** a new `.latest` section sits between the Selected work strip and the footer. It is one row, not a card — a `Latest post` mono eyebrow, the headline, the date beneath it, and a right-aligned arrow, bounded by hairline top and bottom rules. On hover the row takes a 5% accent wash, the headline and arrow go accent, and the arrow slides 4px right. Below 640px the eyebrow drops to its own full-width line above the headline.
+- Populated from `POSTS` (newest by date) in the existing module script; the section ships `hidden` and is only revealed once a post is found, so an empty `POSTS` array leaves no orphan rules on the page.
+- Bumped the `site.js?v=` cache-bust from 10 to 11 across all four remaining pages.
+- Verified in Chromium at `localhost:8765`: nav order and the missing Reading link, the new resume rendering, the Agos card leading the About timeline with a working "Work" filter chip (1 of 8), the blog post's bold/paragraph formatting, and the latest-post row at rest and on hover in both light and dark themes. No console errors on any page.
+
+### Agos scope widened; stale project links cleaned up
+
+Read `~/Desktop/coding_projects/agos` (its `PROJECTS.md` registry plus each child's README) and widened the Agos entry to match the actual work, which is a federation of small deterministic kernels and the labs/harnesses that measure them — not just the memory layer.
+
+- **data/site.js `EXPERIENCES.agos`:** blurb now leads with "the deterministic kernels behind a voice agent — memory, context, and property evidence." Bullets went from four to five: the memory kernel (admission / retention / bounded selection / exact source support) with its LongMemEval lab, the context and property kernels, the **recursion harness** (candidate-neutral measurement of whether an answer improves across a feedback lineage, candidates scored as black boxes against a fixed suite with append-only run artifacts), the **evolution lab** for bounded self-evolving agents, and ContractKit. Skills chips: Evaluation → Benchmarking + Evals.
+- **`PROFILE.bio`:** the Agos paragraph broadened from "the memory layer / a claim ledger" to the kernels plus "the labs and harnesses that measure whether any of it actually works."
+- **Blog post `joining-agos`:** one paragraph added between the benchmark and ContractKit paragraphs covering the two additional kernels, the recursion harness, and the evolution lab. Deliberately kept high level and link-free — the `agos` workspace and the `agos-recursion-harness`, `bbot`, and `contractkit` repositories are private.
+
+Project entries audited against their live URLs and GitHub state:
+
+- **Dead links removed.** `artie-resume-tailoring.fly.dev` no longer resolves at all, and `idx-app`'s Streamlit deployment now 303s to a login wall, so neither is a demo a visitor can open. Both `url` fields are now `null`; `projects.html` guards the link row on `linksList.length`, so each card keeps its GitHub button and drops the "Live demo" one.
+- **Duplicate links removed.** `diginetica-ecomm`, `ecommerce-intent`, and `portfolio-editor` each had `url` set to the same GitHub URL as `repo`, which rendered two buttons pointing at the same page. `url` is now `null` on all three.
+- **portfolio-editor has no links at all now.** The `portfolio_editor` repo is private, so the "View on GitHub" button was a 404 for everyone but the owner; `repo` is `null` until the repo is made public. Verified the card still expands cleanly with description and skills and no empty link row.
+- **Blurbs refreshed.** `ca-real-estate` now states the current model result (7.74% MdAPE on 200K+ CRMLS listings, held across scheduled retrains) instead of the old "100K+ MLS rows / sub-8%". `ats-resume` leads with the GraphRAG + two-agent planner framing that matches the repo today, and its long description drops the Fly.io deployment claim and replaces "best-of-N with an early-exit quality bar" with the epsilon-greedy planner loop and composite reward (ATS fit, semantic similarity, faithfulness check against the graph).
+- **`lastCommit` refreshed** on all eight projects from each repo's GitHub `pushed_at`. Not rendered anywhere — it is sync-pipeline metadata — but it was stale.
+- Bumped the `site.js?v=` cache-bust from 11 to 12 across all four pages.
+- Verified in Chromium: the five-bullet Agos card, the new blog paragraph, the link-less Portfolio Live Editor card, ARTie showing only "View on GitHub", and the refreshed ARTie blurb on the homepage tile. No console errors.
+
+### Portfolio Live Editor removed; homepage hero updated
+
+- **data/site.js:** deleted the `portfolio-editor` entry from `PROJECTS` (7 projects remain, 5 personal). The `portfolio_editor` repo is private, so the card had no working links; per the user it comes off the site entirely rather than sitting there link-less. `data/projects-auto.json` still carries a `portfolio_editor` row, which is harmless — `scripts/merge-projects.js` maps over the existing `PROJECTS` array and never adds entries, so an unmatched auto row is ignored.
+- **Sync-proofed the cleared URLs.** `merge-projects.js` owns `url`, so the next `npm run sync` would have restored the dead fly.dev and Streamlit links. Added `"url"` to `lockedFields` on `ca-real-estate`, `diginetica-ecomm`, and `ecommerce-intent` (the first and third had no `lockedFields` key at all; `ats-resume` already locked it).
+- **`PROFILE.shortBio`** — the homepage hero paragraph — now leads with the current role instead of the degree: "AI Engineer at **Agos**, building the deterministic kernels behind a voice agent, and an M.S. Data Science candidate at **UC San Diego** on a Math + Econ foundation. I build systems that can show their work — and the benchmarks that can prove them wrong."
+- **index.html:** the Currently card's hardcoded "— Updated Apr 2026" stamp refreshed to "Aug 2026".
+- Left `PROFILE.role` as "Data Scientist" — it sets the page `<title>` and the site's overall positioning, and the resume is still targeted at data science roles.
+- Bumped the `site.js?v=` cache-bust from 12 to 13 across all four pages.
+- Verified in Chromium: the new hero copy and timestamp, and the projects grid at 7 of 7 / Personal 5 with the Portfolio Live Editor card gone. No console errors.
+
+### Agos copy recentred on memory layers + self-evolving agents
+
+Every mention of Agos across the site now says the same two things — memory layers for agents, and building agents that evolve themselves — instead of enumerating kernels. All in `data/site.js` unless noted.
+
+- **`PROFILE.shortBio`** (homepage hero): "AI Engineer at **Agos**, where I build memory layers for agents and work on agents that evolve themselves…"
+- **`PROFILE.currently`**: "Agent memory systems at **Agos**" → "Agent memory & self-evolving agents at **Agos**".
+- **`PROFILE.bio`** (About sidebar): the Agos paragraph now opens "my work centers on two things: the memory layer an agent reasons over — what it admits, what it keeps, and what it can prove it was told — and building agents that evolve themselves, along with the harnesses that measure whether that evolution is real."
+- **`EXPERIENCES.agos`**: blurb rewritten to the same two-pillar framing. The bullets are still five but regrouped — two on memory (the kernel itself, then the LongMemEval lab that benchmarks it), two on self-evolution (the recursion harness, the evolution lab), and ContractKit reframed as the thing that keeps both honest. Dropped the context/property-kernel bullet, which was off-pillar. Skills chip "Knowledge graphs" → "Agent memory".
+- **Blog post `joining-agos`**: opening line now names both areas; the "since then the work has widened" paragraph became "The second half of the work is self-evolution" and drops the context/property kernels; "The other half of the job is proving any of that" retitled to "Proving any of that is its own job" so there is only one "other half"; sign-off and blurb updated; tag "retrieval" → "self-evolving agents".
+
+**index.html — Currently card separator.** `.currently-text` is a wrapping flex row and the `·` was its own flex item, so the longer Agos string pushed the separator onto the start of the second line as a stray leading dot. The separator is now rendered inside the preceding `.currently-line` span, so it always trails its own item and can never lead a wrapped line. Also refreshed the no-JS fallback markup, which still hardcoded the old "MS Data Science / Predictive modeling at IDX Exchange" pair in the old order.
+
+- Bumped the `site.js?v=` cache-bust from 13 to 14 across all four pages.
+- Verified in Chromium: the hero paragraph, the Currently card wrapping correctly, the About timeline card, and the blog post. No console errors.

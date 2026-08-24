@@ -48,6 +48,8 @@
   --cat-research-bg: oklch(50% 0.12 250 / 0.10);
   --cat-internship:    oklch(50% 0.12 145);
   --cat-internship-bg: oklch(50% 0.12 145 / 0.10);
+  --cat-work:    oklch(50% 0.12 195);
+  --cat-work-bg: oklch(50% 0.12 195 / 0.10);
   --cat-graduate:    oklch(50% 0.12 305);
   --cat-graduate-bg: oklch(50% 0.12 305 / 0.10);
   --cat-undergrad:    oklch(50% 0.10 75);
@@ -112,6 +114,8 @@
   --cat-research-bg: oklch(72% 0.12 250 / 0.16);
   --cat-internship:    oklch(72% 0.12 145);
   --cat-internship-bg: oklch(72% 0.12 145 / 0.16);
+  --cat-work:    oklch(72% 0.12 195);
+  --cat-work-bg: oklch(72% 0.12 195 / 0.16);
   --cat-graduate:    oklch(72% 0.12 305);
   --cat-graduate-bg: oklch(72% 0.12 305 / 0.16);
   --cat-undergrad:    oklch(72% 0.10 75);
@@ -371,6 +375,7 @@ p + p { margin-top: var(--sp-3); }
 }
 .badge[data-cat="research"]   { background: var(--cat-research-bg);   color: var(--cat-research); }
 .badge[data-cat="internship"] { background: var(--cat-internship-bg); color: var(--cat-internship); }
+.badge[data-cat="work"]       { background: var(--cat-work-bg);       color: var(--cat-work); }
 .badge[data-cat="graduate"]   { background: var(--cat-graduate-bg);   color: var(--cat-graduate); }
 .badge[data-cat="undergrad"]  { background: var(--cat-undergrad-bg);  color: var(--cat-undergrad); }
 .badge[data-cat="personal"]   { background: var(--cat-personal-bg);   color: var(--cat-personal); }

@@ -1,5 +1,32 @@
 [
     {
+        "title": "Portfolio",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Built a personal portfolio website to showcase data science projects, experience, and skills, serving as a live professional presence at nathansso.github.io. Implemented with vanilla HTML, CSS, and ES module JavaScript — no framework, bundler, or build step — keeping the architecture as a flat collection of static files deployable on any host. Automated GitHub repository metadata sync via custom Node.js scripts that fetch and merge project data into a single source-of-truth data layer without overwriting manually authored content.",
+        "url": "https://github.com/nathansso/portfolio",
+        "repo": "portfolio",
+        "lastCommit": "2026-09-14",
+        "skills": [
+            "html",
+            "css",
+            "javascript",
+            "es modules",
+            "node.js",
+            "static site",
+            "web development",
+            "rest api",
+            "data pipeline",
+            "automation",
+            "github api",
+            "playwright",
+            "python",
+            "canvas api",
+            "responsive design"
+        ],
+        "contextHash": "3f0fd0f0458a2d178492e56ed74555e976f807754618bff767e1e1961f32c792"
+    },
+    {
         "title": "Visual Process Mining",
         "year": 2026,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
@@ -62,33 +89,6 @@
             "sequential decision making",
             "value function approximation"
         ]
-    },
-    {
-        "title": "Portfolio",
-        "year": 2026,
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Built a personal portfolio website to showcase data science projects, experience, and skills, serving as a live professional presence at nathansso.github.io. Implemented with vanilla HTML, CSS, and ES module JavaScript — no framework, bundler, or build step — keeping the architecture as a flat collection of static files deployable on any host. Automated GitHub repository metadata sync via custom Node.js scripts that fetch and merge project data into a single source-of-truth data layer without overwriting manually authored content.",
-        "url": "https://github.com/nathansso/portfolio",
-        "repo": "portfolio",
-        "lastCommit": "2026-09-07",
-        "skills": [
-            "html",
-            "css",
-            "javascript",
-            "es modules",
-            "node.js",
-            "static site",
-            "web development",
-            "rest api",
-            "data pipeline",
-            "automation",
-            "github api",
-            "playwright",
-            "python",
-            "canvas api",
-            "responsive design"
-        ],
-        "contextHash": "3f0fd0f0458a2d178492e56ed74555e976f807754618bff767e1e1961f32c792"
     },
     {
         "title": "Agos",

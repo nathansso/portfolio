@@ -490,3 +490,7 @@ Every mention of Agos across the site now says the same two things — memory la
 - **New project: Offline Policy Optimization for Chatbot Responses** (`offline-policy-optimization`, public repo). Contextual-bandit policy learning with IPS / SNIPS / doubly robust / FQE evaluation and a safety-gated action ranker. Personal category; description, blurb, url, and skills are locked against sync. Other unlisted repos were private or course/Agos work and were left off.
 - Bumped the `site.js?v=` cache-bust from 15 to 16.
 - Verified in Chromium: no Blog link in the nav, new hero and About copy, the three-bullet Agos card, and the new card on the projects page (8 projects). Only console errors are the pre-existing CORS failures from the Now widget's proxy on localhost.
+
+### Dependabot alert #11 fixed (brace-expansion)
+
+- **package-lock.json:** `npm audit fix` bumped the transitive dev dependency `brace-expansion` from 2.1.0 to 2.1.7 (via `elocuent` → `glob` → `minimatch`), clearing the high-severity DoS advisory (vulnerable `>=2.0.0 <2.1.2`). No `package.json` change; `npm audit` now reports 0 vulnerabilities. Nothing the live site loads is affected — this is a dev-only tooling dependency.

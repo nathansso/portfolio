@@ -374,7 +374,7 @@
     }
 
     /* ---------- Selected work strip ---------- */
-    .strip { padding: var(--sp-9) 0 var(--sp-7); }
+    .strip { padding: var(--sp-9) 0; }
     .strip-head {
       display: flex;
       justify-content: space-between;
@@ -480,78 +480,6 @@
       transition: color 120ms ease, border-color 120ms ease;
     }
     .all-projects-link:hover { color: var(--accent); border-color: var(--accent); }
-
-    /* ---------- Latest post band ---------- */
-    .latest {
-      padding: 0 0 var(--sp-9);
-    }
-    .latest-row {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: var(--sp-5);
-      padding: var(--sp-5) var(--sp-4);
-      border-top: 1px solid var(--line-faint);
-      border-bottom: 1px solid var(--line-faint);
-      border-radius: var(--r-2);
-      transition: background 180ms ease, border-color 180ms ease;
-    }
-    .latest-row:hover {
-      background: color-mix(in oklab, var(--accent) 5%, transparent);
-      border-color: color-mix(in oklab, var(--accent) 35%, var(--line-faint));
-    }
-    .latest-eyebrow {
-      font-family: var(--font-mono);
-      font-size: var(--fs-meta);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--ink-muted);
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: var(--sp-2);
-    }
-    .latest-eyebrow::before {
-      content: '';
-      width: 18px; height: 1px;
-      background: var(--accent);
-      flex-shrink: 0;
-    }
-    .latest-text { min-width: 0; }
-    .latest-title {
-      display: block;
-      font-size: clamp(16px, 1.5vw, 20px);
-      font-weight: 500;
-      letter-spacing: -0.015em;
-      line-height: 1.35;
-      color: var(--ink-strong);
-      text-wrap: pretty;
-      transition: color 160ms ease;
-    }
-    .latest-row:hover .latest-title { color: var(--accent); }
-    .latest-date {
-      display: block;
-      margin-top: 4px;
-      font-family: var(--font-mono);
-      font-size: var(--fs-meta);
-      letter-spacing: 0.06em;
-      color: var(--ink-faint);
-    }
-    .latest-arrow {
-      font-size: 18px;
-      color: var(--ink-muted);
-      transition: transform 180ms ease, color 160ms ease;
-    }
-    .latest-row:hover .latest-arrow { transform: translateX(4px); color: var(--accent); }
-
-    @media (max-width: 640px) {
-      .latest-row {
-        grid-template-columns: 1fr auto;
-        gap: var(--sp-3) var(--sp-4);
-        align-items: start;
-      }
-      .latest-eyebrow { grid-column: 1 / -1; }
-    }
 
     /* ---------- Now widget ---------- */
     :root {
@@ -884,10 +812,10 @@
                 Currently
               </span>
               <span class="currently-text" id="hero-currently">
-                <span class="currently-line">Agent memory &amp; self-evolving agents at <strong>Agos</strong><span class="currently-sep" aria-hidden="true"> ·</span></span>
+                <span class="currently-line">Process mining from screen recordings at <strong>Agos</strong><span class="currently-sep" aria-hidden="true"> ·</span></span>
                 <span class="currently-line">MS Data Science at <strong>UCSD</strong></span>
               </span>
-              <span class="currently-time">— Updated Aug 2026</span>
+              <span class="currently-time">— Updated Sep 2026</span>
             </div>
           </div>
 
@@ -916,19 +844,6 @@
       </div>
     </section>
 
-    <!-- LATEST POST -->
-    <section class="latest" id="latest-post" hidden>
-      <div class="container">
-        <a class="latest-row" id="latest-link" href="blog.html">
-          <span class="latest-eyebrow">Latest post</span>
-          <span class="latest-text">
-            <span class="latest-title" id="latest-title"></span>
-            <span class="latest-date" id="latest-date"></span>
-          </span>
-          <span class="latest-arrow" aria-hidden="true">&rarr;</span>
-        </a>
-      </div>
-    </section>
   </main>
 
   <div id="site-footer-host"></div>
@@ -1018,7 +933,7 @@
 
   <script type="module">
     import { mountChrome } from './scripts/chrome.js?v=1';
-    import { PROFILE, PROJECTS, POSTS, fmtDate, abbreviate } from './data/site.js?v=15';
+    import { PROFILE, PROJECTS, fmtDate, abbreviate } from './data/site.js?v=16';
     import { THUMBS } from './data/thumbs.js?v=1';
     import { initNowWidget } from './scripts/now-playing.js';
 
@@ -1162,15 +1077,6 @@
         </div>
       </a>
     `).join('');
-
-    // Latest blog post — a single quiet line under the work strip
-    const latest = [...POSTS].sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0];
-    if (latest) {
-      document.getElementById('latest-title').textContent = latest.title;
-      document.getElementById('latest-date').textContent = fmtDate(latest.date);
-      document.getElementById('latest-link').href = `blog.html#${latest.id}`;
-      document.getElementById('latest-post').hidden = false;
-    }
 
   </script>
 </body>

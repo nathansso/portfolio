@@ -8,7 +8,6 @@ const PAGES = [
   { id: 'about',     href: 'about.html',    label: 'About' },
   { id: 'projects',  href: 'projects.html', label: 'Projects' },
   { id: 'resume',    href: 'resume.html',   label: 'Resume', resume: true },
-  { id: 'blog',      href: 'blog.html',     label: 'Blog' },
 ];
 
 export function renderNav(currentId) {

@@ -49,9 +49,9 @@ export const PROFILE = {
       "fit": "contain"
     }
   ],
-  "bio": "Pursuing an M.S. in Data Science at UC San Diego, building on my undergraduate background in Math and Econ, turning messy, real-world data into actionable models.\n\nMy background spans applied research, predictive modeling, and data product development. \n\nI'm currently an AI Engineer at Agos in San Francisco, where my work centers on two things: the memory layer an agent reasons over — what it admits, what it keeps, and what it can prove it was told — and building agents that evolve themselves, along with the harnesses that measure whether that evolution is real.\n\nBefore Agos I was a Data Science Intern at IDX Exchange, where I built end-to-end modeling pipelines, using ETL and gradient boosting, and developed ensemble-based approaches for prediction.\n\nIn my spare time, I've been exploring agent-based workflow and development. One of my current personal projects orchestrates agents to ingest the user's resume, repos, and other data, returning truthfully tailored resumes to specific roles.\n\nMy toolkit includes Python, its various packages (pandas, numpy, sci-kit learn), SQL, R, ETL, ML/predictive modeling, data visualization, and LLM-assisted workflows. \n\nI'm especially interested in data science roles where I can combine analytical rigor, practical machine learning, and product-minded thinking to solve real problems.",
-  "shortBio": "AI Engineer at **Agos**, where I build memory layers for agents and work on agents that evolve themselves, and an M.S. Data Science candidate at **UC San Diego** on a Math + Econ foundation. I build systems that can show their work — and the benchmarks that can prove them wrong.",
-  "currently": "Agent memory & self-evolving agents at **Agos** · MS Data Science at **UCSD**"
+  "bio": "I'm an AI Engineer at **Agos** and an M.S. Data Science student at **UC San Diego**, working across agentic frameworks, reinforcement learning, AI evaluation, and applied machine learning.\n\nAt Agos I'm building an evaluation benchmark for process mining from screen recordings. A multimodal pipeline reads video, browser, and accessibility evidence and tries to recover the business process behind it. Its ground truth comes from a multi-agent synthetic-data pipeline, and a deterministic scorer grades each run blind against it, crediting only claims the evidence supports and scoring abstention separately from error.\n\nBefore Agos I was at **IDX Exchange**, where I built streaming ETL and an XGBoost model for California home prices that held a 7.74% median error on 200K+ listings across scheduled retrains.",
+  "shortBio": "AI Engineer at **Agos** and M.S. Data Science student at **UC San Diego**. Working across agentic frameworks, reinforcement learning, AI evaluation, and applied machine learning.",
+  "currently": "Process mining from screen recordings at **Agos** · MS Data Science at **UCSD**"
 };
 
 
@@ -138,21 +138,19 @@ export const EXPERIENCES = [
     "location": "San Francisco, CA",
     "start": "2026-08",
     "end": null,
-    "blurb": "Memory layers for agents and self-evolving agents: what an agent admits, retains, and can prove it was told, and whether an agent that rewrites itself actually gets any better.",
+    "blurb": "An evaluation benchmark for process mining from screen recordings: can a model watch work being done and recover the business process behind it, accurately and provably enough that the score means something?",
     "bullets": [
-      "The memory layer behind a voice agent: a kernel deciding what gets admitted, what is retained in context, what is selected under a budget, and what can be traced back to an exact source.",
-      "Benchmarked that layer against LongMemEval in its own reproducible lab — a baseline ladder of full history, BM25, dense, and hybrid retrieval scored under an identical reader and the official judge.",
-      "Self-evolving agents: a recursion harness that measures whether an agent's answer actually improves across a feedback lineage, scoring candidates as black boxes against a fixed suite with append-only run artifacts.",
-      "An evolution lab carrying that research — pinned schemas, repeatable protocols, and findings where every claim carries its source, so a claimed improvement has to survive being re-run.",
-      "ContractKit, a dependency-free toolkit that keeps the above honest: it pins a document sentence so breaking a stated contract breaks a test, and ratchets measurements against silent regression."
+      "Building an evaluation benchmark for process mining from screen recordings: a multimodal pipeline over video, browser, and accessibility evidence that recovers a business process, scored blind under a six-way evidence-lane ablation.",
+      "Engineered a multi-agent synthetic-data pipeline: blinded agents author seeded cases that separate agents execute against sandboxed mock surfaces, yielding recordings with derived, digest-chained ground truth.",
+      "Built a deterministic scoring harness (no model calls, byte-identical reports) that grades a run by matching the reconstructed process against sealed ground truth, crediting only supported claims and distinguishing abstention from error."
     ],
     "skills": [
       "Python",
-      "Agent memory",
-      "Retrieval",
-      "Benchmarking",
-      "Evals",
-      "CI"
+      "Process mining",
+      "Multimodal",
+      "Synthetic data",
+      "Multi-agent systems",
+      "Evals"
     ],
     "projectIds": []
   },
@@ -164,7 +162,7 @@ export const EXPERIENCES = [
     "location": "Remote",
     "start": "2026-01",
     "end": "2026-08",
-    "blurb": "Predictive modeling for real-estate pricing. \nBuilding ETL pipelines, training and evaluating gradient boosted models, and translating results into product-ready insights for a proptech team. \nBuilt a production multi-agent AI assistant using OpenClaw that helps consumers by analyzing market trends and recommending properties.",
+    "blurb": "Predictive modeling for real-estate pricing. \nBuilding ETL pipelines, training and evaluating gradient boosted models, and translating results into product-ready insights for a proptech team.",
     "bullets": [
       "Predictive modeling on California MLS data; XGBoost regression for single-family home valuation.",
       "ETL pipelines preparing 100K+ property records for downstream training.",
@@ -340,6 +338,40 @@ export const EXPERIENCES = [
 
 // PROJECTS_AUTO_START
 export const PROJECTS = [
+  {
+    "id": "offline-policy-optimization",
+    "title": "Offline Policy Optimization for Chatbot Responses",
+    "category": "personal",
+    "experienceId": null,
+    "course": null,
+    "date": "2026-09",
+    "image": null,
+    "blurb": "Contextual-bandit policy learning when every example comes from an old policy. A value model ranks actions, behavior support and explicit safety rules gate them, and IPS, SNIPS, doubly robust, and fitted-Q estimators judge the result.",
+    "description": "A reproducible contextual-bandit project for choosing actions when all training data was logged under a historical policy and counterfactual outcomes are never observed. The design is deliberately hybrid: a value model q(s, a) ranks actions, but an action must first be structurally valid, sufficiently supported by the historical behavior policy, and outside forced-escalation conditions before its predicted value can matter — the model ranks, explicit code owns authority. Evaluation addresses the failure modes that make naive offline analysis misleading. Selection bias: high observed reward can just mean the old policy chose an action only in easy states, so raw action averages are replaced by inverse propensity scoring, self-normalized IPS, and doubly robust estimates. Delayed value: a low-reward action can set up a better later one, so fitted-Q evaluation reports trajectory-level value alongside turn-level estimators. Coverage: effective sample size makes extrapolation visible when a candidate policy drifts beyond the logged policy's support. The public demo generates its own trajectories with known propensities, fixes every seed, splits by episode, and needs no credentials or network; a pytest suite covers estimator correctness, the safety envelope, determinism, and the end-to-end run. A clean-room reconstruction of methodology from an interview exercise, containing none of the original data or materials.",
+    "skills": [
+      "python",
+      "contextual bandits",
+      "offline reinforcement learning",
+      "off-policy evaluation",
+      "inverse propensity scoring",
+      "doubly robust estimation",
+      "fitted q evaluation",
+      "causal inference",
+      "selection bias",
+      "safety constraints",
+      "reproducibility",
+      "pytest"
+    ],
+    "url": null,
+    "repo": "offline-policy-optimization",
+    "lastCommit": "2026-09-07",
+    "lockedFields": [
+      "description",
+      "blurb",
+      "url",
+      "skills"
+    ]
+  },
   {
     "id": "atrium",
     "title": "Atrium",
@@ -722,63 +754,11 @@ for (const p of PROJECTS) {
 
 
 
-// ============================================================
-//  Blog
-//  Short posts about recent achievements & events.
-//  `body` supports blank-line paragraphs and **bold**.
-//  `images` are paths into imgs/blog/ (first = header image).
-// ============================================================
-export const POSTS = [
-  {
-    "id": "joining-agos",
-    "title": "I've joined Agos as an AI Engineer",
-    "date": "2026-08-24",
-    "tags": ["agos", "new role", "agent memory", "self-evolving agents"],
-    "blurb": "I've joined Agos in San Francisco as an AI Engineer, working on two things: the memory layer an agent reasons over, and building agents that evolve themselves — plus the benchmarks that decide whether either one actually works.",
-    "body": "I've joined **Agos** in San Francisco as an **AI Engineer**. The work centers on two things: the **memory layer** an agent reasons over, and building **agents that evolve themselves**.\n\nA voice agent that forgets is a demo. One that remembers badly is worse: it will repeat something it was told once, months ago, by someone who has since changed their mind, and it will say it with the same confidence as a fact it verified this morning.\n\nSo the thing I'm building is not a transcript store. It's a **claim ledger**. Every claim carries where it came from, when it was said, and what else supports it, and retrieval scores it on all three. Entities get resolved, the graph expands **two hops** so contradictions actually collide instead of sitting in separate rows, and the evidence that survives is **quoted under a context budget** rather than dumped into the prompt.\n\nMemory is exposed to a task as a **read-only verb**. The agent can ask what it knows; it cannot quietly rewrite the record mid-turn. And because a voice turn does not wait politely, retrieval starts speculatively against a sentence that is **still being spoken**.\n\nProving any of that is its own job. I've been building the **benchmark that measures the memory layer itself**: a stratified 30-case **LongMemEval** sample fixed by a seeded manifest, benchmark and dataset pinned to exact revisions, running a baseline ladder (full history, **BM25**, dense, hybrid) against extracted memory under an identical reader and the official judge. Scored not just on QA accuracy but against context size, cost, latency, and source-support failures, because a memory system that is right and unaffordable is not right.\n\nThe second half of the work is self-evolution. An agent that rewrites its own scaffolding is easy to claim and hard to demonstrate, so I built a **recursion harness** that treats a candidate as a black box — prompt in, answer out — and measures whether its answer actually improves across a feedback lineage, against a fixed suite it never gets to see. Around it sits an **evolution lab** for bounded self-evolving agents, where every run writes append-only evidence and every claim in the findings carries its source. A zero delta against a strong parent is a ceiling, not a refutation, so the point is to make the claim falsifiable before anything gets promoted.\n\nAlongside it I wrote **ContractKit**, a dependency-free assertion toolkit that keeps design documents, code, and CI from drifting apart. It pins a sentence in a design doc so that breaking a stated contract breaks a test, ratchets measurements so a regression can't slip through quietly, and reads three-dot diffs so a branch is judged on what it actually changed.\n\nThis also closes out my time at **IDX Exchange**, where I spent Jan through Aug 2026 on streaming ETL and a production XGBoost model for California home prices. Grateful for it, and glad the next thing is a system that has to know what it knows, and prove it got better.",
-    "images": [],
-    "link": "about.html"
-  },
-  {
-    "id": "atrium-hackathon-win",
-    "title": "Atrium won 1st Place Overall at the Memory Meets Motion Hackathon",
-    "date": "2026-08-03",
-    "tags": ["hackathon", "award", "atrium", "agentic ai"],
-    "blurb": "Dat Nguyen, Bryan Pham, Manny Vazquez, and I formed our own terrifying quartet and won 1st Place Overall at Memory Meets Motion, hosted by Devnovate at Frontier Tower in San Francisco. Our aim was simple: learn anything with a single search.",
-    "body": "Dat Nguyen, Bryan Pham, Manny Vazquez, and I formed our own terrifying quartet, winning 🥇 **1st Place Overall** at the Memory Meets Motion Hackathon hosted by Devnovate at Frontier Tower in San Francisco.\n\nOur aim was simple. Learn anything with a single search.\n\nSo we built **Atrium**. It explores the internet, does the research for you, builds a curriculum, and then tests it in the classroom.\n\nFirecrawl searches the web and returns ranked sources. Atrium evaluates them, binding claims to citations, orders concepts, and chunks material into sequenced lessons with comprehension checks.\n\nThen we take the lesson to a simulated classroom.\n\nIt all lands in a FalkorDB knowledge graph: each lesson wired to the sources that taught it, each student wired to the concepts they've mastered and the misconceptions blocking the rest.\n\nYou can group students by the misconception they share, then walk it straight back to the web page that taught it badly.\n\nUsing Guild.ai, Atrium splits the decisions across eight specialist agents: one forms rooms around a shared misconception, one grades and names what went wrong.\n\nRocketRide runs what they decide, each pipeline fed by the one before it:\n\nA shared misconception rewrites the lesson for that room. Those results rewrite tomorrow's plan.\n\nAnd that mastery is reflected in the graph, so tomorrow's lesson groups a different set of students. **The classroom remembers.**\n\nEvery submission and agent decision lands on a durable event stream, courtesy of LaserData; the classroom moves in real time with full replayability.\n\nHuge thanks to my teammates Dat Nguyen, Bryan Pham, and Manny Vazquez. And to Firecrawl, FalkorDB, RocketRide, Guild.ai, and LaserData, whose tech held up the build.\n\nYou can try the [live demo here](https://atrium-web-production-164a.up.railway.app) or read the [code on GitHub](https://github.com/nathansso/Atrium.).",
-    "images": [],
-    "link": "projects.html#atrium"
-  },
-  {
-    "id": "alongside-jachacks",
-    "title": "Alongside: building a treatment companion for my grandfather at JacHacks",
-    "date": "2026-07-25",
-    "tags": ["hackathon", "jac", "alongside", "graphs"],
-    "blurb": "My grandfather has cancer. I see him every few years, and the change is always stark — he doesn't notice, because he's living the slope. At JacHacks SF we built Alongside, a longitudinal treatment companion where relevance is reachability, not similarity.",
-    "body": "My grandfather has cancer. I see him every few years, and the change is always stark. He doesn't notice, because he is living the slope: day to day the change sits below the threshold of perception, and the person inside a gradual decline is the last one positioned to see it. I only see the endpoints.\n\nThe same blind spot runs through his care. Patients collect prescriptions from oncology, primary care, and urgent care — clinicians who do not share notes. Two doctors each prescribe something safe; nobody was in both rooms; together they are not safe. Meanwhile the symptoms that matter most happen between visits and arrive compressed into \"I've been okay, I guess.\"\n\nSo at **JacHacks SF** we built **Alongside**: a longitudinal treatment companion that sees the endpoints and the slope at once. Not to diagnose, not to talk to anyone's doctor, but to help a patient advocate for himself with a record he actually has.\n\nIt checks in daily, by typing or by voice — voice is one tap for the days typing is the barrier, because a tired day should not become a missing day. A tingling hand becomes a dated observation. \"The copay was rough\" becomes the reason you skipped Tuesday, which is a completely different conversation from skipping over side effects.\n\n**The graph is the memory.** Check-ins are wired to the medications, symptoms, and instructions they are about, rather than stored to be searched. Remembering is a walk across those connections, so a concern surfaces only when it is reachable from the anchor a check-in touches. **Relevance is reachability, not similarity.**\n\nThat buys two findings top-k retrieval cannot produce at any k.\n\n**Convergence:** two drugs, two prescribers, one toxicity through a shared node — a three-hop path that keyword or embedding search would never assemble.\n\n**Absence:** a symptom with no attributing edge, a script with no adherence record, a gap in the check-in chain. A retriever cannot rank a document that does not exist; a graph points at the missing edge. So the record says \"not in your record\" instead of \"safe.\"\n\nThe output is a page, not a message: \"Questions for your care team,\" a standing document that accumulates and drains. Every row cites the exact quote it came from and expands into a case file back to first onset. The system never sends anything to anyone. You carry it.\n\nWe built it end to end in **Jac** on JacHammer — 95.2% Jac, which I am unreasonably proud of. Six walkers, and a hard budget of exactly two `by llm()` sites, both on the write path, so the read path makes zero model calls. We refused `visit [-->] by llm()` on purpose: letting the model pick the path would void the guarantee that hard constraints are checked exhaustively. Object-Spatial Programming makes traversal first-class, so the safety property lives in the control flow instead of in a README.\n\nThe one thing that never ships is an outbound path. Alongside renders a page, and the patient carries it.",
-    "images": [],
-    "link": "projects.html#alongside"
-  },
-  {
-    "id": "rollaway-hackathon-win",
-    "title": "RollAway won the Beginner Track at the MLH × DigitalOcean AI Hackathon",
-    "date": "2026-07",
-    "tags": ["hackathon", "award", "rollaway"],
-    "blurb": "I spent the weekend pretending I knew how to code — and somehow won my first-ever hackathon. In under 24 hours we built RollAway, a map-first copilot for SF's mobile food vendors.",
-    "body": "Spent this entire weekend pretending I knew how to code. Somehow, I ended up winning my first-ever hackathon.\n\nOn Friday, I joined the Major League Hacking x DigitalOcean AI for Social Good hackathon with Bryan Pham and Dat Nguyen, and in less than 24 hours we built **RollAway**, a map-first copilot for SF's mobile food vendors.\n\n**The problem:** Local vendors are competing in a $2 billion industry with razor-thin margins, where one slow day or an out-of-order permit can put you out of business.\n\nWe built RollAway to close that gap. Tell it your vendor type, menu, and range, and it scores real locations on foot traffic, competition, and legality, then turns the permit process into a verified, deadline-aware checklist.\n\nWorking with a new tech stack, fixing broken deployments at 2 am, and coding on trains with no wifi (ironic, for an app about vendors who can't afford to be offline) meant we spent half the weekend debugging issues unrelated to our actual idea.\n\nThe one part that never gave us trouble was our inference layer. It ran seamlessly on DigitalOcean's Gradient AI throughout the weekend, with no babysitting required.\n\nThank you to my teammates Bryan Pham and Dat Nguyen for pretending to know how to code with me, and a massive thanks to Major League Hacking and DigitalOcean for a great first hackathon.\n\nYou can check out our live demo [here](https://rollaway-frontend-production.up.railway.app/).",
-    "images": [],
-    "link": "projects.html#rollaway"
-  }
-];
-
-
-
-
 // Helpers
 // Accepts "YYYY-MM" or "YYYY-MM-DD". A day component, when present, is rendered
 // ("Jul 25, 2026"); month-only values keep the original format ("Jul 2026").
 // Both forms sort correctly under a plain string compare, which is how the
-// projects grid and the blog feed order themselves.
+// projects grid orders itself.
 export function fmtDate(date) {
   if (!date) return '';
   const [y, m, d] = date.split('-').map(Number);

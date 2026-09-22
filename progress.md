@@ -494,3 +494,4 @@ Every mention of Agos across the site now says the same two things — memory la
 ### Dependabot alert #11 fixed (brace-expansion)
 
 - **package-lock.json:** `npm audit fix` bumped the transitive dev dependency `brace-expansion` from 2.1.0 to 2.1.7 (via `elocuent` → `glob` → `minimatch`), clearing the high-severity DoS advisory (vulnerable `>=2.0.0 <2.1.2`). No `package.json` change; `npm audit` now reports 0 vulnerabilities. Nothing the live site loads is affected — this is a dev-only tooling dependency.
+- **Lockfile catch-up:** the same `npm audit fix` run also added `@napi-rs/canvas` (0.1.100), `pdfjs-dist` (4.10.38), and `playwright` (1.63.0) to `package-lock.json`. All three were already declared as devDependencies in `package.json` but missing from the lockfile, so it had drifted; it now matches the manifest.

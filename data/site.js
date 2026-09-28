@@ -698,7 +698,7 @@ export const PROJECTS = [
     ],
     "url": null,
     "repo": "agentic_resume_tailoring",
-    "lastCommit": "2026-08-15",
+    "lastCommit": "2026-09-27",
     "lockedFields": [
       "description",
       "url",
@@ -714,34 +714,41 @@ export const PROJECTS = [
     "date": "2026-03",
     "image": null,
     "blurb": "Random Forest + XGBoost on 12,330 sessions. ~90% accuracy with threshold-tuned recall; 5-cluster behavioral segmentation revealing 0.4%–24.3% conversion span.",
-    "description": "Built classification models using Random Forest and XGBoost on 12,330 e-commerce browsing sessions to predict purchase intent, applying threshold tuning to maximize recall and reduce missed conversions, achieving approximately 90% accuracy. Applied K-Means clustering to segment shoppers into five behavioral archetypes, uncovering conversion rates ranging from 0.4% for bounce-prone visitors to 24.3% for high-intent consumers. Identified product browsing depth and administrative page engagement as the strongest purchase predictors using Python, scikit-learn, pandas, and seaborn.",
+    "description": "Built classification models (Decision Tree, Random Forest, XGBoost) and applied K-Means clustering to 12,330 UCI e-commerce browsing sessions to predict purchase intent and segment shoppers into behavioral archetypes, using Python, scikit-learn, pandas, and seaborn. Threshold-tuned XGBoost achieved 80% recall and 88% accuracy on a class-imbalanced dataset (15.5% positive rate), while clustering revealed five distinct visitor segments with conversion rates ranging from 0.4% for bounce-prone visitors to 24.3% for high-intent shoppers. PageValues and exit rate emerged as the dominant purchase predictors via Random Forest feature importance and Mann-Whitney U hypothesis testing, with product browsing depth as the strongest purely behavioral signal.",
     "skills": [
       "python",
-      "jupyter",
       "scikit-learn",
       "pandas",
       "seaborn",
-      "random forest",
+      "jupyter",
       "xgboost",
+      "random forest",
+      "decision tree",
       "k-means clustering",
+      "pca",
       "classification",
-      "machine learning",
-      "threshold tuning",
       "feature importance",
-      "customer segmentation",
-      "behavioral analysis",
-      "ecommerce analytics",
-      "predictive modeling",
+      "hyperparameter tuning",
+      "threshold tuning",
+      "class imbalance",
+      "hypothesis testing",
+      "mann-whitney u",
+      "chi-squared test",
       "data visualization",
-      "imbalanced classes",
-      "conversion optimization"
+      "ecommerce analytics",
+      "behavioral segmentation",
+      "predictive modeling",
+      "machine learning",
+      "exploratory data analysis",
+      "winsorization",
+      "silhouette analysis"
     ],
     "lockedFields": [
       "url"
     ],
     "url": null,
     "repo": "dsc207finalproject",
-    "lastCommit": "2026-03-30"
+    "lastCommit": "2026-09-22"
   }
 ];
 // PROJECTS_AUTO_END

@@ -698,7 +698,7 @@ export const PROJECTS = [
     ],
     "url": null,
     "repo": "agentic_resume_tailoring",
-    "lastCommit": "2026-09-27",
+    "lastCommit": "2026-10-05",
     "lockedFields": [
       "description",
       "url",
